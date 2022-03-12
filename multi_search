@@ -1,12 +1,46 @@
 #!/usr/bin/env python3
 """
-# TODO: fill in module docstring
+Multi_search is a command-line web search aggregator, written in Python,
+derived the Search-Engine-Scraper search_engines package from
+https://github.com/tasos-py/Search-Engines-Scraper.
+
+Non-redundant aggregate results from several general purpose search
+engines are returned as URLs and their page titles to the Terminal and
+an auto-named text file.
+The intent is to provide easy comparisons among search engines, avoid
+unintended search filtering, and automatically store results to file.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see https://www.gnu.org/licenses/.
 """
+# TODO: display this with arg.parser --about
+__author__ = 'Craig Echt'
+__copyright__ = 'Copyright (C) 2022 C.S. Echt'
+__license__ = 'GNU General Public License'
+__program_name__ = 'multi_search'
+__project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
+__version__ = '0.1.0'
+__credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
+__dev_environment__ = 'Python 3.8'
+__status__ = 'Development Status :: 1 - Alpha'
+
+
 import sys
 from datetime import datetime
 
 import search_engines as se
-from search_engines.search_utils import files, get_user_agent
+from search_utils import files
+from search_utils import get_user_agent
 
 FileIt = files.results2file
 
