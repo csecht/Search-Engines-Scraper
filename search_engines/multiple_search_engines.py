@@ -1,7 +1,7 @@
-from .results import SearchResults
-from .engines import search_engines_dict
-from . import output as out
-from . import config as cfg
+from search_engines.results import SearchResults
+from search_engines.engines import search_engines_dict
+from search_engines import output as out
+from search_engines import config as cfg
 
 
 class MultipleSearchEngines(object):
@@ -59,9 +59,9 @@ class MultipleSearchEngines(object):
         if out.PRINT in output:
             out.print_results(self._engines)
         if out.HTML in output:
-            out.write_file(out.create_html_data(self._engines), path + u'.html') 
+            out.write_file(out.create_html_data(self._engines), path + u'.html')
         if out.CSV in output:
-            out.write_file(out.create_csv_data(self._engines), path + u'.csv') 
+            out.write_file(out.create_csv_data(self._engines), path + u'.csv')
         if out.JSON in output:
             out.write_file(out.create_json_data(self._engines), path + u'.json')
 

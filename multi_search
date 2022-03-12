@@ -1,0 +1,147 @@
+#!/usr/bin/env python3
+"""
+# TODO: fill in module docstring
+"""
+import sys
+from datetime import datetime
+
+import search_engines as se
+from search_engines.search_utils import files, get_user_agent
+
+FileIt = files.results2file
+
+# Assign user agents here.
+# Those not listed below send requests in the http_client.py module
+#   using the default static UA:
+#   'search_engines/0.5 Repo: https://github.com/tasos-py/Search-Engines-Scraper'
+#   which is also available from get_user_agent.github_agent().
+#   Engines using Default UA: Aol, Ask, Quant, Torch, Yahoo.
+
+#   Those that don't accept the default can use these randomly assigned ua.
+#   All can use random firefox_ver() as user agent.
+#   All? but DGG can use static python_agent().
+# bing_ua = get_user_agent.random_agent()
+# dogpile_ua = get_user_agent.firefox_ver()
+# google_ua = get_user_agent.firefox_ver()
+
+DDG_UA = get_user_agent.github_agent()
+mojeek_ua = get_user_agent.random_agent()
+startpage_ua = get_user_agent.firefox_ver()
+
+# NOTE: Cannot use the site: specifier for Mojeek, raises 403 Forbidden.
+#   But site: does work for M in SearchAggregator project, sometimes.
+# Other Search terms that have failed:
+# "vodka -site:ru" in Dogpile > ERROR HTTP 400 Bad Request (Request header too long)
+
+# The duplicated result closest to end of the results list is the one
+# retained in the unique result list, so engine order here matters.
+# TODO: Create MetaGer engine class.
+
+engines = {
+    # 'B': se.Bing(bing_ua),
+    # 'G': se.Google(google_ua),
+    # 'Y': se.Yahoo(),
+    # 'A': se.Ask(),
+    # 'AOL': se.Aol(),
+    # 'DP': se.Dogpile(dogpile_ua),
+    'DDG': se.Duckduckgo(DDG_UA),
+    'M': se.Mojeek(mojeek_ua),
+    'SP': se.Startpage(startpage_ua),
+    }
+
+engine_names = {
+    # 'A': 'Ask',
+    # 'AOL': 'AOL',
+    # 'B': 'Bing',
+    # 'DP': 'Dogpile',
+    # 'G': 'Google',
+    # 'Y': 'Yahoo',
+    'DDG': 'DuckDuckGo',
+    'M': 'Mojeek',
+    'SP': 'Startpage',
+    }
+
+
+def combo_search(search_term) -> None:
+    """
+    engine.search() return options:
+    'host' is the base url, e.g. en.wikipedia.org
+    'links' is the target link, e.g. https://en.wikipedia.org/wiki/Goat
+    'titles' is the link page title.
+    'text' is the full page description.
+    """
+
+    combined_results = []
+
+    for _e in engines:
+        # Limit each engine to ~20-30 results for more even sampling.
+        if _e == 'DDG':
+            results = engines[_e].search(search_term, pages=1)
+        else:
+            results = engines[_e].search(search_term, pages=2)
+
+        links = results.links()
+        titles = results.titles()
+
+        # Prepend the engine tag to each result title.
+        for i, title in enumerate(titles):
+            titles[i] = f'({_e}) {title}'
+        e_result = list(zip(links, titles))
+        combined_results.extend(e_result)
+
+        report_count = f'{len(links)} hits from {engine_names[_e]} ({_e})'
+        print(report_count)
+        FileIt(search_term, f'{report_count}\n')
+
+    # Filter unique urls, saving the last redundant hit from combined_results,
+    #   where last is determined by the engines.keys() order.
+    unique_results = list({tup[:1]: tup for tup in combined_results}.values())
+
+    uniq_res_msg = (f'Found {len(combined_results)} hits.\n\n'
+                    f'There are {len(unique_results)} unique hits.\n')
+    print(uniq_res_msg)
+    FileIt(search_term, f'{uniq_res_msg}\n')
+
+    for tag in engine_names:
+        tag = f'({tag})'
+        num_uniq_hit = len([hit for hit in unique_results if tag in hit[1]])
+        tag_msg = f'{num_uniq_hit} unique hits from {tag}'
+        print(tag_msg)
+        files.results2file(search_term, f'{tag_msg}\n')
+    for _r in unique_results:
+        result_msg = f'\n{_r[0]}\n{_r[1]}'
+        print(result_msg)
+        FileIt(search_term, f'{result_msg}\n')
+
+    print(f'\n=============== END of {len(unique_results)} results ==================')
+    FileIt(search_term,
+           f'\n{"=" * 26} END of {len(unique_results)} results {"=" * 26}\n')
+
+
+def main():
+    # TODO: add parse_args() to handle usage and help.
+    term = input("\nEnter search term: ")
+
+    file_header = (
+        f'SEARCH TERM: {term}    TIME: {datetime.now().strftime("%x %X")}')
+    FileIt(term, f'{file_header}\n\n')
+    FileIt(term,
+           # f'Bing user agent: {bing_ua}\n'
+           # f'Dogpile user agent: {dogpile_ua}\n'
+           # f'Google user agent: {google_ua}\n'
+           f'DuckDuckGo user agent: {DDG_UA}\n'
+           f'Mojeek user agent: {mojeek_ua}\n'
+           f'Startpage user agent: {startpage_ua}\n\n'
+           )
+
+    combo_search(term)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (EOFError, KeyboardInterrupt):
+        # Note: Ctrl-c may not work with PyCharm Terminal interpreter when
+        #   waiting for Terminal input; Ctrl-d does work.
+        print(' *** Keyboard interrupt by user has quit the program ***\n')
+        sys.exit()

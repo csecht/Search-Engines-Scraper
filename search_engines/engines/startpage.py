@@ -1,19 +1,21 @@
 from bs4 import BeautifulSoup
 
-from ..engine import SearchEngine
-from ..config import PROXY, TIMEOUT, FAKE_USER_AGENT
-from .. import output as out
+from search_engines.engine import SearchEngine
+from search_engines.config import PROXY, TIMEOUT
+from search_engines import output as out
 
 
 class Startpage(SearchEngine):
-    '''Searches startpage.com'''
-    def __init__(self, proxy=PROXY, timeout=TIMEOUT): 
+    """Searches startpage.com"""
+    def __init__(self, user_agent, proxy=PROXY, timeout=TIMEOUT):
         super(Startpage, self).__init__(proxy, timeout)
         self._base_url = 'https://www.startpage.com'
-        self.set_headers({'User-Agent':FAKE_USER_AGENT})
+        # FAKE_USER_AGENT OK, random_agent ERROR Banned, python_agent ERROR Banned
+        self.set_headers({'User-Agent': user_agent})
+        print(f"Startpage user agent: {user_agent}")
     
     def _selectors(self, element):
-        '''Returns the appropriate CSS selector.'''
+        """Returns the appropriate CSS selector."""
         selectors = {
             'url': 'a.w-gl__result-url', 
             'title': 'a.w-gl__result-title h3', 
@@ -26,7 +28,7 @@ class Startpage(SearchEngine):
         return selectors[element]
     
     def _first_page(self):
-        '''Returns the initial page and query.'''
+        """Returns the initial page and query."""
         response = self._get_page(self._base_url)
         tags = BeautifulSoup(response.html, "html.parser")
         selector = self._selectors('search_form')
@@ -37,10 +39,10 @@ class Startpage(SearchEngine):
         }
         data['query'] = self._query
         url = self._base_url + '/sp/search'
-        return {'url':url, 'data':data}
+        return {'url': url, 'data': data}
     
     def _next_page(self, tags):
-        '''Returns the next page URL and post data (if any)'''
+        """Returns the next page URL and post data (if any)"""
         selector = self._selectors('next')
         forms = [
             form 
@@ -54,10 +56,10 @@ class Startpage(SearchEngine):
                 i['name']:i.get('value', '') 
                 for i in forms[0].select('input')
             }
-        return {'url':url, 'data':data}
+        return {'url': url, 'data': data}
     
     def _is_ok(self, response):
-        '''Checks if the HTTP response is 200 OK.'''
+        """Checks if the HTTP response is 200 OK."""
         soup = BeautifulSoup(response.html, 'html.parser')
         selector = self._selectors('blocked_form')
         is_blocked = soup.select_one(selector)
