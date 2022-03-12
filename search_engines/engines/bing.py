@@ -9,7 +9,6 @@ class Bing(SearchEngine):
         self._base_url = u'https://www.bing.com'
         # FAKE_USER_AGENT OK, RANDOM_UA OK,
         self.set_headers({'User-Agent': user_agent})
-        print(f'Bing user agent: {user_agent}')
 
     def _selectors(self, element):
         """Returns the appropriate CSS selector."""

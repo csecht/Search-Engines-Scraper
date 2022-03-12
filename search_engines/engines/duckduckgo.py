@@ -14,7 +14,6 @@ class Duckduckgo(SearchEngine):
         self._main_url = u'https://duckduckgo.com/?q={}&t=h_'
         self._current_page = None
         self.set_headers({'User-Agent': user_agent})
-        print(f'Duckduckgo user agent: {user_agent}')
 
     def _selectors(self, element):
         '''Returns the appropriate CSS selector - regex pattern, in this case.'''

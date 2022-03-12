@@ -13,7 +13,6 @@ class Google(SearchEngine):
 
         # FAKE_USER_AGENT OK, random_agent No results, python_agent No results
         self.set_headers({'User-Agent': user_agent})
-        print(f'Google user agent: {user_agent}')
 
     def _selectors(self, element):
         """Returns the appropriate CSS selector."""

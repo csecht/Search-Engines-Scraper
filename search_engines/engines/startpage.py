@@ -12,8 +12,7 @@ class Startpage(SearchEngine):
         self._base_url = 'https://www.startpage.com'
         # FAKE_USER_AGENT OK, random_agent ERROR Banned, python_agent ERROR Banned
         self.set_headers({'User-Agent': user_agent})
-        print(f"Startpage user agent: {user_agent}")
-    
+
     def _selectors(self, element):
         """Returns the appropriate CSS selector."""
         selectors = {

@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
-Multi_search is a command-line web search aggregator, written in Python,
-derived the Search-Engine-Scraper search_engines package from
+Multi_search is a command-line web search aggregator in Python,
+derived from the Search-Engine-Scraper package from
 https://github.com/tasos-py/Search-Engines-Scraper.
 
 Non-redundant aggregate results from several general purpose search
 engines are returned as URLs and their page titles to the Terminal and
 an auto-named text file.
+
 The intent is to provide easy comparisons among search engines, avoid
 unintended search filtering, and automatically store results to file.
 
@@ -22,6 +23,8 @@ unintended search filtering, and automatically store results to file.
 
     You should have received a copy of the GNU General Public License
     along with this program. If not, see https://www.gnu.org/licenses/.
+
+See LICENCE file for additional licenses of repository components.
 """
 # TODO: display this with arg.parser --about
 __author__ = 'Craig Echt'
@@ -35,7 +38,9 @@ __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
 
 
+import argparse
 import sys
+import time
 from datetime import datetime
 
 import search_engines as se
@@ -59,7 +64,7 @@ FileIt = files.results2file
 # google_ua = get_user_agent.firefox_ver()
 
 DDG_UA = get_user_agent.github_agent()
-mojeek_ua = get_user_agent.random_agent()
+mojeek_ua = get_user_agent.random_agent()  # Occasionally raises HTTP 403
 startpage_ua = get_user_agent.firefox_ver()
 
 # NOTE: Cannot use the site: specifier for Mojeek, raises 403 Forbidden.
@@ -67,10 +72,11 @@ startpage_ua = get_user_agent.firefox_ver()
 # Other Search terms that have failed:
 # "vodka -site:ru" in Dogpile > ERROR HTTP 400 Bad Request (Request header too long)
 
-# The duplicated result closest to end of the results list is the one
-# retained in the unique result list, so engine order here matters.
 # TODO: Create MetaGer engine class.
 
+# The duplicated result closest to end of the results list is the one
+#   retained in the unique result list, so engine order here matters for
+#   engine-specific reporting of unique results.
 engines = {
     # 'B': se.Bing(bing_ua),
     # 'G': se.Google(google_ua),
@@ -94,6 +100,43 @@ engine_names = {
     'M': 'Mojeek',
     'SP': 'Startpage',
     }
+
+
+def parse_args() -> None:
+    """Allow handling of common command line arguments.
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--about',
+                        help='Provides description, version, GNU license',
+                        action='store_true',
+                        default=False)
+    parser.add_argument('--syntax',
+                        help='Search syntax examples',
+                        action='store_true',
+                        default=False
+                        )
+
+    args = parser.parse_args()
+    if args.about:
+        print(__doc__)
+        print(f'{"Author:".ljust(13)}', __author__)
+        print(f'{"License:".ljust(13)}', __license__)
+        print(f'{"Copyright:".ljust(13)}', __copyright__)
+        print(f'{"Program:".ljust(13)}', __program_name__)
+        print(f'{"url:".ljust(13)}', __project_url__)
+        print(f'{"Version:".ljust(13)}', __version__)
+        print(f'{"Credits:".ljust(13)}', __credits__)
+        print(f'{"Dev Env:".ljust(13)}', __dev_environment__)
+        print(f'{"Status:".ljust(13)}', __status__)
+        print()
+        sys.exit(0)
+
+    if args.syntax:
+        print(' Example search term syntax (without single quotes):\n'
+              ' classes edu', 'dogs cats', ' *ology',  'Rock * roll -and',
+              '"jump the shark"', 'jump AND shark', 'jump OR shark')
+        print("Specifiers like site:gov, 'dogs AND cats', or 'dogs -cats' may not work as expected with some engines.\n")
+        sys.exit(0)
 
 
 def combo_search(search_term) -> None:
@@ -142,32 +185,39 @@ def combo_search(search_term) -> None:
         tag_msg = f'{num_uniq_hit} unique hits from {tag}'
         print(tag_msg)
         files.results2file(search_term, f'{tag_msg}\n')
+
+    # Need a brief delay before Terminal scrolls to last line of results.
+    time.sleep(2)
+
     for _r in unique_results:
         result_msg = f'\n{_r[0]}\n{_r[1]}'
         print(result_msg)
         FileIt(search_term, f'{result_msg}\n')
 
-    print(f'\n=============== END of {len(unique_results)} results ==================')
     print(f'Results were written/appended to {FileIt(search_term, "")}')
+    print(f'\n=============== END of {len(unique_results)} results ==================')
     FileIt(search_term,
            f'\n{"=" * 26} END of {len(unique_results)} results {"=" * 26}\n')
 
 
-def main():
-    # TODO: add parse_args() to handle usage and help.
+def main() -> None:
+    """
+    Print parameters and header information to Terminal and file.
+    Run the search if no arguments given.
+    """
+    parse_args()
     term = input("\nEnter search term: ")
+
+    user_agents_used = (
+        f'DuckDuckGo user agent: {DDG_UA}\n'
+        f'Mojeek user agent: {mojeek_ua}\n'
+        f'Startpage user agent: {startpage_ua}\n')
+    print('\n', user_agents_used)
 
     file_header = (
         f'SEARCH TERM: {term}    TIME: {datetime.now().strftime("%x %X")}')
     FileIt(term, f'{file_header}\n\n')
-    FileIt(term,
-           # f'Bing user agent: {bing_ua}\n'
-           # f'Dogpile user agent: {dogpile_ua}\n'
-           # f'Google user agent: {google_ua}\n'
-           f'DuckDuckGo user agent: {DDG_UA}\n'
-           f'Mojeek user agent: {mojeek_ua}\n'
-           f'Startpage user agent: {startpage_ua}\n\n'
-           )
+    FileIt(term, f'{user_agents_used}\n')
 
     combo_search(term)
 

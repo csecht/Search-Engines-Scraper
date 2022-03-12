@@ -9,8 +9,7 @@ class Mojeek(SearchEngine):
         self._base_url = 'https://www.mojeek.com'
         # FAKE_USER_AGENT OK, random_agent OK,
         self.set_headers({'User-Agent': user_agent})
-        print(f'Mojeek user agent: {user_agent}')
-    
+
     def _selectors(self, element):
         """Returns the appropriate CSS selector."""
         selectors = {
