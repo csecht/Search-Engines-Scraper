@@ -26,7 +26,6 @@ unintended search filtering, and automatically store results to file.
 
 See LICENCE file for additional licenses of repository components.
 """
-# TODO: display this with arg.parser --about
 __author__ = 'Craig Echt'
 __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
