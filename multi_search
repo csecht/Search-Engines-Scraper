@@ -114,6 +114,7 @@ def combo_search(search_term) -> None:
         FileIt(search_term, f'{result_msg}\n')
 
     print(f'\n=============== END of {len(unique_results)} results ==================')
+    print(f'Results were written/appended to {FileIt(search_term, "")}')
     FileIt(search_term,
            f'\n{"=" * 26} END of {len(unique_results)} results {"=" * 26}\n')
 

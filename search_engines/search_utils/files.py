@@ -6,7 +6,7 @@
 from pathlib import Path
 
 
-def results2file(search_txt: str, data: str) -> str:
+def results2file(search_txt: str, data: str) -> Path:
     """
     Write a text file of search results.
 
@@ -16,11 +16,11 @@ def results2file(search_txt: str, data: str) -> str:
     """
 
     filename = f'Results_{search_txt}.txt'
-    filepath = Path(filename)
+    filepath = Path('ResultsFiles', filename)
     with open(filepath, 'a', encoding='utf-8') as hits:
         hits.write(data)
 
-    return filename
+    return filepath
 
 
 def remove_file(search_txt: str) -> None:
