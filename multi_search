@@ -107,16 +107,16 @@ def parse_args() -> None:
     """
     parser = argparse.ArgumentParser()
     parser.add_argument('--about',
-                        help='Provides description, version, GNU license',
+                        help='Provides description, version, GNU license.',
                         action='store_true',
                         default=False)
-    parser.add_argument('--usage',
-                        help='Search syntax examples',
+    parser.add_argument('--use',
+                        help='Program execution and search term examples.',
                         action='store_true',
-                        default=False
-                        )
+                        default=False)
 
     args = parser.parse_args()
+    # args, unknown = parser.parse_known_args()  # Bypass arg errors.
     if args.about:
         print(__doc__)
         print(f'{"Author:".ljust(13)}', __author__)
@@ -131,14 +131,21 @@ def parse_args() -> None:
         print()
         sys.exit(0)
 
-    if args.usage:
-        print('USAGE: Just enter your search term at the prompt, no parameters needed.')
-        print('Example search term syntax:\n'
-              'puppies\nclasses edu\ndogs cats\n*ology\nRock * roll -and\n'
-              '"jump the shark"\njump AND shark\n')
+    if args.use:
+        print(f'EXECUTION: Run {__file__} without arguments,'
+              ' then enter your search term at the prompt.\n')
         print("Specifiers like site:gov, 'dogs AND cats', or 'dogs -cats'"
               " may not work as expected with some engines.")
-        print('Results are printed to the Terminal and written to a file in the ResultsFiles folder.')
+        print('Example search terms:\n'
+              'paint => Search prefers "paint", but also finds "Paints", "painter", "painting", etc.\n'
+              '"paint" => Double quote for exact term or phrase, usually in the page title.'
+              'classes edu => Preference for "classes" at .edu sites.\n'
+              'dogs cats => Preference for "dogs" with "cats", but also just "dogs" or "cats" or "dog", etc.\n'
+              '*ology => Wildcard character * will prefer "ology"; does not find "biology", "ecology", etc. \n'
+              'Rock * roll -and => "Rock -N- Roll", "rock & roll", etc.\n'
+              '"jump the shark" => Double quote the word or term for exact matches.\n'
+              'jump AND shark => Any combination of jump(s) with shark(s).\n')
+        print('Results are printed to the Terminal and written to the ResultsFiles folder.\n')
         sys.exit(0)
 
 
@@ -154,7 +161,7 @@ def search_this(search_term) -> None:
     combined_results = []
 
     for _e in engines:
-        # Limit each engine to ~20-30 results for more even sampling.
+        # Limit each engine to ~20-30 results.
         if _e == 'DDG':
             results = engines[_e].search(search_term, pages=1)
         else:
@@ -184,12 +191,15 @@ def search_this(search_term) -> None:
 
     for tag in engine_names:
         tag = f'({tag})'
+
+        # Look for the engine abbreviation that was prepended to each title.
         num_uniq_hit = len([hit for hit in unique_results if tag in hit[1]])
         tag_msg = f'{num_uniq_hit} unique hits from {tag}'
         print(tag_msg)
         files.results2file(search_term, f'{tag_msg}\n')
 
-    # Need a brief delay before Terminal scrolls to last line of results.
+    # Need a brief delay before Terminal scrolls to last line of results
+    #   so user can glimpse the last engine's unique count.
     time.sleep(2)
 
     for _r in unique_results:
@@ -197,7 +207,7 @@ def search_this(search_term) -> None:
         print(result_msg)
         FileIt(search_term, f'{result_msg}\n')
 
-    print(f'Results were written/appended to {FileIt(search_term, "")}')
+    print(f'Results were written or appended to {FileIt(search_term, "")}')
     print(f'\n=============== END of {len(unique_results)} results ==================')
     FileIt(search_term,
            f'\n{"=" * 26} END of {len(unique_results)} results {"=" * 26}\n')
@@ -206,17 +216,19 @@ def search_this(search_term) -> None:
 def main() -> None:
     """
     Print parameters and header information to Terminal and file.
-    Run the search if no arguments given.
+    Run the search if no arguments are given.
     """
     parse_args()
     term = input("\nEnter search term: ")
+
+    # Remove spaces in term for better file naming; '+' doesn't affect search.
     term = term.replace(' ', '+')
 
     user_agents_used = (
-        f'DuckDuckGo user agent: {DDG_UA}\n'
+        f'\nDuckDuckGo user agent: {DDG_UA}\n'
         f'Mojeek user agent: {MOJEEK_UA}\n'
         f'Startpage user agent: {startpage_ua}\n')
-    print('\n', user_agents_used)
+    print(user_agents_used)
 
     file_header = (
         f'SEARCH TERM: {term}    TIME: {datetime.now().strftime("%x %X")}')
