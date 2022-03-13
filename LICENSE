@@ -57,7 +57,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ########################################################################
 
-Search-Engines-Scraper-CSE, search_utils module and multi_search script:
+multi_search script, search_utils with files.py and get_user_agent.py modules:
 
 Copyright (c) 2022 Craig S Echt, under
 
