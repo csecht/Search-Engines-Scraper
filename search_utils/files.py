@@ -15,8 +15,11 @@ def results2file(search_txt: str, data: str) -> Path:
     :return: Name of file created/appended.
     """
 
+    resultpath = Path('ResultsFiles/')
+    resultpath.mkdir(parents=True, exist_ok=True)
+
     filename = f'Results_{search_txt}.txt'
-    filepath = Path('ResultsFiles', filename).resolve()
+    filepath = resultpath / filename
     with open(filepath, 'a', encoding='utf-8') as hits:
         hits.write(data)
 
