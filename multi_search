@@ -68,15 +68,14 @@ MOJEEK_UA = get_user_agent.python_agent()
 startpage_ua = get_user_agent.firefox_ver()
 
 # NOTE: Cannot use the site: specifier for Mojeek, raises 403 Forbidden.
-#   But site: does work for M in SearchAggregator project, sometimes.
 # Other Search terms that have failed:
 # -site: in Dogpile > ERROR HTTP 400 Bad Request (Request header too long)
 
-# TODO: Create MetaGer engine class.
-
 # The duplicated result closest to end of the results list is the one
-#   retained in the unique result list, so engine order here matters for
-#   engine-specific reporting of unique results.
+#   retained in the unique_results list, so engine order here matters for
+#   engine-specific reporting of unique results metrics.
+# Use only engines committed to privacy.
+# NOTE to developer: Create MetaGer engine Class in search_engines/engines.
 engines = {
     # 'B': se.Bing(bing_ua),
     # 'G': se.Google(google_ua),
@@ -149,13 +148,12 @@ def parse_args() -> None:
         sys.exit(0)
 
 
-def search_this(search_term) -> None:
+def search_this(search_term: str) -> None:
     """
-    engine.search() return options:
-    'host' is the base url, e.g. en.wikipedia.org
-    'links' is the target link, e.g. https://en.wikipedia.org/wiki/Goat
-    'titles' is the link page title.
-    'text' is the full link description.
+    Run the input search term through the engines dict.
+    Print and write non-redundant results of found urls and page titles.
+
+    :param search_term: string with syntax valid on all or most engines.
     """
 
     combined_results = []
