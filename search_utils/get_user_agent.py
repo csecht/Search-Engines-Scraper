@@ -15,8 +15,7 @@ import gzip
 
 
 # ############ Modified from get_random_user_agent() in googlesearch
-# ############ module of google package.
-# Default user agent, unless instructed by the user to change it.
+# module of google package.
 DEFAULT_AGENT = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)'
 
 # Load the list of valid user agents from the module's folder.
@@ -48,7 +47,7 @@ def random_agent() -> bytes:
     """
     return choice(user_agents_list)
 
-# ^^^^^^^^^^^^^^ Lifted from from googlesearch module of google package.
+# ^^^^^^^^^^^^^^ Modified from from googlesearch module of google package.
 
 
 def python_agent() -> str:
@@ -80,11 +79,11 @@ def firefox_ver() -> str:
     return f'Firefox/{choice(firefox_vers)}'
 
 
-def github_agent() -> str:
+def tasos_agent() -> str:
     """
     The original Search-Engine-Scraper default user agent.
-    works with all engines except Google, which works with firefox_ver().
+    Works with all engines except Google, which works with firefox_ver().
 
-    :return: Original GitHub module and repository link.
+    :return: Original GitHub module and repository link as user agent.
     """
     return 'search_engines/0.5 Repo: https://github.com/tasos-py/Search-Engines-Scraper'

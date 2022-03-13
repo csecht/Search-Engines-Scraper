@@ -16,7 +16,7 @@ def results2file(search_txt: str, data: str) -> Path:
     """
 
     filename = f'Results_{search_txt}.txt'
-    filepath = Path('ResultsFiles', filename)
+    filepath = Path('ResultsFiles', filename).resolve()
     with open(filepath, 'a', encoding='utf-8') as hits:
         hits.write(data)
 
