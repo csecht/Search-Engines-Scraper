@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -110,7 +110,7 @@ def parse_args() -> None:
                         help='Provides description, version, GNU license',
                         action='store_true',
                         default=False)
-    parser.add_argument('--syntax',
+    parser.add_argument('--usage',
                         help='Search syntax examples',
                         action='store_true',
                         default=False
@@ -131,16 +131,18 @@ def parse_args() -> None:
         print()
         sys.exit(0)
 
-    if args.syntax:
-        print(' Example search term syntax (without single quotes):\n'
-              ' classes edu', 'dogs cats', ' *ology',  'Rock * roll -and',
-              '"jump the shark"', 'jump AND shark', 'jump OR shark')
+    if args.usage:
+        print('USAGE: Just enter your search term at the prompt, no parameters needed.')
+        print('Example search term syntax:\n'
+              'puppies\nclasses edu\ndogs cats\n*ology\nRock * roll -and\n'
+              '"jump the shark"\njump AND shark\n')
         print("Specifiers like site:gov, 'dogs AND cats', or 'dogs -cats'"
-              " may not work as expected with some engines.\n")
+              " may not work as expected with some engines.")
+        print('Results are printed to the Terminal and written to a file in the ResultsFiles folder.')
         sys.exit(0)
 
 
-def combo_search(search_term) -> None:
+def search_this(search_term) -> None:
     """
     engine.search() return options:
     'host' is the base url, e.g. en.wikipedia.org
@@ -221,7 +223,7 @@ def main() -> None:
     FileIt(term, f'{file_header}\n\n')
     FileIt(term, f'{user_agents_used}\n')
 
-    combo_search(term)
+    search_this(term)
 
 
 if __name__ == "__main__":
