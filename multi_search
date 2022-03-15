@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.1.2'
+__version__ = '0.2.0'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -49,55 +49,32 @@ from search_utils import get_user_agent
 FileIt = files.results2file
 
 # Assign user agents here.
-# Those not listed below send requests in the http_client.py module
-#   using the default static UA:
-#   'search_engines/0.5 Repo: https://github.com/tasos-py/Search-Engines-Scraper'
-#   which is also available from get_user_agent.tasos_agent().
-#   Engines using Default UA: Aol, Ask, Quant, Torch, Yahoo.
-
-#   Those that don't accept the default can use these randomly assigned ua.
 #   All can use random firefox_ver() as user agent.
 #   All but DGG can use static python_agent().
-# bing_ua = get_user_agent.random_agent()
-# dogpile_ua = get_user_agent.firefox_ver()
-# google_ua = get_user_agent.firefox_ver()
-
-DDG_UA = get_user_agent.tasos_agent()
-# mojeek_ua = get_user_agent.random_agent()  # Occasionally raises HTTP 403
-MOJEEK_UA = get_user_agent.python_agent()
-startpage_ua = get_user_agent.firefox_ver()
-
-# NOTE: Cannot use the site: specifier for Mojeek, raises 403 Forbidden.
-# Other Search terms that have failed:
-# -site: in Dogpile > ERROR HTTP 400 Bad Request (Request header too long)
+dgg_ua = get_user_agent.tasos_agent()
+sp_ua = get_user_agent.firefox_ver()
+m_ua = mg_ua = get_user_agent.random_agent()
+# These work also:
+# M_UA = get_user_agent.python_agent()
+# mg_ua = get_user_agent.firefox_ver()
 
 # The duplicated result closest to end of the results list is the one
 #   retained in the unique_results list, so engine order here matters for
 #   engine-specific reporting of unique results metrics.
 # Use only engines committed to privacy.
-# NOTE to developer: Create MetaGer engine Class in search_engines/engines.
+# Note that Metager2 does not inherit the SearchEngine class (b/c I can't yet get it to work).
 engines = {
-    # 'B': se.Bing(bing_ua),
-    # 'G': se.Google(google_ua),
-    # 'Y': se.Yahoo(),
-    # 'A': se.Ask(),
-    # 'AOL': se.Aol(),
-    # 'DP': se.Dogpile(dogpile_ua),
-    'DDG': se.Duckduckgo(DDG_UA),
-    'M': se.Mojeek(MOJEEK_UA),
-    'SP': se.Startpage(startpage_ua),
+    'DDG': se.Duckduckgo(dgg_ua),
+    'M': se.Mojeek(m_ua),
+    'SP': se.Startpage(sp_ua),
+    'MG': se.engines.Metager2(mg_ua)
     }
 
 engine_names = {
-    # 'A': 'Ask',
-    # 'AOL': 'AOL',
-    # 'B': 'Bing',
-    # 'DP': 'Dogpile',
-    # 'G': 'Google',
-    # 'Y': 'Yahoo',
     'DDG': 'DuckDuckGo',
     'M': 'Mojeek',
     'SP': 'Startpage',
+    'MG': 'MetaGer'
     }
 
 
@@ -157,16 +134,22 @@ def search_this(search_term: str) -> None:
     """
 
     combined_results = []
-
+    links = ()
+    titles = ()
     for _e in engines:
         # Limit each engine to ~20-30 results.
         if _e == 'DDG':
             results = engines[_e].search(search_term, pages=1)
-        else:
+            links = results.links()
+            titles = results.titles()
+        elif _e != 'MG':
             results = engines[_e].search(search_term, pages=2)
-
-        links = results.links()
-        titles = results.titles()
+            links = results.links()
+            titles = results.titles()
+        elif _e == 'MG':
+            # MetaGer usually returns ~36 hits on first page, so limit to ~20.
+            print('Searching MetaGer')
+            links, titles = engines[_e].metager(search_term)[0:21]
 
         # Prepend the engine tag to each result title.
         for i, title in enumerate(titles):
@@ -183,7 +166,7 @@ def search_this(search_term: str) -> None:
     unique_results = list({tup[:1]: tup for tup in combined_results}.values())
 
     uniq_res_msg = (f'Found {len(combined_results)} hits.\n\n'
-                    f'There are {len(unique_results)} unique hits.\n')
+                    f'There are {len(unique_results)} unique hits.')
     print(uniq_res_msg)
     FileIt(search_term, f'{uniq_res_msg}\n')
 
@@ -205,8 +188,8 @@ def search_this(search_term: str) -> None:
         print(result_msg)
         FileIt(search_term, f'{result_msg}\n')
 
-    print(f'Results were written or appended to {FileIt(search_term, "")}')
-    print(f'\n=============== END of {len(unique_results)} results ==================')
+    print(f'\nResults were written or appended to {FileIt(search_term, "")}')
+    print(f'=============== END of {len(unique_results)} results ==================')
     FileIt(search_term,
            f'\n{"=" * 26} END of {len(unique_results)} results {"=" * 26}\n')
 
@@ -223,9 +206,11 @@ def main() -> None:
     term = term.replace(' ', '+')
 
     user_agents_used = (
-        f'\nDuckDuckGo user agent: {DDG_UA}\n'
-        f'Mojeek user agent: {MOJEEK_UA}\n'
-        f'Startpage user agent: {startpage_ua}\n')
+        '\nUser agents used in this search\n'
+        f'DuckDuckGo: {dgg_ua}\n'
+        f'Mojeek: {m_ua}\n'
+        f'Startpage: {sp_ua}\n'
+        f'MetaGert: {mg_ua}\n')
     print(user_agents_used)
 
     file_header = (

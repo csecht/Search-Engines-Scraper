@@ -9,6 +9,8 @@ from .startpage import Startpage
 from .torch import Torch
 from .yahoo import Yahoo
 from .qwant import Qwant
+# from .metager import Metager
+from .metager2 import Metager2
 
 
 search_engines_dict = { 
@@ -17,7 +19,9 @@ search_engines_dict = {
     'yahoo': Yahoo, 
     'aol': Aol, 
     'duckduckgo': Duckduckgo, 
-    'startpage': Startpage, 
+    'startpage': Startpage,
+    # 'metager': Metager,
+    'metager2': Metager2,
     'dogpile': Dogpile, 
     'ask': Ask, 
     'mojeek': Mojeek, 
