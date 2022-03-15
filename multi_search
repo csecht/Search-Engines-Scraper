@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -48,19 +48,22 @@ from search_utils import get_user_agent
 
 FileIt = files.results2file
 
-# Assign user agents here.
+# Assign user agents to engine here.
 #   All can use random firefox_ver() as user agent.
 #   All but DGG can use static python_agent().
 dgg_ua = get_user_agent.tasos_agent()
 sp_ua = get_user_agent.firefox_ver()
-m_ua = mg_ua = get_user_agent.random_agent()
+m_ua = get_user_agent.forked_agent()
+mg_ua = get_user_agent.random_agent()
 # These work also:
-# M_UA = get_user_agent.python_agent()
-# mg_ua = get_user_agent.firefox_ver()
+# m_ua: python_agent()
+# mg_ua: firefox_ver(), random_agent(), tasos_agent()
+# sp_ua: firefox_ver(), random_agent() # occasionally banned
+# Q: does MetaGer UA affect proportion of results hosted by Bing?
 
 # The duplicated result closest to end of the results list is the one
-#   retained in the unique_results list, so engine order here matters for
-#   engine-specific reporting of unique results metrics.
+#   retained in the unique_results list, so engine order here matters
+#   for engine-specific reporting of unique results metrics.
 # Use only engines committed to privacy.
 # Note that Metager2 does not inherit the SearchEngine class (b/c I can't yet get it to work).
 engines = {
@@ -113,29 +116,28 @@ def parse_args() -> None:
         print("Specifiers like site:gov, 'dogs AND cats', or 'dogs -cats'"
               " may not work as expected with some engines.")
         print('Example search terms:\n'
-              'paint => Search prefers "paint", but also finds "Paints", "painter", "painting", etc.\n'
-              '"paint" => Double quote for exact term or phrase, usually in the page title.'
+              'paint => Results prefer "paint", but also finds "Paints", "painter", "painting", etc.\n'
+              '"jump the shark" => Double quote a word or phrase for exact matches.\n'
+              'jump AND shark => Any combination of jump(s) with shark(s).\n'
               'classes edu => Preference for "classes" at .edu sites.\n'
-              'dogs cats => Preference for "dogs" with "cats", but also just "dogs" or "cats" or "dog", etc.\n'
+              'site:gov subsidy => Forces results from .gov sites on most engines.\n'
+              'dogs cats => Preference for "dogs" with "cats", but also only "dogs", "cats", "dog", etc.\n'
               '*ology => Wildcard character * will prefer "ology"; does not find "biology", "ecology", etc. \n'
               'Rock * roll -and => "Rock -N- Roll", "rock & roll", etc.\n'
-              '"jump the shark" => Double quote the word or term for exact matches.\n'
-              'jump AND shark => Any combination of jump(s) with shark(s).\n')
+              )
         print('Results are printed to the Terminal and written to the ResultsFiles folder.\n')
         sys.exit(0)
 
 
 def search_this(search_term: str) -> None:
     """
-    Run the input search term through the engines dict.
-    Print and write non-redundant results of found urls and page titles.
+    Run the input search term through engines specified in Dict(engines).
+    Print and write non-redundant results of urls and page titles.
 
-    :param search_term: string with syntax valid on all or most engines.
+    :param search_term: string with valid syntax on all or most engines.
     """
 
     combined_results = []
-    links = ()
-    titles = ()
     for _e in engines:
         # Limit each engine to ~20-30 results.
         if _e == 'DDG':
@@ -146,10 +148,13 @@ def search_this(search_term: str) -> None:
             results = engines[_e].search(search_term, pages=2)
             links = results.links()
             titles = results.titles()
-        elif _e == 'MG':
-            # MetaGer usually returns ~36 hits on first page, so limit to ~20.
+        else:
+            # MetaGer usually returns ~36 hits on first page, so limit to 20.
+            # Metager2 is not using SearchEngine, so has no pages kw.
             print('Searching MetaGer')
-            links, titles = engines[_e].metager(search_term)[0:21]
+            links, titles = engines[_e].metager(search_term)
+            links = links[0:20]
+            titles = titles[0:20]
 
         # Prepend the engine tag to each result title.
         for i, title in enumerate(titles):
@@ -157,18 +162,18 @@ def search_this(search_term: str) -> None:
         e_result = list(zip(links, titles))
         combined_results.extend(e_result)
 
-        report_count = f'{len(links)} hits from {engine_names[_e]} ({_e})'
-        print(report_count)
-        FileIt(search_term, f'{report_count}\n')
+        e_count_msg = f'{len(links)} hits from {engine_names[_e]} ({_e})'
+        print(e_count_msg)
+        FileIt(search_term, f'{e_count_msg}\n')
 
     # Filter unique urls, saving the last redundant hit from combined_results,
     #   where last is determined by the engines.keys() order.
     unique_results = list({tup[:1]: tup for tup in combined_results}.values())
 
-    uniq_res_msg = (f'Found {len(combined_results)} hits.\n\n'
-                    f'There are {len(unique_results)} unique hits.')
-    print(uniq_res_msg)
-    FileIt(search_term, f'{uniq_res_msg}\n')
+    result_summary = (f'Found {len(combined_results)} hits.\n\n'
+                      f'There are {len(unique_results)} unique hits.')
+    print(result_summary)
+    FileIt(search_term, f'{result_summary}\n')
 
     for tag in engine_names:
         tag = f'({tag})'
@@ -210,7 +215,7 @@ def main() -> None:
         f'DuckDuckGo: {dgg_ua}\n'
         f'Mojeek: {m_ua}\n'
         f'Startpage: {sp_ua}\n'
-        f'MetaGert: {mg_ua}\n')
+        f'MetaGer: {mg_ua}\n')
     print(user_agents_used)
 
     file_header = (
