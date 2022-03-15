@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.2.1'
+__version__ = '0.2.3'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -138,31 +138,31 @@ def search_this(search_term: str) -> None:
     """
 
     combined_results = []
-    for _e in engines:
+    for e_key, _engine in engines.items():
         # Limit each engine to ~20-30 results.
-        if _e == 'DDG':
-            results = engines[_e].search(search_term, pages=1)
+        if e_key == 'DDG':
+            results = _engine.search(search_term, pages=1)
             links = results.links()
             titles = results.titles()
-        elif _e != 'MG':
-            results = engines[_e].search(search_term, pages=2)
+        elif e_key != 'MG':
+            results = _engine.search(search_term, pages=2)
             links = results.links()
             titles = results.titles()
         else:
             # MetaGer usually returns ~36 hits on first page, so limit to 20.
             # Metager2 is not using SearchEngine, so has no pages kw.
             print('Searching MetaGer')
-            links, titles = engines[_e].metager(search_term)
+            links, titles = _engine.metager(search_term)
             links = links[0:20]
             titles = titles[0:20]
 
         # Prepend the engine tag to each result title.
         for i, title in enumerate(titles):
-            titles[i] = f'({_e}) {title}'
+            titles[i] = f'({e_key}) {title}'
         e_result = list(zip(links, titles))
         combined_results.extend(e_result)
 
-        e_count_msg = f'{len(links)} hits from {engine_names[_e]} ({_e})'
+        e_count_msg = f'{len(links)} hits from {engine_names[e_key]} ({e_key})'
         print(e_count_msg)
         FileIt(search_term, f'{e_count_msg}\n')
 
