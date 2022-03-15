@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
-
+"""
+Assigns engines a user agent as specified in multi_search.
+Agent functions:
+firefix_ver(): assigns a random Firefox browser version.
+forked_agent(): this distribution's static agent.
+python_agent(): the default Python used by the requests module.
+random_agent(): a random full system-type agent from list of 4400+.
+tasos_agent(): default agent of original Search-Engines-Scraper distribution.
+"""
 from pathlib import Path
 from random import choice
 
@@ -32,7 +40,7 @@ try:
     except FileNotFoundError as err:
         print('user_agents.txt.gz could not be opened; trying user_agents.txt', err)
         user_agents_file = Path(Path(__file__).parent, 'user_agents.txt')
-        with open(user_agents_file) as fp:
+        with open(user_agents_file, encoding='utf-8') as fp:
             user_agents_list = [_.strip() for _ in fp.readlines()]
 except FileNotFoundError:
     print('Could not open user_agents file for a random agent, so using default agent:')
@@ -41,9 +49,11 @@ except FileNotFoundError:
 
 def random_agent() -> bytes:
     """
-    Get a random user agent string.
+    Get a random user agent byte string from file of over 4400 obtained
+    from the googlesearch module of google package by Mario Vilas. See:
+    https://python-googlesearch.readthedocs.io/en/latest/
 
-    :return: Random user agent string.
+    :return: Random full user agent string.
     """
     return choice(user_agents_list)
 

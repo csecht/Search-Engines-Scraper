@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-
+File controller for multi_search. Writes and appends search results to
+a file path and names the text file based on the search string.
 """
 
 from pathlib import Path
