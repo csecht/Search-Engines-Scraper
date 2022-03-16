@@ -148,9 +148,8 @@ def search_this(search_term: str) -> None:
             links = results.links()
             titles = results.titles()
         else:
-            # MetaGer usually returns ~36 hits on first page, so limit to 20.
-            # Metager2 is not using SearchEngine, so has no pages kw.
-            print('Searching MetaGer')
+            # MetaGer site returns ~36 hits on first page, so limit to 20.
+            # Metager2 does not inherit SearchEngine, so has no pages kw.
             links, titles = _engine.metager(search_term)
             links = links[0:20]
             titles = titles[0:20]
@@ -212,11 +211,11 @@ def main() -> None:
     term = term.replace(' ', '+')
 
     user_agents_used = (
-        '\nUser agents used in this search\n'
-        f'DuckDuckGo: {dgg_ua}\n'
-        f'Mojeek: {m_ua}\n'
-        f'Startpage: {sp_ua}\n'
-        f'MetaGer: {mg_ua}\n')
+        '\nUser agent for each engine of this search:\n'
+        f'{"DuckDuckGo:".ljust(11)}{dgg_ua}\n'
+        f'{"Mojeek:".ljust(11)}{m_ua}\n'
+        f'{"Startpage:".ljust(11)}{sp_ua}\n'
+        f'{"MetaGer:".ljust(11)}{mg_ua}\n')
     print(user_agents_used)
 
     file_header = (
