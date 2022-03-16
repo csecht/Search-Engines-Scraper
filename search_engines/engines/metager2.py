@@ -24,6 +24,8 @@ class Metager2:
         hosters = []
         if request.status_code == 200:
             soup = BeautifulSoup(request.content, 'html.parser')
+            print('Searching metager.org')
+
             for s in soup.find_all('iframe', {'onload': 'this.contentWindow.focus();'}):
                 res_url = s['src']
                 request = requests.get(res_url, headers=headers)
