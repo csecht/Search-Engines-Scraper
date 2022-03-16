@@ -51,26 +51,29 @@ FileIt = files.results2file
 # Assign user agents to engine here.
 #   All can use random firefox_ver() as user agent.
 #   All but DGG can use static python_agent().
+# These work also;
+#   use alternatives if an engine block request b/c of overuse?:
+# m_ua: python_agent()
+# mg_ua: firefox_ver(), random_agent(), tasos_agent().
+# sp_ua: firefox_ver(), random_agent() is occasionally banned.
 dgg_ua = get_user_agent.tasos_agent()
 sp_ua = get_user_agent.firefox_ver()
 m_ua = get_user_agent.forked_agent()
 mg_ua = get_user_agent.random_agent()
-# These work also:
-# m_ua: python_agent()
-# mg_ua: firefox_ver(), random_agent(), tasos_agent()
-# sp_ua: firefox_ver(), random_agent() # occasionally banned
 
 # The duplicated result closest to end of the results list is the one
 #   retained in the unique_results list, so engine order here matters
 #   for engine-specific reporting of unique results metrics.
 # Use only engines committed to privacy.
-# Note that Metager2 does not inherit the SearchEngine class (b/c I can't yet get it to work).
+# Note that Metager2 does not inherit the SearchEngine class
+#  (b/c I can't yet get Metager it to work through SE).
 engines = {
     'DDG': se.Duckduckgo(dgg_ua),
     'M': se.Mojeek(m_ua),
     'SP': se.Startpage(sp_ua),
-    'MG': se.engines.Metager2(mg_ua)
-    }
+    'MG': se.engines.Metager2(mg_ua),
+    # 'MG': se.Metager(mg_ua)
+}
 
 engine_names = {
     'DDG': 'DuckDuckGo',

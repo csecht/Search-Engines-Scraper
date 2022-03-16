@@ -17,6 +17,6 @@ __all__ = [
     'Mojeek', 
     'Qwant',
     'Torch',
-    # 'Metager',
+    'Metager',
     'Metager2',
 ]

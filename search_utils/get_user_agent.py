@@ -103,8 +103,8 @@ def tasos_agent() -> str:
 def forked_agent() -> str:
     """
     The forked Search-Engine-Scraper default user agent:
-    'search_engines/0.5 Repo: https://github.com/csecht/Search-Engines-Scraper'
+    'search_engines/0.2 Repo: https://github.com/csecht/Search-Engines-Scraper'
 
-    :return: GitHub module and repository link as user agent.
+    :return: csecht's GitHub module and repository link as user agent.
     """
-    return 'search_engines/0.5 Repo: https://github.com/csecht/Search-Engines-Scraper'
+    return 'search_engines/0.2 Repo: https://github.com/csecht/Search-Engines-Scraper'
