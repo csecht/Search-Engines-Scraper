@@ -26,22 +26,20 @@ class Metager2:
             soup = BeautifulSoup(request.content, 'html.parser')
             print('Searching metager.org')
 
-            for s in soup.find_all('iframe', {'onload': 'this.contentWindow.focus();'}):
-                res_url = s['src']
-                request = requests.get(res_url, headers=headers)
+            for i in soup.find_all('iframe', {'onload': 'this.contentWindow.focus();'}):
+                req_url = i['src']
+                request = requests.get(req_url, headers=headers)
                 soup = BeautifulSoup(request.content, 'html.parser')
 
-            # Prepend https to the base result link.
-            for i in soup.find_all('a', attrs={'class': 'result-link'}):
-                links.append(f'https://{i.text.strip()}')
-
-            for i in soup.find_all('h2', {'class': 'result-title'}):
-                link_title = i.find('a')
-                titles.append(link_title.text.strip())
-
-            for i in soup.find_all('div', {'class': 'result-headline'}):
-                result_hoster = i.find('a', attrs={'class': 'result-hoster'})
+            for h in soup.find_all('div', {'class': 'result-headline'}):
+                link_url = h.a['href']
+                links.append(link_url)
+                result_hoster = h.find('a', attrs={'class': 'result-hoster'})
                 hosters.append(result_hoster.text.strip())
+
+            for t in soup.find_all('h2', {'class': 'result-title'}):
+                link_title = t.find('a')
+                titles.append(link_title.text.strip())
 
         else:
             links.append(f'HTTP Status: not 200, request failed')
