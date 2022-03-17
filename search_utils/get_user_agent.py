@@ -3,34 +3,20 @@
 Assigns engines a user agent as specified in multi_search.
 Agent functions:
 firefix_ver(): assigns a random Firefox browser version.
-forked_agent(): this distribution's static agent.
+new_agent(): this distribution's static agent.
 python_agent(): the default Python used by the requests module.
 random_agent(): a random full system-type agent from list of 4400+.
-tasos_agent(): default agent of original Search-Engines-Scraper distribution.
+original_agent(): default agent of original Search-Engines-Scraper distribution.
 """
+import gzip
 from pathlib import Path
 from random import choice
 
-import gzip
-
-
-# NOTE: Using system's full user agent at the UA tends to give results
-#   filtered to location and .com. Get system UA from http://my-user-agent.com/
-# So use recent Firefox ver for all search engines to work.
-
-# Search-Engines-Scraper uses its github url as the default ua;
-#   works for all but Google. firefox_ver also works.
-
-
-# ############ Modified from get_random_user_agent() in googlesearch
-#    module of google package.
+# Modified from get_random_user_agent() in googlesearch module of google package.
+#   Can get system's UA from http://my-user-agent.com/
 DEFAULT_AGENT = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)'
 
 # Load the list of valid user agents from the module's folder.
-# The search order is:
-#   * user_agents.txt.gz
-#   * user_agents.txt
-#   * default user agent.
 try:
     try:
         user_agents_file = Path(Path(__file__).parent, 'user_agents.txt.gz') #
@@ -73,7 +59,7 @@ def python_agent() -> str:
     return 'python-requests/2.27.1'
 
 
-def firefox_ver() -> str:
+def firefox_agent() -> str:
     """Generate a random Firefox version.
     Seems to work for all engines.
     """
@@ -89,18 +75,18 @@ def firefox_ver() -> str:
     return f'Firefox/{choice(firefox_vers)}'
 
 
-def tasos_agent() -> str:
+def original_agent() -> str:
     """
     The original Search-Engine-Scraper default user agent:
     'search_engines/0.5 Repo: https://github.com/tasos-py/Search-Engines-Scraper'
-    Works with all engines except Google, which works with firefox_ver().
+    Works with all engines except Google, which works with firefox_agent().
 
     :return: Original GitHub module and repository link as user agent.
     """
     return 'search_engines/0.5 Repo: https://github.com/tasos-py/Search-Engines-Scraper'
 
 
-def forked_agent() -> str:
+def new_agent() -> str:
     """
     The forked Search-Engine-Scraper default user agent:
     'search_engines/0.2 Repo: https://github.com/csecht/Search-Engines-Scraper'
@@ -108,3 +94,30 @@ def forked_agent() -> str:
     :return: csecht's GitHub module and repository link as user agent.
     """
     return 'search_engines/0.2 Repo: https://github.com/csecht/Search-Engines-Scraper'
+
+
+def rando_pick(agents: tuple):
+    """
+    From available user agent functions, pick one at random from the
+    selection of functions provided by *agents*.
+    Example USAGE:
+    engine_agent = get_user_agent.rando_pick(('fua', 'pua', 'oua', 'nua', 'rua'))
+
+    :param agents: Tuple of handles for agent functions known to work
+    for the engine. 'fua': firefox_agent(), 'pua': python_agent(),
+    'nua': new_agent(), 'oua': original_agent(), 'rua': random_agent().
+    """
+    pick = choice(agents)
+
+    if pick == 'rua':
+        agent_pick = random_agent()
+    elif pick == 'pua':
+        agent_pick = python_agent()
+    elif pick == 'nua':
+        agent_pick = new_agent()
+    elif pick == 'oua':
+        agent_pick = original_agent()
+    else:
+        agent_pick = firefox_agent()
+
+    return agent_pick
