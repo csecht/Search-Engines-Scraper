@@ -4,9 +4,9 @@ Multi_search is a command-line web search aggregator in Python,
 derived from the Search-Engine-Scraper package from
 https://github.com/tasos-py/Search-Engines-Scraper.
 
-Non-redundant aggregate results from several general purpose search
-engines are returned as URLs and their page titles to the Terminal and
-an auto-named text file.
+Non-redundant aggregate results from privacy-oriented search engines
+are returned as URLs and their page titles to Terminal output and
+an auto-named text file. User agents for requests are randomized.
 
 The intent is to provide easy comparisons among search engines, avoid
 unintended search filtering, and automatically store results to file.
@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.2.4'
+__version__ = '0.2.5'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -63,7 +63,7 @@ mg_UA = get_user_agent.rando_pick(('fua', 'pua', 'oua', 'nua', 'rua'))
 #   for engine-specific reporting of unique results metrics.
 # Use only engines committed to privacy.
 # Note that Metager2 does not inherit the SearchEngine class
-#  (b/c I can't yet get Metager it to work through SE).
+#  (b/c I can't yet get Metager to work through engine.py).
 engines = {
     'DDG': se.Duckduckgo(dgg_UA),
     'M': se.Mojeek(m_UA),
@@ -119,7 +119,7 @@ def parse_args() -> None:
               '"jump the shark" => Double quote a word or phrase for exact matches.\n'
               'jump AND shark => Any combination of jump(s) with shark(s).\n'
               'classes edu => Preference for "classes" at .edu sites.\n'
-              'site:gov subsidy => Forces results from .gov sites on most engines.\n'
+              'site:gov subsidy => Only "subsidy" results from .gov sites (site: is not valid for Startpage).\n'
               'dogs cats => Preference for "dogs" with "cats", but also only "dogs", "cats", "dog", etc.\n'
               '*ology => Wildcard character * will prefer "ology"; does not find "biology", "ecology", etc. \n'
               'Rock * roll -and => "Rock -N- Roll", "rock & roll", etc.\n'
