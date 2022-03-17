@@ -43,8 +43,7 @@ import time
 from datetime import datetime
 
 import search_engines as se
-from search_utils import files
-from search_utils import get_user_agent
+from search_utils import files, get_user_agent
 
 FileIt = files.results2file
 
