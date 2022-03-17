@@ -3,32 +3,32 @@ A fork of Search Engines Scraper by tasos_py. Intended to be run from
 the `multi_search` script.
 ## Supported search engines  
 
-_[Duckduckgo](https://duckduckgo.com)_  
-_[Startpage](https://www.startpage.com)_  
-_[Mojeek](https://www.mojeek.com)_  
-_[MetaGer](https://metager.org)_  
+_[Duckduckgo](https://duckduckgo.com)_
+_[Startpage](https://www.startpage.com)_
+_[Mojeek](https://www.mojeek.com)_
+_[MetaGer](https://metager.org)_
 
 ## Features  
 
- - Creates output text file of non-redundant hits (url, page title).
+ - Uses search engines that are focused on user privacy.
+ - Creates output text file of non-redundant results (URL, page title).
  - Uses random user agent when possible.
- - Python3.  
 
 ## Requirements  
 
-_Python 3_ with  
-_[Requests](http://docs.python-requests.org/en/master/)_ and  
+_Python 3_ with
+_[Requests](http://docs.python-requests.org/en/master/)_ and
 _[BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)_ 
 
 Developed in Python 3.8-3.9
 
 ## Installation  
 
-Run the setup file from within the unzipped Search-Engines-Scraper-master folder:
+Download the .zip code archive, extract the .zip file, run the setup file from within the unzipped Search-Engines-Scraper-master folder:
 
 `$ python3 setup.py install`
 
-Done!  
+Done!
 
 ## Usage  
 Execute `multi_search` Python script from Terminal, enter search term at the prompt.
@@ -64,8 +64,6 @@ https://www.fs.usda.gov/about-agency/regulations-policies
 https://fire.ca.gov
 (MG) CAL FIRE - Home ->hosted by Scopia
 ```
-...and the remaining results. All results would be printed to Terminal and writen to a file automatically titled: Results_gov+forest+policies.txt
+...and the remaining results. All results would be printed to Terminal and written to a file automatically titled: Results_gov+forest+policies.txt
 
-Arguments: --help, --about, or --use.  `multi_search --use` provides example search term syntax.
-
-User agents can be changed in the *_ua variables of the `multi_search` script.
+Arguments: --help, --about, or --use. The command `multi_search --use` provides examples of search term syntax.

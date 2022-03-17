@@ -1,0 +1,58 @@
+<h1 id="search-engines-scraper-cse">Search Engines Scraper CSE</h1>
+<p>A fork of Search Engines Scraper by tasos_py. Intended to be run from 
+the <code>multi_search</code> script.</p>
+<h2 id="supported-search-engines">Supported search engines</h2>
+<p><em><a href="https://duckduckgo.com">Duckduckgo</a></em>
+<em><a href="https://www.startpage.com">Startpage</a></em>
+<em><a href="https://www.mojeek.com">Mojeek</a></em>
+<em><a href="https://metager.org">MetaGer</a></em></p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Uses search engines that are focused on user privacy.</li>
+<li>Creates output text file of non-redundant results (URL, page title).</li>
+<li>Uses random user agent when possible.</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<p><em>Python 3</em> with
+<em><a href="http://docs.python-requests.org/en/master/">Requests</a></em> and
+<em><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">BeautifulSoup</a></em> </p>
+<p>Developed in Python 3.8-3.9</p>
+<h2 id="installation">Installation</h2>
+<p>Download the .zip code archive, extract the .zip file, run the setup file from within the unzipped Search-Engines-Scraper-master folder:</p>
+<p><code>$ python3 setup.py install</code></p>
+<p>Done!</p>
+<h2 id="usage">Usage</h2>
+<p>Execute <code>multi_search</code> Python script from Terminal, enter search term at the prompt.
+Example output:</p>
+<pre><code>Enter search term: gov forest policies
+
+User agents used <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span> search
+DuckDuckGo: search_engines<span class="hljs-regexp">/0.5 Repo: https:/</span>/github.com/tasos-py/Search-Engines-Scraper
+Mojeek: search_engines<span class="hljs-regexp">/0.5 Repo: https:/</span>/github.com/csecht/Search-Engines-Scraper
+Startpage: Firefox/<span class="hljs-number">89.0</span>
+MetaGer: b<span class="hljs-string">'Opera/9.60 (Windows NT 6.0; U; uk) Presto/2.1.1'</span>
+
+Searching Duckduckgo
+<span class="hljs-number">29</span> hits <span class="hljs-keyword">from</span> DuckDuckGo (DDG)
+Searching Mojeek
+<span class="hljs-number">20</span> hits <span class="hljs-keyword">from</span> Mojeek (M)
+Searching Startpage
+<span class="hljs-number">20</span> hits <span class="hljs-keyword">from</span> Startpage (SP)
+Searching MetaGer
+<span class="hljs-number">19</span> hits <span class="hljs-keyword">from</span> MetaGer (MG)
+Found <span class="hljs-number">88</span> hits.
+
+There are <span class="hljs-number">84</span> unique hits.
+<span class="hljs-number">26</span> unique hits <span class="hljs-keyword">from</span> (DDG)
+<span class="hljs-number">19</span> unique hits <span class="hljs-keyword">from</span> (M)
+<span class="hljs-number">20</span> unique hits <span class="hljs-keyword">from</span> (SP)
+<span class="hljs-number">19</span> unique hits <span class="hljs-keyword">from</span> (MG)
+
+https:<span class="hljs-regexp">//www.fs.usda.gov/about-agency/regulations-policies
+(SP) Regulations &amp; Policies | US Forest Service
+
+https://</span>fire.ca.gov
+(MG) CAL FIRE - Home<span class="hljs-function"> -&gt;</span>hosted <span class="hljs-keyword">by</span> Scopia
+</code></pre><p>...and the remaining results. All results would be printed to Terminal and written to a file automatically titled: Results_gov+forest+policies.txt</p>
+<p>Arguments: --help, --about, or --use.  The command <code>multi_search --use</code> provides examples of search term syntax.</p>
+
