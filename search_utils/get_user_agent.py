@@ -75,6 +75,17 @@ def firefox_agent() -> str:
     return f'Firefox/{choice(firefox_vers)}'
 
 
+def fake_agent() -> str:
+    """
+    The FAKE_USER_AGENT in config.py:
+    'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/84.0'
+    Works with Startpage when nothing else will.
+
+    :return: static user agent string.
+    """
+    return 'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/84.0'
+
+
 def original_agent() -> str:
     """
     The original Search-Engine-Scraper default user agent:

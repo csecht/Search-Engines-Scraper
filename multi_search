@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.2.7'
+__version__ = '0.2.8'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -49,13 +49,14 @@ FileIt = files.results2file
 
 # Assign user agent to engines here.
 #   All can use random firefox_agent() as user agent.
-#   Startpage seems to ban all but firefox_agent().
+#   Startpage seems to ban or restrict pages with all UA except the
+#      FAKE_USER_AGENT in config.py and fake_agent().
 #   Some random_agent() agents not accepted by DDG.
 #   Mojeek does not accept the distribution agents, original_agent() and new_agent().
 #   All but DGG and SP can use static python_agent().
 #   All but SP can use original_agent(), new_agent(), and random_agent().
 dgg_UA = get_user_agent.rando_pick(('fua', 'oua', 'nua'))
-sp_UA = get_user_agent.rando_pick(('fua',))
+sp_UA = get_user_agent.fake_agent()
 m_UA = get_user_agent.rando_pick(('fua', 'nua', 'rua'))
 mg_UA = get_user_agent.rando_pick(('fua', 'pua', 'oua', 'nua', 'rua'))
 
