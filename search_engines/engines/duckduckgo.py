@@ -1,9 +1,11 @@
-from ..engine import SearchEngine
-from ..config import PROXY, TIMEOUT
-
-import re
 import json
+import re
+
 from bs4 import BeautifulSoup
+
+from .. import utils
+from ..config import PROXY, TIMEOUT
+from ..engine import SearchEngine
 
 
 class Duckduckgo(SearchEngine):
