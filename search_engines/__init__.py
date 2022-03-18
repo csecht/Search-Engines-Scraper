@@ -19,4 +19,5 @@ __all__ = [
     'Torch',
     'Metager',
     'Metager2',
+    'Brave'
 ]

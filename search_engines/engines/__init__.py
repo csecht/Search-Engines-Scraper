@@ -11,6 +11,7 @@ from .yahoo import Yahoo
 from .qwant import Qwant
 from .metager import Metager
 from .metager2 import Metager2
+from .brave import Brave
 
 
 search_engines_dict = { 
@@ -20,11 +21,12 @@ search_engines_dict = {
     'aol': Aol, 
     'duckduckgo': Duckduckgo, 
     'startpage': Startpage,
-    'metager': Metager,
-    'metager2': Metager2,
     'dogpile': Dogpile, 
     'ask': Ask, 
     'mojeek': Mojeek, 
     'qwant': Qwant, 
-    'torch': Torch 
+    'torch': Torch,
+    'metager': Metager,
+    'metager2': Metager2,
+    'brave': Brave
 }
