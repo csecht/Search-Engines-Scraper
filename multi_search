@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.2.6'
+__version__ = '0.2.7'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -111,10 +111,10 @@ def parse_args() -> None:
         sys.exit(0)
 
     if args.use:
-        print(f'EXECUTION: Run {__file__} without arguments,'
+        print(f'USAGE: {__file__} without arguments,'
               ' then enter your search term at the prompt.\n')
         print("Specifiers like site:gov, 'dogs AND cats', or 'dogs -cats'"
-              " may not work as expected with some engines.")
+              " may not work as expected, specifically with Startpage.")
         print('Example search terms:\n'
               'paint => Results prefer "paint", but also finds "Paints", "painter", "painting", etc.\n'
               '"jump the shark" => Double quote a word or phrase for exact matches.\n'
@@ -144,7 +144,8 @@ def search_this(search_term: str) -> None:
             results = _engine.search(search_term, pages=1)
             links = results.links()
             titles = results.titles()
-        elif e_key != 'MG':
+        elif e_key in 'M, SP':
+            # Note that Startpage may not return 2nd page.
             results = _engine.search(search_term, pages=2)
             links = results.links()
             titles = results.titles()
