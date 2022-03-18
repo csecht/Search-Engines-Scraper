@@ -15,7 +15,7 @@ class Metager2:
 
     def metager(self, search):
 
-        url = ('https://metager.org/meta/meta.ger3?eingabe=' + search)
+        url = f'https://metager.org/meta/meta.ger3?eingabe={search}'
         headers = {'user-agent': self.user_agent}
         request = requests.get(url, headers=headers)  # gives <Response [200]>
 
@@ -42,8 +42,8 @@ class Metager2:
                 titles.append(link_title.text.strip())
 
         else:
-            links.append(f'HTTP Status: not 200, request failed')
-            titles.append(f'HTTP Status: not 200, request failed')
+            links.append(f'HTTP Status: {request}, request failed')
+            titles.append(f'HTTP Status: {request}, request failed')
 
         # Need to add the original host to the end of each title.
         titles_plus = list(zip(titles, hosters))
