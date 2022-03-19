@@ -2,11 +2,13 @@
 """
 Assigns engines a user agent as specified in multi_search.
 Agent functions:
-firefix_ver(): assigns a random Firefox browser version.
+firefox_ver(): assigns a random Firefox browser version.
+fake_agent(): static, works with Startpage.
 new_agent(): this distribution's static agent.
 python_agent(): the default Python used by the requests module.
 random_agent(): a random full system-type agent from list of 4400+.
 original_agent(): default agent of original Search-Engines-Scraper distribution.
+winfire_agent(): limited random, works with Startpage.
 """
 import gzip
 from pathlib import Path
@@ -48,19 +50,6 @@ def random_agent() -> bytes:
 # ^^^^^^^^^^^^^^ Modified from from googlesearch module of google package.
 
 
-def python_agent() -> str:
-    """
-    This static UA,'python-requests/2.27.1', is the Python default and
-    works with all engines except DDG, where it is 403: Forbidden.
-
-    :return: Default Python requests package header user agent.
-    """
-    # >>>import requests
-    # >>>requests.utils.default_headers()
-    # {'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'}
-    return 'python-requests/2.27.1'
-
-
 def firefox_agent() -> str:
     """Generate a random Firefox version.
     Seems to work for all engines.
@@ -89,14 +78,14 @@ def fake_agent() -> str:
     return 'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/84.0'
 
 
-def winfire_agent() -> str:
+def new_agent() -> str:
     """
-    Derivative of fake_agent(), using randome Firefox versions.
-    Use with Startpage.
+    The forked Search-Engine-Scraper default user agent:
+    'search_engines/0.2 Repo: https://github.com/csecht/Search-Engines-Scraper'
 
-    :return: A user agent that works most of the time with Startpage.
+    :return: csecht GitHub module and forked repository as user agent.
     """
-    return f'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 {firefox_agent()}'
+    return 'search_engines/0.2 Repo: https://github.com/csecht/Search-Engines-Scraper'
 
 
 def original_agent() -> str:
@@ -110,14 +99,27 @@ def original_agent() -> str:
     return 'search_engines/0.5 Repo: https://github.com/tasos-py/Search-Engines-Scraper'
 
 
-def new_agent() -> str:
+def python_agent() -> str:
     """
-    The forked Search-Engine-Scraper default user agent:
-    'search_engines/0.2 Repo: https://github.com/csecht/Search-Engines-Scraper'
+    This static UA,'python-requests/2.27.1', is the Python default and
+    works with all engines except DDG, where it is 403: Forbidden.
 
-    :return: csecht's GitHub module and repository link as user agent.
+    :return: Default Python requests package header user agent.
     """
-    return 'search_engines/0.2 Repo: https://github.com/csecht/Search-Engines-Scraper'
+    # >>>import requests
+    # >>>requests.utils.default_headers()
+    # {'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'}
+    return 'python-requests/2.27.1'
+
+
+def winfire_agent() -> str:
+    """
+    Derivative of fake_agent(), using randome Firefox versions.
+    Use with Startpage.
+
+    :return: A user agent that works most of the time with Startpage.
+    """
+    return f'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 {firefox_agent()}'
 
 
 def rando_function(agents: tuple):

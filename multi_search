@@ -56,7 +56,7 @@ FileIt = files.results2file
 #   All but DGG and SP can use static python_agent().
 #   All but SP can use original_agent(), new_agent(), and random_agent().
 dgg_UA = get_user_agent.rando_function(('fua', 'oua', 'nua'))
-sp_UA = get_user_agent.fake_agent()
+sp_UA = get_user_agent.winfire_agent()
 m_UA = get_user_agent.rando_function(('fua', 'nua', 'rua'))
 mg_UA = get_user_agent.rando_function(('fua', 'pua', 'oua', 'nua', 'rua'))
 
