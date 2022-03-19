@@ -2,6 +2,7 @@
 """
 Assigns engines a user agent as specified in multi_search.
 Agent functions:
+bot_agent: assigns one of three search engine bot agents.
 firefox_ver(): assigns a random Firefox browser version.
 fake_agent(): static, works with Startpage.
 new_agent(): this distribution's static agent.
@@ -48,6 +49,18 @@ def random_agent() -> bytes:
     return choice(user_agents_list)
 
 # ^^^^^^^^^^^^^^ Modified from from googlesearch module of google package.
+
+
+def bot_agent() -> str:
+    """
+    Generate a random agent from the three most common bot user agents.
+    """
+    bot = (
+        'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+        'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)',
+        'Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)'
+        )
+    return choice(bot)
 
 
 def firefox_agent() -> str:
@@ -130,11 +143,11 @@ def rando_function(agents: tuple):
     engine_agent = get_user_agent.rando_function(('fua', 'pua', 'oua', 'nua', 'rua'))
 
     :param agents: Tuple of handles for agent functions known to work
-    for the engine. 'fua': firefox_agent(), 'pua': python_agent(),
-    'nua': new_agent(), 'oua': original_agent(), 'rua': random_agent().
+    for the engine. 'bua': bot_agent(),  'fua': firefox_agent(),
+    'pua': python_agent(), 'nua': new_agent(), 'oua': original_agent(),
+    'rua': random_agent(), 'wua': winfire_agent()
     """
     pick = choice(agents)
-
     if pick == 'rua':
         agent_pick = random_agent()
     elif pick == 'pua':
@@ -143,6 +156,10 @@ def rando_function(agents: tuple):
         agent_pick = new_agent()
     elif pick == 'oua':
         agent_pick = original_agent()
+    elif pick == 'bua':
+        agent_pick = bot_agent()
+    elif pick == 'wua':
+        agent_pick = winfire_agent()
     else:
         agent_pick = firefox_agent()
 
