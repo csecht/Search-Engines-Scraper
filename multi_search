@@ -48,10 +48,10 @@ from search_utils import files, get_user_agent
 FileIt = files.results2file
 
 # Assign user agent to engines here.
-dgg_UA = get_user_agent.rando_function(('bua', 'fua', 'oua', 'nua'))
+dgg_UA = get_user_agent.rando_function(('bua', 'fua', 'tua', 'eua'))
 sp_UA = get_user_agent.rando_function(('bua', 'wua'))
-m_UA = get_user_agent.rando_function(('bua', 'fua', 'nua', 'rua'))
-mg_UA = get_user_agent.rando_function(('bua', 'fua', 'pua', 'oua', 'nua', 'rua'))
+m_UA = get_user_agent.rando_function(('bua', 'fua', 'tua', 'eua', 'rua'))
+mg_UA = get_user_agent.rando_function(('bua', 'fua', 'pua', 'tua', 'eua', 'rua'))
 
 # The duplicated result closest to end of the results list is the one
 #   retained in the unique_results list, so engine order here matters

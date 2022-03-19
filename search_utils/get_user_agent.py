@@ -5,10 +5,10 @@ Agent functions:
 bot_agent: assigns one of three search engine bot agents.
 firefox_ver(): assigns a random Firefox browser version.
 fake_agent(): static, works with Startpage.
-new_agent(): this distribution's static agent.
+echt_agent(): this distribution's static agent.
 python_agent(): the default Python used by the requests module.
 random_agent(): a random full system-type agent from list of 4400+.
-original_agent(): default agent of original Search-Engines-Scraper distribution.
+tasos_agent(): default agent of original Search-Engines-Scraper distribution.
 winfire_agent(): limited random, works with Startpage.
 """
 import gzip
@@ -91,7 +91,7 @@ def fake_agent() -> str:
     return 'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/84.0'
 
 
-def new_agent() -> str:
+def echt_agent() -> str:
     """
     The forked Search-Engine-Scraper default user agent:
     'search_engines/0.2 Repo: https://github.com/csecht/Search-Engines-Scraper'
@@ -101,7 +101,7 @@ def new_agent() -> str:
     return 'search_engines/0.2 Repo: https://github.com/csecht/Search-Engines-Scraper'
 
 
-def original_agent() -> str:
+def tasos_agent() -> str:
     """
     The original Search-Engine-Scraper default user agent:
     'search_engines/0.5 Repo: https://github.com/tasos-py/Search-Engines-Scraper'
@@ -144,7 +144,7 @@ def rando_function(agents: tuple):
 
     :param agents: Tuple of handles for agent functions known to work
     for the engine. 'bua': bot_agent(),  'fua': firefox_agent(),
-    'pua': python_agent(), 'nua': new_agent(), 'oua': original_agent(),
+    'pua': python_agent(), 'eua': echt_agent(), 'tua': tasos_agent(),
     'rua': random_agent(), 'wua': winfire_agent()
     """
     pick = choice(agents)
@@ -152,10 +152,10 @@ def rando_function(agents: tuple):
         agent_pick = random_agent()
     elif pick == 'pua':
         agent_pick = python_agent()
-    elif pick == 'nua':
-        agent_pick = new_agent()
-    elif pick == 'oua':
-        agent_pick = original_agent()
+    elif pick == 'eua':
+        agent_pick = echt_agent()
+    elif pick == 'tua':
+        agent_pick = tasos_agent()
     elif pick == 'bua':
         agent_pick = bot_agent()
     elif pick == 'wua':
