@@ -128,9 +128,9 @@ def python_agent() -> str:
 def winfire_agent() -> str:
     """
     Derivative of fake_agent(), using randome Firefox versions.
-    Use with Startpage.
+    Use with Startpage. Not tested on other engines, but should work.
 
-    :return: A user agent that works most of the time with Startpage.
+    :return: A user agent that works with Startpage.
     """
     return f'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 {firefox_agent()}'
 
@@ -140,7 +140,7 @@ def rando_function(agents: tuple):
     From available user agent functions, pick one at random from the
     selection of functions provided by *agents*.
     Example USAGE:
-    engine_agent = get_user_agent.rando_function(('fua', 'pua', 'oua', 'nua', 'rua'))
+    engine_agent = get_user_agent.rando_function(('fua', 'pua', 'rua'))
 
     :param agents: Tuple of handles for agent functions known to work
     for the engine. 'bua': bot_agent(),  'fua': firefox_agent(),
