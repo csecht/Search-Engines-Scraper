@@ -19,7 +19,7 @@ DEFAULT_AGENT = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)'
 # Load the list of valid user agents from the module's folder.
 try:
     try:
-        user_agents_file = Path(Path(__file__).parent, 'user_agents.txt.gz') #
+        user_agents_file = Path(Path(__file__).parent, 'user_agents.txt.gz')
         with gzip.open(user_agents_file, 'rb') as fp:
             user_agents_list = [_.strip() for _ in fp.readlines()]
 
@@ -41,6 +41,8 @@ def random_agent() -> bytes:
 
     :return: Random full user agent string.
     """
+    # Note that all the browser versions in user_agents.txt are old,
+    # so list probably needs an update to work more consistently.
     return choice(user_agents_list)
 
 # ^^^^^^^^^^^^^^ Modified from from googlesearch module of google package.
@@ -83,7 +85,18 @@ def fake_agent() -> str:
 
     :return: static user agent string.
     """
+    # NOTE that the Firefox ver can be any from firefox_agent()
     return 'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/84.0'
+
+
+def winfire_agent() -> str:
+    """
+    Derivative of fake_agent(), using randome Firefox versions.
+    Use with Startpage.
+
+    :return: A user agent that works most of the time with Startpage.
+    """
+    return f'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 {firefox_agent()}'
 
 
 def original_agent() -> str:
@@ -107,12 +120,12 @@ def new_agent() -> str:
     return 'search_engines/0.2 Repo: https://github.com/csecht/Search-Engines-Scraper'
 
 
-def rando_pick(agents: tuple):
+def rando_function(agents: tuple):
     """
     From available user agent functions, pick one at random from the
     selection of functions provided by *agents*.
     Example USAGE:
-    engine_agent = get_user_agent.rando_pick(('fua', 'pua', 'oua', 'nua', 'rua'))
+    engine_agent = get_user_agent.rando_function(('fua', 'pua', 'oua', 'nua', 'rua'))
 
     :param agents: Tuple of handles for agent functions known to work
     for the engine. 'fua': firefox_agent(), 'pua': python_agent(),
