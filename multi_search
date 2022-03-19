@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.3.0'
+__version__ = '0.2.8'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -59,29 +59,26 @@ dgg_UA = get_user_agent.rando_pick(('fua', 'oua', 'nua'))
 sp_UA = get_user_agent.fake_agent()
 m_UA = get_user_agent.rando_pick(('fua', 'nua', 'rua'))
 mg_UA = get_user_agent.rando_pick(('fua', 'pua', 'oua', 'nua', 'rua'))
-b_UA = get_user_agent.fake_agent()
 
 # The duplicated result closest to end of the results list is the one
 #   retained in the unique_results list, so engine order here matters
 #   for engine-specific reporting of unique results metrics.
 # Use only engines committed to privacy.
-# Note that Metager2 and Brave do not inherit the SearchEngine class.
+# Note that Metager2 does not inherit the SearchEngine class
 #  (b/c I can't yet get Metager to work through engine.py).
 engines = {
     'DDG': se.Duckduckgo(dgg_UA),
-    'B': se.engines.Brave(b_UA),
     'M': se.Mojeek(m_UA),
     'SP': se.Startpage(sp_UA),
     'MG': se.engines.Metager2(mg_UA),
-    # 'MG': se.Metager(mg_UA),
+    # 'MG': se.Metager(mg_UA)
 }
 
 engine_names = {
     'DDG': 'DuckDuckGo',
     'M': 'Mojeek',
     'SP': 'Startpage',
-    'MG': 'MetaGer',
-    'B': 'Brave',
+    'MG': 'MetaGer'
     }
 
 
@@ -141,8 +138,6 @@ def search_this(search_term: str) -> None:
     :param search_term: string with valid syntax on all or most engines.
     """
 
-    links = []
-    titles = []
     combined_results = []
     for e_key, _engine in engines.items():
         # Limit each engine to ~20-30 results.
@@ -151,18 +146,16 @@ def search_this(search_term: str) -> None:
             links = results.links()
             titles = results.titles()
         elif e_key in 'M, SP':
+            # Note that Startpage may not return 2nd page.
             results = _engine.search(search_term, pages=2)
             links = results.links()
             titles = results.titles()
-        elif e_key == 'MG':
+        else:
             # MetaGer site returns ~36 hits on first page, so limit to 20.
-            # Class Metager2 does not inherit SearchEngine, so has no pages kw.
+            # Metager2 does not inherit SearchEngine, so has no pages kw.
             links, titles = _engine.metager(search_term)
             links = links[0:20]
             titles = titles[0:20]
-        elif e_key == 'B':
-            # Class Brave does not inherit SearchEngine, so has no pages kw.
-            links, titles = _engine.brave(search_term)
 
         # Prepend the engine tag to each result title.
         for i, _title in enumerate(titles):
@@ -222,13 +215,10 @@ def main() -> None:
 
     user_agents_used = (
         '\nUser agent for each engine of this search:\n'
-        f'{"Brave:".ljust(11)}{b_UA}\n'
         f'{"DuckDuckGo:".ljust(11)}{dgg_UA}\n'
-        f'{"MetaGer:".ljust(11)}{mg_UA}\n'
         f'{"Mojeek:".ljust(11)}{m_UA}\n'
         f'{"Startpage:".ljust(11)}{sp_UA}\n'
-    )
-
+        f'{"MetaGer:".ljust(11)}{mg_UA}\n')
     print(user_agents_used)
 
     file_header = (
