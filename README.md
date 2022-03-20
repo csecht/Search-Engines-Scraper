@@ -24,15 +24,18 @@ Developed in Python 3.8-3.9
 
 ## Installation  
 
-Download the .zip code archive, extract the .zip file, run the setup file from within the unzipped Search-Engines-Scraper-master folder:
+Download the .zip code archive, extract the .zip file, open Terminal/Command Prompt in the Search-Engines-Scraper-master folder, run the setup file:
 
-`$ python3 setup.py install`
+`python3 setup.py install`
 
 Done!
 
 ## Usage  
-Execute `multi_search` Python script from Terminal, enter search term at the prompt.
-Example output:
+From within the Search-Engines-Scraper-master folder, execute `multi_search` from Terminal/Command Prompt:
+- Linux/MacOS: `python3 multi_search` or `./multi_search`
+- Windows: `python3 multi_search` or `python multi_search` or `py multi_search`, depending on your system environment. 
+
+then enter your search term at the prompt. Example output:
 ```
 Enter search term: gov forest policies
 
