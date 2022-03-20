@@ -22,6 +22,7 @@ class Metager2:
         links = []
         titles = []
         hosters = []
+        tags = None
         if request.status_code == 200:
             soup = BeautifulSoup(request.content, 'html.parser')
             print('Searching metager.org')
@@ -29,15 +30,15 @@ class Metager2:
             for i in soup.find_all('iframe', {'onload': 'this.contentWindow.focus();'}):
                 req_url = i['src']
                 request = requests.get(req_url, headers=headers)
-                soup = BeautifulSoup(request.content, 'html.parser')
+                tags = BeautifulSoup(request.content, 'html.parser')
 
-            for h in soup.find_all('div', {'class': 'result-headline'}):
+            for h in tags.find_all('div', {'class': 'result-headline'}):
                 link_url = h.a['href']
                 links.append(link_url)
                 result_hoster = h.find('a', attrs={'class': 'result-hoster'})
                 hosters.append(result_hoster.text.strip())
 
-            for t in soup.find_all('h2', {'class': 'result-title'}):
+            for t in tags.find_all('h2', {'class': 'result-title'}):
                 link_title = t.find('a')
                 titles.append(link_title.text.strip())
 
