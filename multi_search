@@ -49,7 +49,7 @@ FileIt = files.results2file
 
 # Assign user agent to engines here.
 dgg_UA = get_user_agent.rando_function(('bua', 'fua', 'tua', 'eua'))
-sp_UA = get_user_agent.rando_function(('bua', 'wua'))
+sp_UA = get_user_agent.rando_function(('bua', 'fua', 'wua')) # bua sometimes banned.
 m_UA = get_user_agent.rando_function(('bua', 'fua', 'eua', 'rua'))  # tua sometimes blocked.
 mg_UA = get_user_agent.rando_function(('bua', 'fua', 'pua', 'tua', 'eua', 'rua'))
 
