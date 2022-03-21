@@ -15,9 +15,9 @@ class Metager2:
 
     def metager(self, search):
 
-        url = f'https://metager.org/meta/meta.ger3?eingabe={search}'
+        search_url = f'https://metager.org/meta/meta.ger3?eingabe={search}'
         headers = {'user-agent': self.user_agent}
-        request = requests.get(url, headers=headers)  # gives <Response [200]>
+        request = requests.get(search_url, headers=headers)
 
         links = []
         titles = []
@@ -26,15 +26,14 @@ class Metager2:
             soup = BeautifulSoup(request.content, 'html.parser')
             print('Searching metager.org')
 
-            iframe = soup.find('iframe', onload='this.contentWindow.focus();')
-            req_url = iframe.get('src')
+            coded_url = soup.select_one('iframe').get('src')
 
-            request = requests.get(req_url, headers=headers)
-            tags = BeautifulSoup(request.content, 'html.parser')
+            page_req = requests.get(coded_url, headers=headers)
+            tags = BeautifulSoup(page_req.content, 'html.parser')
 
             for h in tags.select('div.result-headline'):
-                link_url = h.a['href']
-                links.append(link_url)
+                links.append(h.a['href'])
+
                 result_hoster = h.select_one('a.result-hoster').text.strip()
                 hosters.append(result_hoster)
 
@@ -47,7 +46,7 @@ class Metager2:
             titles.append(f'HTTP Status: {request}, request failed')
 
         # Need to add the original host to the end of each title.
-        titles_plus = list(zip(titles, hosters))
-        annotated_titles = [' ->hosted '.join(e) for e in titles_plus]
+        titles_and_hosts = list(zip(titles, hosters))
+        annotated_titles = [' ->hosted '.join(item) for item in titles_and_hosts]
 
         return links, annotated_titles
