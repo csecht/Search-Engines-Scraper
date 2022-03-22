@@ -10,17 +10,15 @@ class Metager(SearchEngine):
     def __init__(self, user_agent, proxy=PROXY, timeout=TIMEOUT):
         super(Metager, self).__init__(proxy, timeout)
         self._base_url = 'https://metager.org'
-        # self._search_url = 'https://metager.org/meta/meta.ger3?eingabe={}'
-
         self.set_headers({'User-Agent': user_agent})
 
     def _selectors(self, element):
         """Returns the appropriate CSS selector."""
         selectors = {
-            'url': 'a.result-link[href]', # 'div.result-headline.a[href]',
-            'title': 'h2.result-title[title]',
+            'url': 'h2 > a', #'h2.result_title', # a[href]', #'a.result-link', #
+            'title': 'h2.title', #'h2.result-title[title]', # h2.title.a
             'text': 'div.result-description',
-            'links': 'div.results > a',
+            'links': 'div.results',
             'next': 'div.next-search-link a[href]',
             }
         return selectors[element]
