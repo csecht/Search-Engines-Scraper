@@ -26,9 +26,9 @@ class Metager2:
             soup = BeautifulSoup(request.content, 'html.parser')
             print('Searching metager.org')
 
-            coded_url = soup.select_one('iframe').get('src')
+            source_pg = soup.select_one('iframe').get('src')
 
-            page_req = requests.get(coded_url, headers=headers)
+            page_req = requests.get(source_pg, headers=headers)
             tags = BeautifulSoup(page_req.content, 'html.parser')
 
             for h in tags.select('div.result-headline'):
