@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 from time import sleep
 from random import uniform as random_uniform
-from collections import namedtuple
 
 from .results import SearchResults
 from .http_client import HttpClient
@@ -87,16 +86,16 @@ class SearchEngine(object):
     def _filter_results(self, soup):
         """Processes and filters the search results.""" 
         tags = soup.select(self._selectors('links'))
-        results = [self._item(l) for l in tags]
+        results = [self._item(link) for link in tags]
 
         if u'url' in self._filters:
-            results = [l for l in results if self._query_in(l['link'])]
+            results = [_l for _l in results if self._query_in(_l['link'])]
         if u'title' in self._filters:
-            results = [l for l in results if self._query_in(l['title'])]
+            results = [_l for _l in results if self._query_in(_l['title'])]
         if u'text' in self._filters:
-            results = [l for l in results if self._query_in(l['text'])]
+            results = [_l for _l in results if self._query_in(_l['text'])]
         if u'host' in self._filters:
-            results = [l for l in results if self._query_in(utils.domain(l['link']))]
+            results = [_l for _l in results if self._query_in(utils.domain(_l['link']))]
         return results
     
     def _collect_results(self, items):
@@ -140,7 +139,7 @@ class SearchEngine(object):
 
         for operator in operators:
             if operator not in supported_operators:
-                msg = u'Ignoring unsupported operator "{}"'.format(operator)
+                msg = f'Ignoring unsupported operator "{operator}"'
                 out.console(msg, level=out.Level.warning)
             else:
                 self._filters += [operator]
@@ -152,7 +151,7 @@ class SearchEngine(object):
         :param pages: int Optional, the maximum number of results pages to search  
         :returns SearchResults object
         """
-        out.console('Searching {}'.format(self.__class__.__name__))
+        out.console(f'Searching {self.__class__.__name__}')
         self._query = utils.decode_bytes(query)
         request = self._first_page()
 
@@ -164,12 +163,9 @@ class SearchEngine(object):
                 tags = BeautifulSoup(response.html, "html.parser")
                 items = self._filter_results(tags)
 
-                # print('SEARCH TAGS:', tags.prettify())  # DEBUG
-                # print('SEARCH ITEMS:', items)  # DEBUG
-
                 self._collect_results(items)
                 
-                msg = 'page: {:<8} links: {}'.format(page, len(self.results))
+                msg = f'{"page:".ljust(6)}{page}  links: {len(self.results)}'
                 out.console(msg, end='')
                 request = self._next_page(tags)
 
