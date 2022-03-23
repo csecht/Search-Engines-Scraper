@@ -15,18 +15,17 @@ class Metager(SearchEngine):
     def _selectors(self, element):
         """Returns the appropriate CSS selector."""
         selectors = {
-            'url': 'h2 > a', #'h2.result_title', # a[href]', #'a.result-link', #
-            'title': 'h2.title', #'h2.result-title[title]', # h2.title.a
+            'url': 'a.result-link',
+            'title': 'h2.result-title a',
             'text': 'div.result-description',
-            'links': 'div.results',
-            'next': 'div.next-search-link a[href]',
+            'links': '#results div.result-header',
+            'next': '.next-search-link a[href]',
             }
         return selectors[element]
 
     def _first_page(self):
         """Returns the initial page and query."""
         query = f'{self._base_url}/meta/meta.ger3?eingabe={self._query}'
-        # response = self._http_client.get(url)
         response = self._get_page(query)
         source_pg = BeautifulSoup(response.html, "html.parser")
         url = source_pg.select_one('iframe').get('src')

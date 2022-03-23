@@ -9,6 +9,5 @@ __all__ = [
     'Duckduckgo',
     'Startpage', 
     'Mojeek',
-    # 'Metager',
-    'Metager2',
+    'Metager',
 ]

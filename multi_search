@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -50,20 +50,18 @@ FileIt = files.results2file
 # Assign user agent to engines here.
 dgg_UA = get_user_agent.rando_function(('bua', 'fua', 'tua', 'eua'))
 sp_UA = get_user_agent.rando_function(('bua', 'fua', 'wua')) # bua sometimes banned.
-m_UA = get_user_agent.rando_function(('bua', 'fua', 'eua', 'rua'))  # tua sometimes blocked.
+m_UA = get_user_agent.rando_function(('bua', 'fua', 'eua', 'rua', 'rua'))  # tua sometimes blocked.
 mg_UA = get_user_agent.rando_function(('bua', 'fua', 'pua', 'tua', 'eua', 'rua'))
 
 # The duplicated result closest to end of the results list is the one
 #   retained in the unique_results list, so engine order here matters
 #   for engine-specific reporting of unique results metrics.
 # Use only engines committed to privacy.
-# Note that Metager2 does not inherit the SearchEngine class
-#  (b/c I can't yet get Metager to work through engine.py).
 engines = {
     'DDG': se.Duckduckgo(dgg_UA),
     'M': se.Mojeek(m_UA),
     'SP': se.Startpage(sp_UA),
-    'MG': se.engines.Metager2(mg_UA),
+    'MG': se.Metager(mg_UA),
     }
 
 engine_names = {
@@ -131,23 +129,19 @@ def search_this(search_term: str) -> None:
     """
 
     combined_results = []
+    links = []
+    titles = []
     for e_key, _engine in engines.items():
-        # Limit each engine to ~20-30 results.
-        if e_key == 'DDG':
+        # Limit each engine to ~20 max results.
+        if e_key in 'DDG, MG':
             results = _engine.search(search_term, pages=1)
-            links = results.links()
-            titles = results.titles()
+            links = results.links()[0:20]
+            titles = results.titles()[0:20]
         elif e_key in 'M, SP':
             # Note that Startpage may not return 2nd page.
             results = _engine.search(search_term, pages=2)
             links = results.links()
             titles = results.titles()
-        else:
-            # MetaGer site returns ~36 hits on first page, so limit to 20.
-            # Metager2 does not inherit SearchEngine, so has no pages kw.
-            links, titles = _engine.metager(search_term)
-            links = links[0:20]
-            titles = titles[0:20]
 
         # Prepend the engine tag to each result title.
         for i, _title in enumerate(titles):
