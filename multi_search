@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -59,14 +59,14 @@ mg_UA = get_user_agent.rando_function(('bua', 'fua', 'pua', 'tua', 'eua', 'rua')
 # Use only engines committed to privacy.
 engines = {
     'DDG': se.Duckduckgo(dgg_UA),
-    'M': se.Mojeek(m_UA),
+    'Moj': se.Mojeek(m_UA),
     'SP': se.Startpage(sp_UA),
     'MG': se.Metager(mg_UA),
     }
 
 engine_names = {
     'DDG': 'DuckDuckGo',
-    'M': 'Mojeek',
+    'Moj': 'Mojeek',
     'SP': 'Startpage',
     'MG': 'MetaGer'
     }
@@ -129,17 +129,19 @@ def search_this(search_term: str) -> None:
     """
 
     combined_results = []
-    links = []
-    titles = []
     for e_key, _engine in engines.items():
         # Limit each engine to ~20 max results.
-        if e_key in 'DDG, MG':
+        if e_key == 'DDG':
             results = _engine.search(search_term, pages=1)
             links = results.links()[0:20]
             titles = results.titles()[0:20]
-        elif e_key in 'M, SP':
-            # Note that Startpage may not return 2nd page.
+        elif e_key in 'Moj, SP':
             results = _engine.search(search_term, pages=2)
+            links = results.links()
+            titles = results.titles()
+        else:
+            # MetaGer returns 20-30 per page; adjust as needed.
+            results = _engine.search(search_term, pages=1)
             links = results.links()
             titles = results.titles()
 
