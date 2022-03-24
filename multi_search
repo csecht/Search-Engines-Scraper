@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.3.3'
+__version__ = '0.3.4'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -41,6 +41,7 @@ import argparse
 import sys
 import time
 from datetime import datetime
+from pathlib import Path
 
 import search_engines as se
 from search_utils import files, get_user_agent as ua
@@ -103,21 +104,13 @@ def parse_args() -> None:
         sys.exit(0)
 
     if args.use:
-        print(f'USAGE: {__file__} without arguments,'
+        print(f'USAGE: Run {__file__} without arguments,'
               ' then enter your search term at the prompt.\n')
-        print("Specifiers like site:gov, 'dogs AND cats', or 'dogs -cats'"
-              " may not work as expected, specifically with Startpage.")
-        print('Example search terms:\n'
-              'paint => Results prefer "paint", but also finds "Paints", "painter", "painting", etc.\n'
-              '"jump the shark" => Double quote a word or phrase for exact matches.\n'
-              'jump AND shark => Any combination of jump(s) with shark(s).\n'
-              'classes edu => Preference for "classes" at .edu sites.\n'
-              'site:gov subsidy => Only "subsidy" results from .gov sites (site: is not valid for Startpage).\n'
-              'dogs cats => Preference for "dogs" with "cats", but also only "dogs", "cats", "dog", etc.\n'
-              '*ology => Wildcard character * will prefer "ology"; does not find "biology", "ecology", etc. \n'
-              'Rock * roll -and => "Rock -N- Roll", "rock & roll", etc.\n'
-              )
-        print('Results are printed to the Terminal and written to the ResultsFiles folder.\n')
+        try:
+            useage = Path('search_utils', 'usage.txt').read_text()
+            print(useage)
+        except FileNotFoundError as err:
+            print('Sorry, but the usage.txt file is not in the search_utils folder.')
         sys.exit(0)
 
 
