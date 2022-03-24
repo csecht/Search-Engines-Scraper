@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -48,9 +48,9 @@ from search_utils import files, get_user_agent as ua
 FileIt = files.results2file
 
 # Assign user agent to engines here.
-# bua may be banned by SP, tua may be blocked by Moj.
+# Bots are generally banned by SP; tua may be blocked by Moj.
 dgg_UA = ua.rando_function(('bua', 'fua', 'tua', 'eua'))
-sp_UA = ua.rando_function(('bua', 'fua', 'wua'))
+sp_UA = ua.rando_function(('fua', 'wua'))
 moj_UA = ua.rando_function(('bua', 'fua', 'eua', 'rua', 'rua'))
 mg_UA = ua.rando_function(('bua', 'fua', 'pua', 'tua', 'eua', 'rua'))
 
@@ -132,17 +132,13 @@ def search_this(search_term: str) -> None:
     combined_results = []
     for e_key, _engine in engines.items():
         # Limit each engine to ~20 max results.
-        if e_key == 'DDG':
+        if e_key in 'DDG, MG':
             results = _engine.search(search_term, pages=1)
             links = results.links()[0:20]
             titles = results.titles()[0:20]
-        elif e_key in 'Moj, SP':
-            results = _engine.search(search_term, pages=2)
-            links = results.links()
-            titles = results.titles()
         else:
-            # MetaGer returns 20-30 per page; adjust as needed.
-            results = _engine.search(search_term, pages=1)
+            # Mojeek and Startpage return 10/page.
+            results = _engine.search(search_term, pages=2)
             links = results.links()
             titles = results.titles()
 
@@ -159,7 +155,7 @@ def search_this(search_term: str) -> None:
         FileIt(search_term, f'{e_count_msg}\n')
 
     # Filter unique urls, saving the last redundant hit from combined_results,
-    #   where last is determined by the engines.keys() order.
+    #   where last is determined by the engines (dict) items' order.
     unique_results = list({tup[:1]: tup for tup in combined_results}.values())
 
     result_summary = (f'Found {len(combined_results)} hits.\n\n'
@@ -173,7 +169,7 @@ def search_this(search_term: str) -> None:
         num_uniq_hit = len([hit for hit in unique_results if tag in hit[1]])
         tag_msg = f'{num_uniq_hit} unique hits from {tag}'
         print(tag_msg)
-        files.results2file(search_term, f'{tag_msg}\n')
+        FileIt(search_term, f'{tag_msg}\n')
 
     # Need a brief delay before Terminal scrolls to last line of results
     #   so user can glimpse the last engine's, and final, unique count.
