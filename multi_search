@@ -49,8 +49,8 @@ FileIt = files.results2file
 
 # Assign user agent to engines here.
 dgg_UA = get_user_agent.rando_function(('bua', 'fua', 'tua', 'eua'))
-sp_UA = get_user_agent.rando_function(('bua', 'fua', 'wua')) # bua sometimes banned.
-m_UA = get_user_agent.rando_function(('bua', 'fua', 'eua', 'rua', 'rua'))  # tua sometimes blocked.
+sp_UA = get_user_agent.rando_function(('bua', 'fua', 'wua')) # bua may be banned.
+moj_UA = get_user_agent.rando_function(('bua', 'fua', 'eua', 'rua', 'rua'))  # tua may be blocked.
 mg_UA = get_user_agent.rando_function(('bua', 'fua', 'pua', 'tua', 'eua', 'rua'))
 
 # The duplicated result closest to end of the results list is the one
@@ -59,7 +59,7 @@ mg_UA = get_user_agent.rando_function(('bua', 'fua', 'pua', 'tua', 'eua', 'rua')
 # Use only engines committed to privacy.
 engines = {
     'DDG': se.Duckduckgo(dgg_UA),
-    'Moj': se.Mojeek(m_UA),
+    'Moj': se.Mojeek(moj_UA),
     'SP': se.Startpage(sp_UA),
     'MG': se.Metager(mg_UA),
     }
@@ -204,7 +204,7 @@ def main() -> None:
     user_agents_used = (
         '\nUser agent for each engine of this search:\n'
         f'{"DuckDuckGo:".ljust(11)}{dgg_UA}\n'
-        f'{"Mojeek:".ljust(11)}{m_UA}\n'
+        f'{"Mojeek:".ljust(11)}{moj_UA}\n'
         f'{"Startpage:".ljust(11)}{sp_UA}\n'
         f'{"MetaGer:".ljust(11)}{mg_UA}\n')
     print(user_agents_used)
