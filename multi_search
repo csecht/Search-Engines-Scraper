@@ -107,10 +107,10 @@ def parse_args() -> None:
         print(f'USAGE: Run {__file__} without arguments,'
               ' then enter your search term at the prompt.\n')
         try:
-            useage = Path('search_utils', 'usage.txt').read_text()
-            print(useage)
-        except FileNotFoundError as err:
-            print('Sorry, but the usage.txt file is not in the search_utils folder.')
+            syntax = Path('search_utils', 'use_syntax.txt').read_text(encoding='utf-8')
+            print(syntax)
+        except FileNotFoundError:
+            print('Sorry, but the use_syntax.txt file is not in the search_utils folder.')
         sys.exit(0)
 
 
