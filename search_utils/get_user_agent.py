@@ -4,12 +4,13 @@ Assigns engines a user agent as specified in multi_search.
 Agent functions:
 bot_agent: assigns one of three search engine bot agents.
 firefox_ver(): assigns a random Firefox browser version.
-fake_agent(): static, works with Startpage.
-echt_agent(): this distribution's static agent.
-python_agent(): the default Python used by the requests module.
+fake_agent(): static, FAKE_USER_AGENT from config, works with Startpage.
+echt_agent(): static, this distribution's url agent.
+python_agent(): static, default used by the requests module.
 random_agent(): a random full system-type agent from list of 4400+.
-tasos_agent(): default agent of original Search-Engines-Scraper distribution.
-winfire_agent(): limited random, works with Startpage.
+tasos_agent(): static, default original Search-Engines-Scraper url agent.
+winfire_agent(): original FAKE_USER_AGENT for Startpage, but with random
+    assignment of Firefox version.
 """
 import gzip
 from pathlib import Path
@@ -81,7 +82,7 @@ def firefox_agent() -> str:
 
 def fake_agent() -> str:
     """
-    The FAKE_USER_AGENT in config.py:
+    The original FAKE_USER_AGENT in config.py:
     'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/84.0'
     Works with Startpage when nothing else will.
 

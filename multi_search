@@ -43,15 +43,16 @@ import time
 from datetime import datetime
 
 import search_engines as se
-from search_utils import files, get_user_agent
+from search_utils import files, get_user_agent as ua
 
 FileIt = files.results2file
 
 # Assign user agent to engines here.
-dgg_UA = get_user_agent.rando_function(('bua', 'fua', 'tua', 'eua'))
-sp_UA = get_user_agent.rando_function(('bua', 'fua', 'wua')) # bua may be banned.
-moj_UA = get_user_agent.rando_function(('bua', 'fua', 'eua', 'rua', 'rua'))  # tua may be blocked.
-mg_UA = get_user_agent.rando_function(('bua', 'fua', 'pua', 'tua', 'eua', 'rua'))
+# bua may be banned by SP, tua may be blocked by Moj.
+dgg_UA = ua.rando_function(('bua', 'fua', 'tua', 'eua'))
+sp_UA = ua.rando_function(('bua', 'fua', 'wua'))
+moj_UA = ua.rando_function(('bua', 'fua', 'eua', 'rua', 'rua'))
+mg_UA = ua.rando_function(('bua', 'fua', 'pua', 'tua', 'eua', 'rua'))
 
 # The duplicated result closest to end of the results list is the one
 #   retained in the unique_results list, so engine order here matters
