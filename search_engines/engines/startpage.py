@@ -8,9 +8,9 @@ from search_engines import output as out
 class Startpage(SearchEngine):
     """Searches startpage.com"""
     def __init__(self, user_agent, proxy=PROXY, timeout=TIMEOUT):
-        super(Startpage, self).__init__(proxy, timeout)
+        super().__init__(proxy, timeout)
         self._base_url = 'https://www.startpage.com'
-        # FAKE_USER_AGENT OK, random_agent ERROR Banned, python_agent ERROR Banned
+        # FAKE_USER_AGENT OK, random_agent and python_agent ERROR Banned
         self.set_headers({'User-Agent': user_agent})
 
     def _selectors(self, element):
@@ -20,7 +20,7 @@ class Startpage(SearchEngine):
             'title': 'a.w-gl__result-title h3', 
             'text': 'p.w-gl__description', 
             'links': 'section.w-gl div.w-gl__result', 
-            'next': {'form':'form.pagination__form', 'text':'Next'},
+            'next': {'form': 'form.pagination__form', 'text': 'Next'},
             'search_form': 'form#search input[name]',
             'blocked_form': 'form#blocked_feedback_form'
         }
@@ -52,7 +52,7 @@ class Startpage(SearchEngine):
         if forms:
             url = self._base_url + forms[0]['action']
             data = {
-                i['name']:i.get('value', '') 
+                i['name']: i.get('value', '')
                 for i in forms[0].select('input')
             }
         return {'url': url, 'data': data}

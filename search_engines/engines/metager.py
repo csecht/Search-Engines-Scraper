@@ -8,7 +8,7 @@ class Metager(SearchEngine):
     """Searches metager.org"""
 
     def __init__(self, user_agent, proxy=PROXY, timeout=TIMEOUT):
-        super(Metager, self).__init__(proxy, timeout)
+        super().__init__(proxy, timeout)
         self._base_url = 'https://metager.org'
         self.set_headers({'User-Agent': user_agent})
 

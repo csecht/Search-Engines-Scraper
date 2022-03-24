@@ -12,7 +12,7 @@ class Duckduckgo(SearchEngine):
     """Searches duckduckgo.com"""
 
     def __init__(self, user_agent, proxy=PROXY, timeout=TIMEOUT):
-        super(Duckduckgo, self).__init__(proxy, timeout)
+        super().__init__(proxy, timeout)
         self._base_url = 'https://links.duckduckgo.com{}&biaexp=b&msvrtexp=b&videxp=a&nadse=b&tjsexp=b'
         self._main_url = 'https://duckduckgo.com/?q={}&t=h_'
         self._current_page = None
