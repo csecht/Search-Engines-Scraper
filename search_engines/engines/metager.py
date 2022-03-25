@@ -24,26 +24,27 @@ class Metager(SearchEngine):
             }
         return selectors[element]
 
+    def redirect(self, query):
+        """Redirects initial request to actual result page."""
+        response = self._get_page(query)
+        src_page = BeautifulSoup(response.html, "html.parser")
+        url = src_page.select_one('iframe').get('src')
+
+        return url
+
     def _first_page(self):
         """Returns the initial page and query."""
         query = f'{self._base_url}/meta/meta.ger3?eingabe={self._query}'
-        response = self._get_page(query)
-        src_pg = BeautifulSoup(response.html, "html.parser")
-        url = src_pg.select_one('iframe').get('src')
+        url = self.redirect(query)
 
         return {'url': url, 'data': None}
 
     def _next_page(self, tags):
         """Returns the next page URL."""
-        next_page_tag = tags.select_one(self._selectors('next'))
+        next_page = tags.select_one(self._selectors('next'))
         url = None
-        if next_page_tag:
-            next_resp = self._get_page(next_page_tag['href'])
-            src_pg = BeautifulSoup(next_resp.html, "html.parser")
-            url = src_pg.select_one('iframe').get('src')
+        if next_page:
+            url = self.redirect(next_page['href'])
 
         return {'url': url, 'data': None}
-
-
-
 
