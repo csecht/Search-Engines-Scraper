@@ -28,7 +28,6 @@ class Metager(SearchEngine):
         """Redirects initial request to actual result page."""
         response = self._get_page(query)
         src_page = BeautifulSoup(response.html, "html.parser")
-        print(src_page)
         # url = src_page.select_one('iframe').get('src')
         url = src_page.select_one('#mg-framed').get('src')
 
