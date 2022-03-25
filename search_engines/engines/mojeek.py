@@ -9,7 +9,8 @@ class Mojeek(SearchEngine):
         self._base_url = 'https://www.mojeek.com'
         self.set_headers({'User-Agent': user_agent})
 
-    def _selectors(self, element):
+    @staticmethod
+    def _selectors(element, **kwargs):
         """Returns the appropriate CSS selector."""
         selectors = {
             'url': 'a.ob[href]',

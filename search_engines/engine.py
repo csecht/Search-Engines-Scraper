@@ -31,7 +31,8 @@ class SearchEngine:
         self.is_banned = False
         """Indicates if a ban occured"""
 
-    def _selectors(self, element):
+    @staticmethod
+    def _selectors(element, **kwargs):
         """Returns the appropriate CSS selector."""
         raise NotImplementedError()
 
@@ -170,7 +171,7 @@ class SearchEngine:
 
                 self._collect_results(items)
 
-                msg = f'{"page:".ljust(6)}{page}  links: {len(self.results)}'
+                msg = f'{"page:".ljust(8)}{page}  links: {len(self.results)}'
                 out.console(msg, end='')
                 request = self._next_page(tags)
 

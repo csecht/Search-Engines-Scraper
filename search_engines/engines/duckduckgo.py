@@ -18,7 +18,8 @@ class Duckduckgo(SearchEngine):
         self._current_page = None
         self.set_headers({'User-Agent': user_agent})
 
-    def _selectors(self, element):
+    @staticmethod
+    def _selectors(element, **kwargs):
         """Returns the appropriate CSS selector - regex pattern, in this case."""
         selectors = {
             'first_page': r'DDG\.deep\.initialize\(\'(.*?)\'\)',

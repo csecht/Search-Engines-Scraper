@@ -13,7 +13,8 @@ class Startpage(SearchEngine):
         # FAKE_USER_AGENT OK, random_agent and python_agent ERROR Banned
         self.set_headers({'User-Agent': user_agent})
 
-    def _selectors(self, element):
+    @staticmethod
+    def _selectors(element, **kwargs):
         """Returns the appropriate CSS selector."""
         selectors = {
             'url': 'a.w-gl__result-url', 
