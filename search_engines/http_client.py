@@ -1,12 +1,13 @@
-import requests
 from collections import namedtuple
 
-from search_engines.config import TIMEOUT, PROXY, USER_AGENT
+import requests
+
 from search_engines import utils as utl
+from search_engines.config import TIMEOUT, PROXY, USER_AGENT
 
 
-class HttpClient(object):
-    """Performs HTTP requests. A `requests` wrapper, essentialy"""
+class HttpClient:
+    """Performs HTTP requests. A `requests` wrapper, essentially."""
     def __init__(self, timeout=TIMEOUT, proxy=PROXY):
         # self.session = requests.session() # Deprecated
         self.session = requests.sessions.Session()
@@ -24,27 +25,27 @@ class HttpClient(object):
         try:
             req = self.session.get(page, timeout=self.timeout)
             self.session.headers['Referer'] = page
-        except requests.exceptions.RequestException as e:
-            return self.response(http=0, html=e.__doc__)
+        except requests.exceptions.RequestException as _e:
+            return self.response(http=0, html=_e.__doc__)
         return self.response(http=req.status_code, html=req.text)
-    
+
     def post(self, page, data):
         """Submits a HTTP POST request."""
         page = self._quote(page)
         try:
             req = self.session.post(page, data, timeout=self.timeout)
             self.session.headers['Referer'] = page
-        except requests.exceptions.RequestException as e:
-            return self.response(http=0, html=e.__doc__)
+        except requests.exceptions.RequestException as _e:
+            return self.response(http=0, html=_e.__doc__)
         return self.response(http=req.status_code, html=req.text)
-    
+
     @staticmethod
     def _quote(url):
         """URL-encodes URLs."""
         if utl.decode_bytes(utl.unquote_url(url)) == utl.decode_bytes(url):
             url = utl.quote_url(url)
         return url
-    
+
     @staticmethod
     def _set_proxy(proxy):
         """Returns HTTP or SOCKS proxies dictionary."""

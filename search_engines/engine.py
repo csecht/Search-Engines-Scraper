@@ -102,7 +102,7 @@ class SearchEngine:
         return results
 
     def _collect_results(self, items):
-        """Colects the search results items."""
+        """Collects the search results items."""
         for item in items:
             if not utils.is_url(item['link']):
                 continue
