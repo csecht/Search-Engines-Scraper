@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.3.5'
+__version__ = '0.3.6'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -119,7 +119,7 @@ def search_this(search_term: str) -> None:
     Run the input search term through engines specified in Dict(engines).
     Print and write non-redundant results of urls and page titles.
 
-    :param search_term: string with valid syntax on all or most engines.
+    :param search_term: String with valid syntax on all or most engines.
     """
 
     combined_results = []
@@ -144,7 +144,7 @@ def search_this(search_term: str) -> None:
         e_result = list(zip(links, titles))
         combined_results.extend(e_result)
 
-        e_count_msg = f'{len(links)} hits from {engine_names[e_key]} ({e_key})'
+        e_count_msg = f'Keeping the first {len(links)} results from {engine_names[e_key]} ({e_key})'
         print(e_count_msg)
         FileIt(search_term, f'{e_count_msg}\n')
 
@@ -152,8 +152,8 @@ def search_this(search_term: str) -> None:
     #   where last is determined by the engines (dict) items' order.
     unique_results = list({tup[:1]: tup for tup in combined_results}.values())
 
-    result_summary = (f'Found {len(combined_results)} hits.\n\n'
-                      f'There are {len(unique_results)} unique hits.')
+    result_summary = (f'Found {len(combined_results)} total results.\n\n'
+                      f'There are {len(unique_results)} unique results.')
     print(result_summary)
     FileIt(search_term, f'{result_summary}\n')
 
@@ -161,7 +161,7 @@ def search_this(search_term: str) -> None:
     for tag in engine_names:
         tag = f'({tag})'
         num_uniq_hit = len([hit for hit in unique_results if tag in hit[1]])
-        tag_msg = f'{num_uniq_hit} unique hits from {tag}'
+        tag_msg = f'{num_uniq_hit} unique results retained from {tag}'
         print(tag_msg)
         FileIt(search_term, f'{tag_msg}\n')
 
