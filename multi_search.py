@@ -29,9 +29,9 @@ See LICENCE file for additional licenses of repository components.
 __author__ = 'Craig Echt'
 __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
-__program_name__ = 'multi_search'
+__program_name__ = 'multi_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.3.6'
+__version__ = '0.3.7'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -214,5 +214,5 @@ if __name__ == "__main__":
     except (EOFError, KeyboardInterrupt):
         # Note: Ctrl-c may not work with PyCharm Terminal interpreter when
         #   waiting for Terminal input; Ctrl-d does work.
-        print(' *** Keyboard interrupt by user has quit the program ***\n')
+        print(' *** Keyboard interrupt: User has quit the program ***\n')
         sys.exit()
