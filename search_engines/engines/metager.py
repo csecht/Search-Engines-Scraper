@@ -12,14 +12,15 @@ class Metager(SearchEngine):
         self._base_url = 'https://metager.org'
         self.set_headers({'User-Agent': user_agent})
 
-    def _selectors(self, element):
+    @staticmethod
+    def _selectors(element, **kwargs):
         """Returns the appropriate CSS selector."""
         selectors = {
             'url': 'a.result-link',
             'title': 'h2.result-title a',
             'text': 'div.result-description',
             'links': '#results div.result-header',
-            'next': '.next-search-link a[href]',
+            'next': '#next-search-link a',
             }
         return selectors[element]
 
@@ -27,16 +28,22 @@ class Metager(SearchEngine):
         """Returns the initial page and query."""
         query = f'{self._base_url}/meta/meta.ger3?eingabe={self._query}'
         response = self._get_page(query)
-        source_pg = BeautifulSoup(response.html, "html.parser")
-        url = source_pg.select_one('iframe').get('src')
+        src_pg = BeautifulSoup(response.html, "html.parser")
+        url = src_pg.select_one('iframe').get('src')
 
         return {'url': url, 'data': None}
 
     def _next_page(self, tags):
-        """Returns the next page URL and post data (if any)"""
-
-        next_page = tags.select_one(self._selectors('next'))
+        """Returns the next page URL."""
+        next_page_tag = tags.select_one(self._selectors('next'))
         url = None
-        if next_page:
-            url = self._base_url + next_page['href']
+        if next_page_tag:
+            next_resp = self._get_page(next_page_tag['href'])
+            src_pg = BeautifulSoup(next_resp.html, "html.parser")
+            url = src_pg.select_one('iframe').get('src')
+
         return {'url': url, 'data': None}
+
+
+
+
