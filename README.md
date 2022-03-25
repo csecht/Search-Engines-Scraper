@@ -1,5 +1,5 @@
 # Search Engines Scraper CSE
-Aggregates results from several search engines with an easily read text output. This is a fork of Search Engines Scraper by tasos_py. It is run from the `multi_search` Python script.
+Aggregates results from several search engines with an easily read text output. This is a fork of Search Engines Scraper by tasos_py. It is run from the `multi_search.py.py` Python script.
 ## Supported search engines  
 
 - _[Duckduckgo](https://duckduckgo.com)_
@@ -27,9 +27,9 @@ Download the .zip code archive, extract the .zip file, open Terminal/Command Pro
 Done!
 
 ## Usage  
-From within the Search-Engines-Scraper-master folder, execute `multi_search` from Terminal/Command Prompt:
-- Linux/MacOS: `python3 multi_search` or `./multi_search`
-- Windows: `python3 multi_search` or `python multi_search` or `py multi_search`, depending on your system environment. 
+From within the Search-Engines-Scraper-master folder, execute `multi_search.py` from Terminal/Command Prompt:
+- Linux/MacOS: `python3 multi_search.py` or `./multi_search.py`
+- Windows: `python3 multi_search.py` or `python multi_search.py` or `py multi_search.py`, depending on your system environment. 
 
 then enter your search term at the prompt. Example output:
 ```
@@ -65,4 +65,4 @@ https://fire.ca.gov
 ```
 ...and the remaining results. All results would be printed to Terminal and written to a file automatically titled: Results_gov+forest+policies.txt
 
-Arguments: --help, --about, or --use. The command `multi_search --use` provides examples of search term syntax.
+Arguments: --help, --about, or --use. The command `multi_search.py --use` provides examples of search term syntax.
