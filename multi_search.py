@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Multi_search is a command-line web search aggregator in Python,
-derived from the Search-Engine-Scraper package from
+Multi_search.py is a command-line web search aggregator in Python,
+derived from the Search-Engine-Scraper package at
 https://github.com/tasos-py/Search-Engines-Scraper.
 
-Non-redundant aggregate results from privacy-oriented search engines
-are returned as URLs and their page titles to Terminal output and
+Non-redundant aggregated results from privacy-oriented search engines
+are returned as URLs and their page titles to the Terminal and to
 an auto-named text file. User agents for requests are randomized.
 
 The intent is to provide easy comparisons among search engines, avoid
@@ -31,11 +31,10 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
-
 
 import argparse
 import sys
@@ -64,17 +63,17 @@ engines = {
     'Moj': se.Mojeek(moj_UA),
     'SP': se.Startpage(sp_UA),
     'MG': se.Metager(mg_UA),
-    }
+}
 
 engine_names = {
     'DDG': 'DuckDuckGo',
     'Moj': 'Mojeek',
     'SP': 'Startpage',
     'MG': 'MetaGer'
-    }
+}
 
 
-def parse_args() -> None:
+def parse_args(assist=None) -> None:
     """Allow handling of common command line arguments.
     """
     parser = argparse.ArgumentParser()
@@ -88,7 +87,6 @@ def parse_args() -> None:
                         default=False)
 
     args = parser.parse_args()
-    # args, unknown = parser.parse_known_args()  # Bypass arg errors.
     if args.about:
         print(__doc__)
         print(f'{"Author:".ljust(13)}', __author__)
@@ -103,7 +101,7 @@ def parse_args() -> None:
         print()
         sys.exit(0)
 
-    if args.use:
+    if args.use or str(assist) in '-help, --help':
         print(f'USAGE: Run {__file__} without arguments,'
               ' then enter your search term at the prompt.\n')
         try:
@@ -187,13 +185,17 @@ def main() -> None:
     Run the search if no arguments are given.
     """
     parse_args()
-    term = input("\nEnter search term: ")
+    term = input("\nEnter search term: ").lstrip()
+
+    # In unlikely event the user seeks syntax assistance at input prompt...
+    if term in '-help, --help':
+        parse_args(term)
 
     # Remove spaces in term for better file naming; '+' doesn't affect search.
     term = term.replace(' ', '+')
 
     user_agents_used = (
-        '\nUser agent for each engine of this search:\n'
+        '\nUser agent currently assigned to each search engine:\n'
         f'{"DuckDuckGo:".ljust(11)}{dgg_UA}\n'
         f'{"Mojeek:".ljust(11)}{moj_UA}\n'
         f'{"Startpage:".ljust(11)}{sp_UA}\n'
