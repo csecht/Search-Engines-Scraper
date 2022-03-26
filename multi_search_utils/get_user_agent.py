@@ -20,20 +20,14 @@ from random import choice
 #   Can get system's UA from http://my-user-agent.com/
 DEFAULT_AGENT = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)'
 
-# Load the list of valid user agents from the module's folder.
+# Load the list of user agents to use for random_agent().
 try:
-    try:
-        user_agents_file = Path(Path(__file__).parent, 'user_agents.txt.gz')
-        with gzip.open(user_agents_file, 'rb') as fp:
-            user_agents_list = [_.strip() for _ in fp.readlines()]
-
-    except FileNotFoundError as err:
-        print('user_agents.txt.gz could not be opened; trying user_agents.txt', err)
-        user_agents_file = Path(Path(__file__).parent, 'user_agents.txt')
-        with open(user_agents_file, encoding='utf-8') as fp:
-            user_agents_list = [_.strip() for _ in fp.readlines()]
+    user_agents_file = Path(Path(__file__).parent, 'user_agents.txt.gz')
+    with gzip.open(user_agents_file, 'rb') as fp:
+        user_agents_list = [_.strip() for _ in fp.readlines()]
 except FileNotFoundError:
-    print('Could not open user_agents file for a random agent, so using default agent:')
+    print('Could not open user_agents file; using default agent...\n'
+          'Try downloading user_agents.txt.gz from https://github.com/csecht/Search-Engines-Scraper')
     user_agents_list = [DEFAULT_AGENT]
 
 

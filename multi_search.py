@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'multi_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.3.7'
+__version__ = '0.3.8'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -44,7 +44,7 @@ from datetime import datetime
 from pathlib import Path
 
 import search_engines as se
-from search_utils import files, get_user_agent as ua
+from multi_search_utils import files, get_user_agent as ua
 
 FileIt = files.results2file
 
@@ -107,10 +107,10 @@ def parse_args() -> None:
         print(f'USAGE: Run {__file__} without arguments,'
               ' then enter your search term at the prompt.\n')
         try:
-            syntax = Path('search_utils', 'use_syntax.txt').read_text(encoding='utf-8')
+            syntax = Path('multi_search_utils', 'use_syntax.txt').read_text(encoding='utf-8')
             print(syntax)
         except FileNotFoundError:
-            print('Sorry, but the use_syntax.txt file is not in the search_utils folder.')
+            print('Sorry, but the use_syntax.txt file is not in the multi_search_utils folder.')
         sys.exit(0)
 
 
