@@ -35,7 +35,7 @@ class Metager(SearchEngine):
 
     def _first_page(self):
         """Returns the initial page and query."""
-        query = f'{self._base_url}/meta/meta.ger3?eingabe={self._query}'
+        query = f'{self._base_url}/meta/meta.ger3?eingabe={self.se_query}'
         url = self.redirect(query)
 
         return {'url': url, 'data': None}

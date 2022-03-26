@@ -19,8 +19,8 @@ class SearchEngine:
         """
         self._http_client = HttpClient(timeout, proxy)
         self._delay = (1, 4)
-        self._query = ''
-        self._filters = []
+        self.se_query = ''
+        self.se_filters = []
 
         self.results = SearchResults()
         """The search results."""
@@ -84,20 +84,20 @@ class SearchEngine:
 
     def _query_in(self, item):
         """Checks if query is contained in the item."""
-        return self._query.lower() in item.lower()
+        return self.se_query.lower() in item.lower()
 
     def _filter_results(self, soup):
         """Processes and filters the search results."""
         tags = soup.select(self._selectors('links'))
         results = [self._item(link) for link in tags]
 
-        if 'url' in self._filters:
+        if 'url' in self.se_filters:
             results = [_l for _l in results if self._query_in(_l['link'])]
-        if 'title' in self._filters:
+        if 'title' in self.se_filters:
             results = [_l for _l in results if self._query_in(_l['title'])]
-        if 'text' in self._filters:
+        if 'text' in self.se_filters:
             results = [_l for _l in results if self._query_in(_l['text'])]
-        if 'host' in self._filters:
+        if 'host' in self.se_filters:
             results = [_l for _l in results if self._query_in(utils.domain(_l['link']))]
         return results
 
@@ -145,7 +145,7 @@ class SearchEngine:
                 msg = f'Ignoring unsupported operator "{_op}"'
                 out.console(msg, level=out.Level.warning)
             else:
-                self._filters += [_op]
+                self.se_filters += [_op]
 
     def search(self, query, pages=cfg.SEARCH_ENGINE_RESULTS_PAGES):
         """
@@ -158,7 +158,7 @@ class SearchEngine:
         :returns SearchResults object
         """
         out.console(f'Searching {self.__class__.__name__}')
-        self._query = utils.decode_bytes(query)
+        self.se_query = utils.decode_bytes(query)
         request = self._first_page()
 
         for page in range(1, pages + 1):
@@ -193,7 +193,7 @@ class SearchEngine:
         """
         output = (output or '').lower()
         if not path:
-            path = cfg.os_path.join(cfg.OUTPUT_DIR, '_'.join(self._query.split()))
+            path = cfg.os_path.join(cfg.OUTPUT_DIR, '_'.join(self.se_query.split()))
         out.console('')
 
         if out.PRINT in output:

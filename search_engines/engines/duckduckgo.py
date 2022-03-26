@@ -30,7 +30,7 @@ class Duckduckgo(SearchEngine):
 
     def _first_page(self):
         """Returns the initial page and query."""
-        res = self._http_client.get(self._main_url.format(self._query))
+        res = self._http_client.get(self._main_url.format(self.se_query))
         match = re.search(self._selectors('first_page'), res.html)
         if match:
             return {'url': self._base_url.format(match.group(1)), 'data': None}
@@ -62,12 +62,12 @@ class Duckduckgo(SearchEngine):
             for i in data
         ]
 
-        if 'url' in self._filters:
+        if 'url' in self.se_filters:
             results = [_l for _l in results if self._query_in(_l['link'])]
-        if 'title' in self._filters:
+        if 'title' in self.se_filters:
             results = [_l for _l in results if self._query_in(_l['title'])]
-        if 'text' in self._filters:
+        if 'text' in self.se_filters:
             results = [_l for _l in results if self._query_in(_l['text'])]
-        if 'host' in self._filters:
+        if 'host' in self.se_filters:
             results = [_l for _l in results if self._query_in(utils.domain(_l['link']))]
         return results

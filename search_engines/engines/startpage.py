@@ -37,7 +37,7 @@ class Startpage(SearchEngine):
             i['name']: i.get('value', '') 
             for i in tags.select(selector)
         }
-        data['query'] = self._query
+        data['query'] = self.se_query
         url = self._base_url + '/sp/search'
         return {'url': url, 'data': data}
     

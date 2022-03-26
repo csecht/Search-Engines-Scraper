@@ -1,11 +1,13 @@
+<!DOCTYPE html>
+<meta charset="utf-8"><!--markdown .md to HTML conversion courtesy of https://markdowntohtml.com/ -->
 <h1 id="search-engines-scraper-cse">Search Engines Scraper CSE</h1>
 <p>Aggregates results from several search engines with an easily read text output. This is a fork of Search Engines Scraper by tasos_py. It is run from
 the <code>multi_search.py</code> Python script.</p>
 <h2 id="supported-search-engines">Supported search engines</h2>
-<p><ul><li><em><a href="https://duckduckgo.com">Duckduckgo</a></em>
+<ul><li><em><a href="https://duckduckgo.com">Duckduckgo</a></em>
 <li><em><a href="https://www.startpage.com">Startpage</a></em>
 <li><em><a href="https://www.mojeek.com">Mojeek</a></em>
-    <li><em><a href="https://metager.org">MetaGer</a></em></ul></p>
+    <li><em><a href="https://metager.org">MetaGer</a></em></ul>
 <h2 id="features">Features</h2>
 <ul>
 <li>Uses search engines that are focused on user privacy.</li>
@@ -22,11 +24,11 @@ the <code>multi_search.py</code> Python script.</p>
 <p><code>$ python3 setup.py install</code></p>
 <p>Done!</p>
 <h2 id="usage">Usage</h2>
-<p>From within the Search-Engines-Scraper-master folder, execute <code>multi_search.py</code> from Terminal/Command Prompt:
+From within the Search-Engines-Scraper-master folder, execute <code>multi_search.py</code> from Terminal/Command Prompt:
 <ul><li>Linux/MacOS: <code>python3 multi_search.py</code> or <code>./multi_search.py</code>
 <li>Windows: <code>python3 multi_search.py</code> or <code>python multi_search.py</code> or <code>py multi_search.py</code>, depending on your system environment.
 </ul>
-Example output:</p>
+Example output:
 <pre><code>Enter search term: gov forest policies
 
 User agents used <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span> search
@@ -59,3 +61,9 @@ https://</span>fire.ca.gov
 </code></pre><p>...and the remaining results. All results would be printed to Terminal and written to a file automatically titled: Results_gov+forest+policies.txt</p>
 <p>Arguments: --help, --about, or --use.  The command <code>multi_search.py --use</code> provides examples of search term syntax.</p>
 
+<h3 id="single-engine-search">Single engine search</h3>
+<p>The original command line client from Search-Engines_Scraper, <code>search_engines_cli.py</code> can be used for customized searches. For example,</p>
+<pre><code>python3 search_engines_cli<span class="hljs-selector-class">.py</span> -<span class="hljs-selector-tag">q</span> forestry -<span class="hljs-selector-tag">p</span> <span class="hljs-number">4</span> -e mojeek
+</code></pre><p>will return four pages of url results for the query &#39;forestry&#39; from the Mojeek engine. To see additional search and output options, use the help command,</p>
+<pre><code>python3 search_engines_cli<span class="hljs-selector-class">.py</span> -h
+</code></pre>

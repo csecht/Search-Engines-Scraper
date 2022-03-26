@@ -23,7 +23,7 @@ class Mojeek(SearchEngine):
 
     def _first_page(self):
         """Returns the initial page and query."""
-        url = f'{self._base_url}/search?q={self._query}'
+        url = f'{self._base_url}/search?q={self.se_query}'
         return {'url': url, 'data': None}
 
     def _next_page(self, tags):
