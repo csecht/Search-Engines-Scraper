@@ -7,7 +7,7 @@ try:
     from search_engines import config
 except ImportError as err:
     MSG = '\nPlease install `search_engines` to resolve this error.'
-    raise ImportError(f'{MSG}') from err
+    raise ImportError(f'{MSG}\n') from err
 
 
 def main():
@@ -22,7 +22,7 @@ def main():
                         default='print')
     parser.add_argument('-n',
                         help='filename for output file',
-                        default=config.OUTPUT_DIR+'output')
+                        default=str(config.OUTPUT_DIR / 'output'))
     parser.add_argument('-p',
                         help='number of pages',
                         default=config.SEARCH_ENGINE_RESULTS_PAGES,

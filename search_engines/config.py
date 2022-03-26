@@ -1,4 +1,4 @@
-from os import path as os_path
+from pathlib import Path
 from sys import version_info
 
 # Python version
@@ -22,7 +22,5 @@ PROXY = None
 # TOR proxy server
 TOR = 'socks5h://127.0.0.1:9050'
 
-_base_dir = os_path.abspath(os_path.dirname(os_path.abspath(__file__)))
-
 # Path to output files
-OUTPUT_DIR = os_path.join(_base_dir, 'search_results') + os_path.sep
+OUTPUT_DIR = Path('search_engines/search_results/').resolve()
