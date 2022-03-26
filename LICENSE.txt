@@ -1,4 +1,4 @@
-Search-Engine-Scraper search_engines module:
+Search-Engine-Scraper, modules in search_engines:
 Copyright (c) 2018 Tasos M Adamopoulos, under
 
 MIT License
@@ -23,7 +23,7 @@ SOFTWARE.
 
 ########################################################################
 
-user_agents.txt.gz in search_utils is from google package, googlesearch:
+user_agents.txt.gz in multi_search_utils is from google package, googlesearch:
 Copyright (c) 2009-2020, Mario Vilas, under
 
 BSD 3-Clause License
@@ -57,7 +57,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ########################################################################
 
-multi_search script, search_utils with files.py and get_user_agent.py modules:
+multi_search.py, multi_search_utils modules:
 
 Copyright (c) 2022 Craig S Echt, under
 
