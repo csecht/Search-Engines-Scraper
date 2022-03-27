@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Assigns engines a user agent as specified in multi_search.py.
+Assigns engines a user agent as specified in aggregate_search.py.
 Agent functions:
 bot_agent: assigns one of three search engine bot agents.
 firefox_ver(): assigns a random Firefox browser version.

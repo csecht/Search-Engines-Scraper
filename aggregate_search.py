@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Multi_search.py is a command-line web search aggregator in Python,
-derived from the Search-Engine-Scraper package at
+aggregate_search.py is a command-line web search aggregator in Python,
+derived from the Search-Engines-Scraper repository at
 https://github.com/tasos-py/Search-Engines-Scraper.
 
 Non-redundant aggregated results from privacy-oriented search engines
@@ -29,7 +29,7 @@ See LICENCE file for additional licenses of repository components.
 __author__ = 'Craig Echt'
 __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
-__program_name__ = 'multi_search.py'
+__program_name__ = 'aggregate_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
 __version__ = '0.4.3'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
@@ -43,7 +43,7 @@ from datetime import datetime
 from pathlib import Path
 
 import search_engines as se
-from multi_search_utils import files, get_user_agent as ua
+from aggregate_search_utils import files, get_user_agent as ua
 
 FileIt = files.results2file
 
@@ -105,10 +105,10 @@ def parse_args(assist=None) -> None:
         print(f'USAGE: Run {__file__} without arguments,'
               ' then enter your search term at the prompt.\n')
         try:
-            syntax = Path('multi_search_utils', 'use_syntax.txt').read_text(encoding='utf-8')
+            syntax = Path('aggregate_search_utils', 'use_syntax.txt').read_text(encoding='utf-8')
             print(syntax)
         except FileNotFoundError:
-            print('Sorry, but the use_syntax.txt file is not in the multi_search_utils folder.')
+            print('Sorry, but the use_syntax.txt file is not in the aggregate_search_utils folder.')
         sys.exit(0)
 
 
