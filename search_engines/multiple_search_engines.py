@@ -1,7 +1,7 @@
-from .results import SearchResults
-from .engines import search_engines_dict
-from . import output as out
-from . import config as cfg
+from search_engines.results import SearchResults
+from search_engines.engines import search_engines_dict
+from search_engines import output as out
+from search_engines import config as cfg
 
 
 class MultipleSearchEngines:
@@ -53,7 +53,7 @@ class MultipleSearchEngines:
         output = (output or '').lower()
         query = self._engines[0].se_query if self._engines else ''
         if not path:
-            path = cfg.OUTPUT_DIR + '_'.join(query.split())
+            path = str(cfg.OUTPUT_DIR) + '_'.join(query.split())
         out.console('')
 
         if out.PRINT in output:

@@ -5,7 +5,7 @@ from sys import version_info
 PYTHON_VERSION = version_info.major
 
 # Maximum number of pages to search
-SEARCH_ENGINE_RESULTS_PAGES = 5 # 20
+SEARCH_ENGINE_RESULTS_PAGES = 10 # 20
 
 # HTTP request timeout
 TIMEOUT = 12

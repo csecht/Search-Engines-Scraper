@@ -33,7 +33,9 @@ def create_csv_data(search_engines):
         for i in engine.results:
             row = [
                 engine.se_query, engine.__class__.__name__,
-                i['host'], i['link'], i['title'], i['text']
+                # Note: 'host' key throws exception with duckduckgo.
+                # i['host'], i['link'], i['title'], i['text']
+                i['link'], i['title'], i['text']
             ]
             row = [encoder(i) for i in row]
             data.append(row)

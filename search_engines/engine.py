@@ -193,7 +193,7 @@ class SearchEngine:
         """
         output = (output or '').lower()
         if not path:
-            path = cfg.os_path.join(cfg.OUTPUT_DIR, '_'.join(self.se_query.split()))
+            path = str(cfg.OUTPUT_DIR) + '_'.join(self.se_query.split())
         out.console('')
 
         if out.PRINT in output:
