@@ -2,10 +2,10 @@ Specifiers like site:edu, 'dogs AND cats', or 'dogs -cats' may not work as expec
 Example search terms:
     paint => Results prefer 'paint', but also finds 'Paints', 'painter', 'painting', etc.
     "jump the shark" => Double quote a word or phrase for exact matches.
-    jump AND shark => Any combination of 'jump(s)' with 'shark(s)'.
+    jump AND shark => Finds any combination of 'jump(s)' with 'shark(s)'.
     classes edu => Preference for 'classes' at .edu sites.
-    site:gov subsidy => Search only .gov domains. For Startpage try 'gov subsidy'.
+    site:gov subsidy => Searches only .gov domains. For Startpage try 'gov subsidy'.
     dogs cats => Preference for 'dogs' with 'cats', but also only 'dogs', 'cats', 'dog', etc.
     *ology => Wildcard character * will prefer 'ology'; does not find 'biology', 'ecology', etc.
-    Rock * roll -and => 'Rock -N- Roll', 'rock & roll', etc. (excludes 'and')
+    Rock * roll -and => Finds 'Rock -N- Roll', 'rock & roll', etc. (excludes 'and')
 Results are printed to the Terminal and written to the ResultsFiles folder.
