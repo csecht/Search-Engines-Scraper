@@ -43,20 +43,21 @@ from datetime import datetime
 from pathlib import Path
 
 import search_engines as se
-from aggregate_search_utils import files, reporting, vcheck, get_user_agent as ua
+from aggregate_search_utils import files, get_user_agent, reporting, vcheck
 
 # Need to check that Python interpreter is at least the required version.
 vcheck.minversion('3.6')
 
 FileIt = files.results2file
+GetUA = get_user_agent.rando_function
 ReportIt = reporting.report_results
 
-# Assign user agent to engines here.
+# Assign a random user agent to each engine here.
 # Bots are generally banned by SP; tua may be blocked by Moj.
-dgg_UA = ua.rando_function(('bua', 'fua', 'tua', 'eua'))
-sp_UA = ua.rando_function(('fua', 'wua'))
-moj_UA = ua.rando_function(('bua', 'fua', 'eua', 'rua', 'rua'))
-mg_UA = ua.rando_function(('bua', 'fua', 'pua', 'tua', 'eua', 'rua'))
+dgg_UA = GetUA(('bua', 'fua', 'tua', 'eua'))
+sp_UA = GetUA(('fua', 'wua'))
+moj_UA = GetUA(('bua', 'fua', 'eua', 'rua', 'rua'))
+mg_UA = GetUA(('bua', 'fua', 'pua', 'tua', 'eua', 'rua'))
 
 # The duplicated result closest to end of the results list is the one
 #   retained in the unique_results list, so engine order here matters
