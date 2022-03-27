@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'aggregate_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.4.6'
+__version__ = '0.4.7'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -46,19 +46,19 @@ from pathlib import Path
 import search_engines as se
 from aggregate_search_utils import files, get_user_agent, reporting, vcheck
 
-# Need to check that Python interpreter is at least the required version.
+# Quit if Python interpreter version is earlier than required.
 vcheck.minversion('3.6')
 
 FileIt = files.results2file
-GetUA = get_user_agent.rando_function
+RandoUA = get_user_agent.rando_function
 ReportIt = reporting.report_results
 
 # Assign a random user agent to each engine here.
 # Bots are generally banned by SP; tua may be blocked by Moj.
-dgg_UA = GetUA(('bua', 'fua', 'tua', 'eua'))
-sp_UA = GetUA(('fua', 'wua'))
-moj_UA = GetUA(('bua', 'fua', 'eua', 'rua', 'rua'))
-mg_UA = GetUA(('bua', 'fua', 'pua', 'tua', 'eua', 'rua'))
+dgg_UA = RandoUA(('bua', 'fua', 'tua', 'eua'))
+sp_UA = RandoUA(('fua', 'wua'))
+moj_UA = RandoUA(('bua', 'fua', 'eua', 'rua', 'rua'))
+mg_UA = RandoUA(('bua', 'fua', 'pua', 'tua', 'eua', 'rua'))
 
 # The duplicated result closest to end of the results list is the one
 #   retained in the unique_results list, so engine order here matters
@@ -80,7 +80,7 @@ engine_names = {
 
 # Terminal output ANSI color options.
 blue = '\x1b[1;38;5;33m'
-orange = '\x1b[1;38;5;208m'
+orange = '\x1b[1;38;5;166m'
 yellow = '\x1b[1;38;5;3m'
 undo_color = '\x1b[0m'  # No color, reset to system default.
 
@@ -197,6 +197,7 @@ def main() -> None:
     """
     parse_args()
     term = input("\nEnter search term: ").lstrip()
+    print()
 
     # In unlikely event the user seeks syntax assistance at input prompt...
     if term in '-help, --help':
@@ -207,10 +208,10 @@ def main() -> None:
 
     user_agents_used = (
         'User agent currently assigned to each search engine:\n'
-        f'{"DuckDuckGo:".ljust(11)}{dgg_UA}\n'
-        f'{"Mojeek:".ljust(11)}{moj_UA}\n'
-        f'{"Startpage:".ljust(11)}{sp_UA}\n'
-        f'{"MetaGer:".ljust(11)}{mg_UA}\n')
+        f'{"DuckDuckGo:".ljust(11)}{orange}{dgg_UA}{undo_color}\n'
+        f'{"Mojeek:".ljust(11)}{orange}{moj_UA}{undo_color}\n'
+        f'{"Startpage:".ljust(11)}{orange}{sp_UA}{undo_color}\n'
+        f'{"MetaGer:".ljust(11)}{orange}{mg_UA}{undo_color}\n')
 
     file_header = (
         f'SEARCH TERM: {term}    TIME: {datetime.now().strftime("%x %X")}')
