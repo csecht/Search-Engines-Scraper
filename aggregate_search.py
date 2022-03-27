@@ -78,45 +78,6 @@ engine_names = {
 }
 
 
-def parse_args(assist: str = None) -> None:
-    """Allow handling of common command line arguments.
-    """
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--about',
-                        help='Provides description, version, GNU license.',
-                        action='store_true',
-                        default=False)
-    parser.add_argument('--use',
-                        help='Program execution and search term examples.',
-                        action='store_true',
-                        default=False)
-
-    args = parser.parse_args()
-    if args.about:
-        print(__doc__)
-        print(f'{"Author:".ljust(13)}', __author__)
-        print(f'{"License:".ljust(13)}', __license__)
-        print(f'{"Copyright:".ljust(13)}', __copyright__)
-        print(f'{"Program:".ljust(13)}', __program_name__)
-        print(f'{"url:".ljust(13)}', __project_url__)
-        print(f'{"Version:".ljust(13)}', __version__)
-        print(f'{"Credits:".ljust(13)}', __credits__)
-        print(f'{"Dev Env:".ljust(13)}', __dev_environment__)
-        print(f'{"Status:".ljust(13)}', __status__)
-        print()
-        sys.exit(0)
-
-    if args.use or str(assist) in '-help, --help':
-        print(f'USAGE: Run {__file__} without arguments,'
-              ' then enter your search term at the prompt.\n')
-        try:
-            syntax = Path('aggregate_search_utils', 'use_syntax.txt').read_text(encoding='utf-8')
-            print(syntax)
-        except FileNotFoundError:
-            print('Sorry, but the use_syntax.txt file is not in the aggregate_search_utils folder.')
-        sys.exit(0)
-
-
 def search_this(search_term: str) -> None:
     """
     Run the input search term through engines specified in dict(engines).
@@ -139,7 +100,7 @@ def search_this(search_term: str) -> None:
             links = results.links()
             titles = results.titles()
 
-        # Prepend the engine tag to each result title.
+        # Prepend the engine tag, in parentheses, to each result title.
         for i, _title in enumerate(titles):
             titles[i] = f'({e_key}) {_title}'
 
@@ -177,6 +138,45 @@ def search_this(search_term: str) -> None:
     print(f'\nResults were written or appended to {FileIt(search_term, "")}')
     ending_msg = f'\n{"=" * 26} END of {len(unique_results)} results {"=" * 26}\n'
     ReportIt(search_term, ending_msg)
+
+
+def parse_args(assist: str = None) -> None:
+    """Allow handling of common command line arguments.
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--about',
+                        help='Provides description, version, GNU license.',
+                        action='store_true',
+                        default=False)
+    parser.add_argument('--use',
+                        help='Program execution and search term examples.',
+                        action='store_true',
+                        default=False)
+
+    args = parser.parse_args()
+    if args.about:
+        print(__doc__)
+        print(f'{"Author:".ljust(13)}', __author__)
+        print(f'{"License:".ljust(13)}', __license__)
+        print(f'{"Copyright:".ljust(13)}', __copyright__)
+        print(f'{"Program:".ljust(13)}', __program_name__)
+        print(f'{"url:".ljust(13)}', __project_url__)
+        print(f'{"Version:".ljust(13)}', __version__)
+        print(f'{"Credits:".ljust(13)}', __credits__)
+        print(f'{"Dev Env:".ljust(13)}', __dev_environment__)
+        print(f'{"Status:".ljust(13)}', __status__)
+        print()
+        sys.exit(0)
+
+    if args.use or str(assist) in '-help, --help':
+        print(f'USAGE: Run {__file__} without arguments,'
+              ' then enter your search term at the prompt.\n')
+        try:
+            syntax = Path('aggregate_search_utils', 'use_syntax.txt').read_text(encoding='utf-8')
+            print(syntax)
+        except FileNotFoundError:
+            print('Sorry, but the use_syntax.txt file is not in the aggregate_search_utils folder.')
+        sys.exit(0)
 
 
 def main() -> None:
