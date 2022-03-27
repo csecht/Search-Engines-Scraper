@@ -1,8 +1,6 @@
-from __future__ import print_function
 
 import csv
 import json
-import io
 import re
 from collections import namedtuple
 
@@ -21,8 +19,8 @@ def print_results(search_engines):
     for engine in search_engines:
         console(engine.__class__.__name__ + ' results')
 
-        for i, v in enumerate(engine.results, 1):
-            console(f'{i:<4}{v["link"]}')
+        for i, _v in enumerate(engine.results, 1):
+            console(f'{i:<4}{_v["link"]}')
         console('')
 
 
@@ -61,14 +59,14 @@ def create_html_data(search_engines):
 
     for engine in search_engines:
         rows = ''
-        for i, v in enumerate(engine.results, 1):
+        for i, _v in enumerate(engine.results, 1):
             data = ''
             if 'title' in engine.se_filters:
-                data += HtmlTemplate.data.format(_replace_with_bold(query, v['title']))
+                data += HtmlTemplate.data.format(_replace_with_bold(query, _v['title']))
             if 'text' in engine.se_filters:
-                data += HtmlTemplate.data.format(_replace_with_bold(query, v['text']))
-            link = _replace_with_bold(query, v['link']) if 'url' in engine.se_filters else v['link']
-            rows += HtmlTemplate.row.format(number=i, href=v['link'], link=link, data=data)
+                data += HtmlTemplate.data.format(_replace_with_bold(query, _v['text']))
+            link = _replace_with_bold(query, _v['link']) if 'url' in engine.se_filters else _v['link']
+            rows += HtmlTemplate.row.format(number=i, href=_v['link'], link=link, data=data)
 
         engine_name = engine.__class__.__name__
         tables += HtmlTemplate.table.format(engine=engine_name, rows=rows)
@@ -85,15 +83,15 @@ def _replace_with_bold(query, data):
 def write_file(data, path, encoding='utf-8'):
     """Writes search results data to file."""
     try:
-        with io.open(path, 'w', encoding=encoding, newline='') as f:
-            if type(data) is list:
-                writer = csv.writer(f)
+        with open(path, 'w', encoding=encoding, newline='') as _f:
+            if isinstance(data, list):
+                writer = csv.writer(_f)
                 writer.writerows(data)
             else:
-                f.write(data)
+                _f.write(data)
             console('Output file: ' + path)
-    except IOError as e:
-        console(e, level=Level.error)
+    except IOError as err:
+        console(err, level=Level.error)
 
 
 def console(msg, end='\n', level=None):
@@ -118,7 +116,7 @@ CSV = 'csv'
 
 class HtmlTemplate:
     """HTML template."""
-    html = u"""<html>
+    html = """<html>
     <head>
     <meta charset="UTF-8">
     <title>Search Results</title>
@@ -139,7 +137,7 @@ class HtmlTemplate:
     </body>
     </html>
     """
-    table = u"""<table>
+    table = """<table>
     <tr><th>{engine} search results </th></tr>
     </table>
     <table>
@@ -147,10 +145,10 @@ class HtmlTemplate:
     </table>
     <br>
     """
-    row = u"""<tr>
+    row = """<tr>
     <td>{number})</td>
     <td><a href="{href}" target="_blank">{link}</a></td>
     {data}
     </tr>
     """
-    data = u"""<tr><td></td><td>{}</td></tr>"""
+    data = """<tr><td></td><td>{}</td></tr>"""
