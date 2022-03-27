@@ -114,9 +114,7 @@ def python_agent() -> str:
 
     :return: Default Python requests package header user agent.
     """
-    # >>>import requests
-    # >>>requests.utils.default_headers()
-    # {'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'}
+    # Obtained from : >>>requests.utils.default_headers()
     return 'python-requests/2.27.1'
 
 
@@ -138,24 +136,20 @@ def rando_function(agents: tuple):
     engine_agent = get_user_agent.rando_function(('fua', 'pua', 'rua'))
 
     :param agents: Tuple of handles for agent functions known to work
-    for the engine. 'bua': bot_agent(),  'fua': firefox_agent(),
+    for an engine. 'bua': bot_agent(),  'fua': firefox_agent(),
     'pua': python_agent(), 'eua': echt_agent(), 'tua': tasos_agent(),
     'rua': random_agent(), 'wua': winfire_agent()
     """
-    pick = choice(agents)
-    if pick == 'rua':
-        agent_pick = random_agent()
-    elif pick == 'pua':
-        agent_pick = python_agent()
-    elif pick == 'eua':
-        agent_pick = echt_agent()
-    elif pick == 'tua':
-        agent_pick = tasos_agent()
-    elif pick == 'bua':
-        agent_pick = bot_agent()
-    elif pick == 'wua':
-        agent_pick = winfire_agent()
-    else:
-        agent_pick = firefox_agent()
+    select = choice(agents)
 
-    return agent_pick
+    agent = {
+        'bua': bot_agent(),
+        'eua': echt_agent(),
+        'fua': firefox_agent(),
+        'pua': python_agent(),
+        'rua': random_agent(),
+        'tua': tasos_agent(),
+        'wua': winfire_agent(),
+    }
+
+    return agent[select]
