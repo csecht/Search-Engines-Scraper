@@ -141,9 +141,9 @@ def search_this(search_term: str) -> None:
     #   so user can glimpse the last engine's, and final, unique count.
     time.sleep(2)
 
-    # Finally, report url and page title from each hit in results list.
-    for _r in unique_results:
-        result = f'\n{blue}{_r[0]}\n{yellow}{_r[1]}{undo_color}'
+    # Finally, report url and page title from each tuple in results list.
+    for tup in unique_results:
+        result = f'\n{blue}{tup[0]}\n{yellow}{tup[1]}{undo_color}'
         ReportIt(search_term, result)
 
     print(f'\nResults were written or appended to {FileIt(search_term, "")}')
