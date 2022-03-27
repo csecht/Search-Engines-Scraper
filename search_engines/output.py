@@ -9,9 +9,8 @@ try:
 except ImportError:
     from .libs.get_terminal_size import get_terminal_size
 
-from .utils import encode_str, decode_bytes
+from .utils import decode_bytes #, encode_str
 from .libs import windows_cmd_encoding
-from .config import PYTHON_VERSION
 
 
 def print_results(search_engines):
@@ -26,7 +25,7 @@ def print_results(search_engines):
 
 def create_csv_data(search_engines):
     """CSV formats the search results."""
-    encoder = decode_bytes if PYTHON_VERSION == 3 else encode_str
+    encoder = decode_bytes
     data = [['query', 'engine', 'domain', 'URL', 'title', 'text']]
 
     for engine in search_engines:
