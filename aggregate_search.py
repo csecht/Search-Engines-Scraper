@@ -154,7 +154,7 @@ def search_this(search_term: str) -> None:
     #   where last is determined by the engines (dict) items' order.
     unique_results = list({tup[:1]: tup for tup in combined_results}.values())
 
-    result_summary = (f'Found {len(combined_results)} total results.\n\n'
+    result_summary = (f'Kept {len(combined_results)} total results.\n\n'
                       f'There are {len(unique_results)} unique results.')
     ReportIt(search_term, result_summary)
 
@@ -171,8 +171,8 @@ def search_this(search_term: str) -> None:
 
     # Finally, report url and page title from each hit in results list.
     for _r in unique_results:
-        result_msg = f'\n{_r[0]}\n{_r[1]}'
-        ReportIt(search_term, result_msg)
+        result = f'\n{_r[0]}\n{_r[1]}'
+        ReportIt(search_term, result)
 
     print(f'\nResults were written or appended to {FileIt(search_term, "")}')
     ending_msg = f'\n{"=" * 26} END of {len(unique_results)} results {"=" * 26}\n'
