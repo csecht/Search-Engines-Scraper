@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'aggregate_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.4.4'
+__version__ = '0.4.5'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -43,7 +43,10 @@ from datetime import datetime
 from pathlib import Path
 
 import search_engines as se
-from aggregate_search_utils import files, reporting, get_user_agent as ua
+from aggregate_search_utils import files, reporting, vcheck, get_user_agent as ua
+
+# Need to check that Python interpreter is at least the required version.
+vcheck.minversion('3.6')
 
 FileIt = files.results2file
 ReportIt = reporting.report_results
