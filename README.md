@@ -76,4 +76,3 @@ will return four pages of url results for the query 'forestry' from the Mojeek e
 ```
 python3 search_engines_cli.py -h
 ```
-If you get `Warning: The soupsieve package is not installed. CSS selectors cannot be used.`, then try running with `python` instead of `python3`.
