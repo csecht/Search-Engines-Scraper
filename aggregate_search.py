@@ -81,7 +81,7 @@ engine_names = {
 # Terminal output ANSI color options.
 blue = '\x1b[1;38;5;33m'
 orange = '\x1b[1;38;5;166m'
-yellow = '\x1b[1;38;5;3m'
+yellow = '\x1b[1;38;5;208m'
 undo_color = '\x1b[0m'  # No color, reset to system default.
 
 # Needed for Windows Command Prompt ANSI text formatting.
