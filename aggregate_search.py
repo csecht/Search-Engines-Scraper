@@ -43,8 +43,8 @@ from datetime import datetime
 from os import system
 from pathlib import Path
 
-import search_engines as se
-from aggregate_search_utils import files, get_user_agent, reporting, vcheck
+from aggregate_utils import files, get_user_agent, reporting, vcheck
+from search_engines import engines as se
 
 # Quit if Python interpreter version is earlier than required.
 vcheck.minversion('3.6')
@@ -183,10 +183,10 @@ def parse_args(assist: str = None) -> None:
         print(f'USAGE: Run {__file__} without arguments,'
               ' then enter your search term at the prompt.\n')
         try:
-            syntax = Path('aggregate_search_utils', 'use_syntax.txt').read_text(encoding='utf-8')
+            syntax = Path('aggregate_utils', 'use_syntax.txt').read_text(encoding='utf-8')
             print(syntax)
         except FileNotFoundError:
-            print('Sorry, but the use_syntax.txt file is not in the aggregate_search_utils folder.')
+            print('Sorry, but the use_syntax.txt file is not in the aggregate_utils folder.')
         sys.exit(0)
 
 
