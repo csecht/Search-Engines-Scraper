@@ -1,5 +1,5 @@
 import re
-from aggregate_search_utils.files import results2file
+from aggregate_utils.files import results2file
 
 # Need to remove color escape codes for text in file.
 ansi_esc = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
