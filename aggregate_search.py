@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'aggregate_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.4.9'
+__version__ = '0.4.10'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -65,10 +65,10 @@ mg_UA = RandoUA(cfg.MG_UAs)
 #   for engine-specific reporting of unique results counts.
 # Engine keys here should match those in config.py ENGINE_NAMES.
 engine = {
-    'DDG': se.Duckduckgo(dgg_UA),
-    'Moj': se.Mojeek(moj_UA),
-    'SP': se.Startpage(sp_UA),
-    'MG': se.Metager(mg_UA),
+    '(DDG)': se.Duckduckgo(dgg_UA),
+    '(Moj)': se.Mojeek(moj_UA),
+    '(SP)': se.Startpage(sp_UA),
+    '(MG)': se.Metager(mg_UA),
 }
 
 # Needed for Windows Command Prompt ANSI text formatting.
@@ -88,7 +88,7 @@ def search_this(search_term: str) -> None:
     for e_key, _e in engine.items():
         # Limit each engine to ~20 max results.
         # MG returns 20-52 results/page depending on UA; DDG ~36.
-        if e_key in 'DDG, MG':
+        if e_key in '(DDG), (MG)':
             results = _e.search(search_term, pages=1)
             links = results.links()[0:20]
             titles = results.titles()[0:20]
@@ -98,16 +98,16 @@ def search_this(search_term: str) -> None:
             links = results.links()
             titles = results.titles()
 
-        # Prepend the engine tag, in parentheses, to each result title.
+        # Prepend the engine tag to each result title.
         for i, _title in enumerate(titles):
-            titles[i] = f'({e_key}) {_title}'
+            titles[i] = f'{e_key} {_title}'
 
         # Pack the link and its title into a list of tuples.
         e_result = list(zip(links, titles))
         combined_results.extend(e_result)
 
         e_count_msg = (f'Keeping the first {len(links)} results'
-                       f' from {cfg.ENGINE_NAMES[e_key]} ({e_key})')
+                       f' from {cfg.ENGINE_NAMES[e_key]} {e_key}')
         ReportIt(search_term, e_count_msg)
 
     # Filter unique urls, saving the last redundant hit from combined_results,
@@ -120,8 +120,8 @@ def search_this(search_term: str) -> None:
 
     # Report number of unique hits retained from each engine.
     for tag in cfg.ENGINE_NAMES:
-        num_uniq = len([hit for hit in unique_results if f'({tag})' in hit[1]])
-        tag_msg = f'{num_uniq} unique results retained from ({tag})'
+        num_uniq = len([hit for hit in unique_results if f'{tag}' in hit[1]])
+        tag_msg = f'{num_uniq} unique results retained from {tag}'
         ReportIt(search_term, tag_msg)
 
     # Need a brief delay before Terminal scrolls to last line of results

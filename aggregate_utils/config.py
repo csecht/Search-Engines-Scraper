@@ -1,11 +1,13 @@
 """
 Configuration file used by aggregate_search.py
 """
+
+# Keys here need to match those in the engine dictionary.
 ENGINE_NAMES = {
-    'DDG': 'DuckDuckGo',
-    'Moj': 'Mojeek',
-    'SP': 'Startpage',
-    'MG': 'MetaGer'
+    '(DDG)': 'DuckDuckGo',
+    '(Moj)': 'Mojeek',
+    '(SP)': 'Startpage',
+    '(MG)': 'MetaGer'
 }
 
 # Assign a random user agent function from get_user_agents() to each engine.
