@@ -46,9 +46,6 @@ from pathlib import Path
 from aggregate_utils import files, get_user_agent, reporting, vcheck, config as cfg
 from search_engines import engines as se
 
-# Quit if Python interpreter version is earlier than required.
-vcheck.minversion('3.6')
-
 FileIt = files.results2file
 RandoUA = get_user_agent.rando_function
 ReportIt = reporting.report_results
@@ -59,10 +56,6 @@ dgg_UA = RandoUA(cfg.DGG_UAs)
 sp_UA = RandoUA(cfg.SP_UAs)
 moj_UA = RandoUA(cfg.MOJ_UAs)
 mg_UA = RandoUA(cfg.MG_UAs)
-
-# Needed for Windows Command Prompt ANSI text formatting.
-if sys.platform[:3] == 'win':
-    system("color")
 
 
 def search_this(search_term: str) -> None:
@@ -183,11 +176,19 @@ def main() -> None:
     Print parameters and header information to Terminal and file.
     Run the search if no arguments are given.
     """
+    # Quit if Python interpreter version is earlier than required.
+    vcheck.minversion('3.6')
+
     parse_args()
+
+    # Needed for Windows Command Prompt ANSI text formatting.
+    if sys.platform[:3] == 'win':
+        system("color")
+
     term = input("\nEnter search term: ").lstrip()
     print()
 
-    # In unlikely event the user seeks syntax assistance at input prompt...
+    # In the unlikely event user seeks assistance at input prompt...
     if term in '-help, --help':
         parse_args(term)
 
