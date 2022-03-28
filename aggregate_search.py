@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'aggregate_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.4.10'
+__version__ = '0.4.11'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -60,17 +60,6 @@ sp_UA = RandoUA(cfg.SP_UAs)
 moj_UA = RandoUA(cfg.MOJ_UAs)
 mg_UA = RandoUA(cfg.MG_UAs)
 
-# Any duplicated url nearest end of the combined_results list will be
-#   retained in the unique_results list, so engine order here matters
-#   for engine-specific reporting of unique results counts.
-# Engine keys here should match those in config.py ENGINE_NAMES.
-engine = {
-    '(DDG)': se.Duckduckgo(dgg_UA),
-    '(Moj)': se.Mojeek(moj_UA),
-    '(SP)': se.Startpage(sp_UA),
-    '(MG)': se.Metager(mg_UA),
-}
-
 # Needed for Windows Command Prompt ANSI text formatting.
 if sys.platform[:3] == 'win':
     system("color")
@@ -78,11 +67,23 @@ if sys.platform[:3] == 'win':
 
 def search_this(search_term: str) -> None:
     """
-    Run the input search term through engines specified in dict(engines).
-    Print and write non-redundant results of urls and page titles.
+    Run the input search term through engines specified in dict(engine).
+    Report to Terminal and to file non-redundant results of urls and
+    page titles.
 
     :param search_term: String with valid syntax on all or most engines.
     """
+
+    # Any duplicated url closest to the end of the combined_results list will
+    #   be retained in the unique_results list, so engine order here matters
+    #   for engine-specific reporting of unique results counts.
+    # Engine keys here should match those in config.py ENGINE_NAMES.
+    engine = {
+        '(DDG)': se.Duckduckgo(dgg_UA),
+        '(Moj)': se.Mojeek(moj_UA),
+        '(SP)': se.Startpage(sp_UA),
+        '(MG)': se.Metager(mg_UA),
+    }
 
     combined_results = []
     for e_key, _e in engine.items():
