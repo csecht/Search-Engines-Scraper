@@ -47,15 +47,14 @@ from aggregate_utils import config as cfg, files, get_user_agent, reporting, vch
 from aggregate_utils import aggr_engines, engine_names, tag_UA
 
 FileIt = files.results2file
-RandoUA = get_user_agent.rando_function
 ReportIt = reporting.report_results
 
 # Random user agent for each engine are assigned here;
 #  the assigned agent is also reported in main().
-ddg_UA = RandoUA(cfg.DDG_UAs)
-sp_UA = RandoUA(cfg.SP_UAs)
-moj_UA = RandoUA(cfg.MOJ_UAs)
-mg_UA = RandoUA(cfg.MG_UAs)
+ddg_UA = get_user_agent.rando_function(cfg.DDG_UAs)
+sp_UA = get_user_agent.rando_function(cfg.SP_UAs)
+moj_UA = get_user_agent.rando_function(cfg.MOJ_UAs)
+mg_UA = get_user_agent.rando_function(cfg.MG_UAs)
 
 
 def search_this(search_term: str) -> None:
