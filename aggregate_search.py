@@ -44,7 +44,7 @@ from os import system
 from pathlib import Path
 
 from aggregate_utils import config as cfg, files, get_user_agent, reporting, vcheck
-from aggregate_utils import aggr_engines, engine_names, tag_UA
+from aggregate_utils import aggr_engines, engine_names, tag_UAs
 
 FileIt = files.results2file
 ReportIt = reporting.report_results
@@ -71,12 +71,12 @@ def search_this(search_term: str) -> None:
         # Limit each engine to ~20 max results.
         # DDG and MG return 20-60 results/page depending on UA.
         if e_key in '(DDG), (MG)':
-            results = _e(tag_UA[e_key]).search(search_term, pages=1)
+            results = _e(tag_UAs[e_key]).search(search_term, pages=1)
             links = results.links()[0:20]
             titles = results.titles()[0:20]
         else:
             # Mojeek and Startpage return 10 results/page.
-            results =  _e(tag_UA[e_key]).search(search_term, pages=2)
+            results =  _e(tag_UAs[e_key]).search(search_term, pages=2)
             links = results.links()
             titles = results.titles()
 
@@ -104,7 +104,7 @@ def search_this(search_term: str) -> None:
     ReportIt(search_term, result_summary)
 
     # Report number of unique hits retained from each engine.
-    for tag in tag_UA:
+    for tag in tag_UAs:
         num_uniq = len([res for res in unique_results if f'{tag}' in res[1]])
         uniq_msg = f'{num_uniq} unique results retained from {tag}'
         ReportIt(search_term, uniq_msg)

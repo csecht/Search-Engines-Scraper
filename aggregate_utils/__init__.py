@@ -23,7 +23,7 @@ engine_names = {
 
 # Needed to assign a user agent to each engine with
 #   SearchEngine search() in aggregate_search.search_this().
-tag_UA = {
+tag_UAs = {
     '(DDG)': 'ddg_UA',
     '(SP)': 'sp_UA',
     '(Moj)': 'moj_UA',
