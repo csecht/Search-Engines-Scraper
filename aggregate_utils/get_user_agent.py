@@ -128,7 +128,7 @@ def winfire_agent() -> str:
     return f'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 {firefox_agent()}'
 
 
-def rando_function(agents: tuple):
+def rando_function(agents: tuple) -> str:
     """
     From available user agent functions, pick one at random from the
     selection of functions provided by *agents*.
