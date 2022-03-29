@@ -105,8 +105,10 @@ def search_this(search_term: str) -> None:
         ReportIt(search_term, e_count_msg)
 
     # Filter unique urls, saving the last redundant hit from combined_results,
-    #   where last is determined by the engines (dict) items' order.
-    unique_results = list({tup[:1]: tup for tup in combined_results}.values())
+    #   where last is determined by the dict(engine) items' order.
+    # Note: in combined_results and unique_results, res[0] is the url,
+    #   res[1] is the title.
+    unique_results = tuple({res[0]: res for res in combined_results}.values())
 
     result_summary = (f'Kept {len(combined_results)} total results.\n\n'
                       f'There are {len(unique_results)} unique results.')
@@ -114,17 +116,17 @@ def search_this(search_term: str) -> None:
 
     # Report number of unique hits retained from each engine.
     for tag in cfg.ENGINE_NAMES:
-        num_uniq = len([hit for hit in unique_results if f'{tag}' in hit[1]])
-        tag_msg = f'{num_uniq} unique results retained from {tag}'
-        ReportIt(search_term, tag_msg)
+        num_uniq = len([res for res in unique_results if f'{tag}' in res[1]])
+        uniq_msg = f'{num_uniq} unique results retained from {tag}'
+        ReportIt(search_term, uniq_msg)
 
     # Need a brief delay before Terminal scrolls to last line of results
     #   so user can glimpse the last engine's, and final, unique count.
     time.sleep(2)
 
-    # Finally, report url and page title from each tuple in results list.
-    for tup in unique_results:
-        result = f'\n{cfg.BLUE}{tup[0]}\n{cfg.YELLOW}{tup[1]}{cfg.NC}'
+    # Finally, report url and page title from each search result.
+    for res in unique_results:
+        result = f'\n{cfg.BLUE}{res[0]}\n{cfg.YELLOW}{res[1]}{cfg.NC}'
         ReportIt(search_term, result)
 
     print(f'\nResults were written or appended to {FileIt(search_term, "")}')
@@ -189,7 +191,7 @@ def main() -> None:
     print()
 
     # In the unlikely event user seeks assistance at input prompt...
-    if term in '-help, --help':
+    if term in '-help, --help, -h':
         parse_args(term)
 
     # Remove spaces in term for better file naming; '+' doesn't affect search.

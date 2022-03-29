@@ -2,7 +2,7 @@
 Configuration file used by aggregate_search.py
 """
 
-# Keys here need to match those in the engine dictionary.
+# Keys (engine tags) here need to match those in dict(engine).
 ENGINE_NAMES = {
     '(DDG)': 'DuckDuckGo',
     '(Moj)': 'Mojeek',
