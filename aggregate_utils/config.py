@@ -2,21 +2,13 @@
 Configuration file used by aggregate_search.py
 """
 
-# Keys (engine tags) here need to match those in dict(engine).
-ENGINE_NAMES = {
-    '(DDG)': 'DuckDuckGo',
-    '(Moj)': 'Mojeek',
-    '(SP)': 'Startpage',
-    '(MG)': 'MetaGer'
-}
-
 # Assign a random user agent function from get_user_agents() to each engine.
 # Any agent may be temporarily blocked when too frequent requests are made,
 #   so try to maximize the choice of most likely to be accepted agents.
 # Bot agents, 'bua', are generally banned by SP; tua may be blocked by Moj.
 # These tuples of dictionary keys are a mix of static and random user agent
 #   functions for random selection by get_user_agents.rando_function().
-DGG_UAs = ('bua', 'fua', 'tua', 'eua')
+DDG_UAs = ('bua', 'fua', 'tua', 'eua')
 SP_UAs = ('fua', 'wua')
 MOJ_UAs = ('bua', 'fua', 'eua', 'rua', 'rua')
 MG_UAs = ('bua', 'fua', 'pua', 'tua', 'eua', 'rua')
