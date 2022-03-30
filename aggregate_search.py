@@ -69,8 +69,8 @@ def search_this(search_term: str) -> None:
     # Any duplicated url closest to the end of the combined_results list will
     #   be retained in the unique_results list, so engine order here matters
     #   for engine-specific reporting of unique results counts.
-    # Engine keys (tags) here should match those in config.py ENGINE_NAMES.
-    engine = {
+    # Engine keys (tags) here should match those in config.py TAG_NAME.
+    engines = {
         '(DDG)': se.Duckduckgo(ddg_UA),
         '(SP)': se.Startpage(sp_UA),
         '(Moj)': se.Mojeek(moj_UA),
@@ -78,10 +78,10 @@ def search_this(search_term: str) -> None:
     }
 
     combined_results = []
-    for e_key, _e in engine.items():
+    for tag, _e in engines.items():
         # Limit each engine to ~20 max results.
         # MG returns ~20-60 results/page depending on UA; DDG ~36.
-        if e_key in '(DDG), (MG)':
+        if tag in '(DDG), (MG)':
             results = _e.search(search_term, pages=1)
             links = results.links()[0:20]
             titles = results.titles()[0:20]
@@ -95,14 +95,14 @@ def search_this(search_term: str) -> None:
 
         # Prepend the engine tag to each result title.
         for i, _title in enumerate(titles):
-            titles[i] = f'{e_key} {_title}'
+            titles[i] = f'{tag} {_title}'
 
         # Pack the result into a list of tuples.
         e_result = list(zip(links, titles, detail))
         combined_results.extend(e_result)
 
         e_count_msg = (f'Keeping the first {len(links)} results'
-                       f' from {cfg.ENGINE_NAMES[e_key]} {e_key}')
+                       f' from {cfg.TAG_NAME[tag]} {tag}')
         ReportIt(search_term, e_count_msg)
 
     # Filter unique urls, saving the last redundant hit from combined_results,
@@ -116,7 +116,7 @@ def search_this(search_term: str) -> None:
     ReportIt(search_term, result_summary)
 
     # Report number of unique results retained from each engine.
-    for tag, _ in cfg.ENGINE_NAMES.items():
+    for tag, _ in cfg.TAG_NAME.items():
         num_uniq = len([res for res in unique_results if f'{tag}' in res[1]])
         uniq_msg = f'{num_uniq} unique results retained from {tag}'
         ReportIt(search_term, uniq_msg)

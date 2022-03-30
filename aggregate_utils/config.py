@@ -4,7 +4,7 @@ Configuration file used by aggregate_search.py
 # Keys here need to match those of the dict(engine) in aggrigate_search.py;
 #   item order should also match (b/c used reporting form for loop).
 # This is to report the proper/correct engine name.
-ENGINE_NAMES = {
+TAG_NAME = {
     '(DDG)': 'DuckDuckGo',
     '(SP)': 'Startpage',
     '(Moj)': 'Mojeek',
