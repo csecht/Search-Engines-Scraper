@@ -33,37 +33,51 @@ From within the Search-Engines-Scraper-master folder, execute `aggregate_search.
 
 then enter your search term at the prompt. Example output:
 ```
-Enter search term: gov forest policies
+Enter search term: gov income tax
 
-User agents used in this search
-DuckDuckGo: search_engines/0.5 Repo: https://github.com/tasos-py/Search-Engines-Scraper
-Mojeek: search_engines/0.5 Repo: https://github.com/csecht/Search-Engines-Scraper
-Startpage: Firefox/89.0
-MetaGer: b'Opera/9.60 (Windows NT 6.0; U; uk) Presto/2.1.1'
+User agents assigned for this search:
+MegaGer:   Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+DuckDuckGo:Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+Startpage: Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/91.0
+Mojeek:    Firefox/89.0
 
+Searching Metager
+Keeping the first 20 results from MetaGer (MG)
 Searching Duckduckgo
-29 hits from DuckDuckGo (DDG)
-Searching Mojeek
-20 hits from Mojeek (M)
+Keeping the first 20 results from DuckDuckGo (DDG)
 Searching Startpage
-20 hits from Startpage (SP)
-Searching MetaGer
-19 hits from MetaGer (MG)
-Found 88 hits.
+Keeping the first 20 results from Startpage (SP)
+Searching Mojeek
+Keeping the first 20 results from Mojeek (Moj)
+Kept 80 total results.
 
-There are 84 unique hits.
-26 unique hits from (DDG)
-19 unique hits from (M)
-20 unique hits from (SP)
-19 unique hits from (MG)
+There are 54 unique results.
+6 unique results retained from (MG)
+10 unique results retained from (DDG)
+18 unique results retained from (SP)
+20 unique results retained from (Moj)
 
-https://www.fs.usda.gov/about-agency/regulations-policies
-(SP) Regulations & Policies | US Forest Service
+https://www.incometax.gov.in/iec/foportal
+(SP) Income Tax Department: Home
+Please use e-mail ID “ITR.helpdesk@incometax.gov.in” for queries related to Income tax return (ITR 1 to ITR 7 for AY 21-22). Refer News & update for the ...
 
-https://fire.ca.gov
-(MG) CAL FIRE - Home ->hosted by Scopia
+https://eportal.incometax.gov.in/iec/foservices/
+(MG) e-Filing Home Page, Income Tax Department, Government of India
+
+
+https://www.usa.gov/taxes
+(SP) Taxes | USAGov
+Find answers to top questions about filing federal income tax, paying, getting refunds, and more.
+
+https://www.usa.gov/check-tax-status
+(DDG) Where&#x27;s My Refund? Check the Status of My Tax Return - USA.gov
+Check Your Federal Tax Refund Status. If you have filed your federal income taxes and expect to receive a refund, you can track its status. Have your Social Security number, filing status, and the exact whole dollar amount of your refund ready.
+
+http://www.taxes.ca.gov/Income_Tax/
+(Moj) Income Tax
+CA.gov ... City/County Business Tax (CCBT) Program - Identifies individuals and businesses with certain filing requirements.
 ```
-...and the remaining results. All results would be printed to Terminal and written to a file automatically titled: Results_gov+forest+policies.txt
+...and all remaining results. All results are printed to Terminal and written to a file automatically titled: Results_gov+forest+policies.txt
 
 Arguments: --help, --about, or --use. The command `aggregate_search.py --use` provides examples of search term syntax.
 
@@ -76,3 +90,5 @@ will return four pages of url results for the query 'forestry' from the Mojeek e
 ```
 python3 search_engines_cli.py -h
 ```
+## Known issues
+Page details are not being reported for MetaGer search results.

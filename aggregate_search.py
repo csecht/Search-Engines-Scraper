@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'aggregate_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.4.14'
+__version__ = '0.4.15'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -71,10 +71,10 @@ def search_this(search_term: str) -> None:
     #   for engine-specific reporting of unique results counts.
     # Engine keys (tags) here should match those in config.py TAG_NAME.
     engines = {
+        '(MG)': se.Metager(mg_UA),
         '(DDG)': se.Duckduckgo(ddg_UA),
         '(SP)': se.Startpage(sp_UA),
         '(Moj)': se.Mojeek(moj_UA),
-        '(MG)': se.Metager(mg_UA),
     }
 
     combined_results = []
@@ -179,8 +179,9 @@ def parse_args(assist: str = None) -> None:
 
 def main() -> None:
     """
+    Run startup checks and housekeeping.
     Print parameters and header information to Terminal and file.
-    Run the search if no arguments are given.
+    Run searches if no arguments are given.
     """
     # Quit if Python interpreter version is earlier than required.
     vcheck.minversion('3.6')
@@ -203,10 +204,10 @@ def main() -> None:
 
     user_agents_used = (
         'User agents assigned for this search:\n'
+        f'{"MegaGer:".ljust(11)}{cfg.ORANGE}{mg_UA}{cfg.NC}\n'
         f'{"DuckDuckGo:".ljust(11)}{cfg.ORANGE}{ddg_UA}{cfg.NC}\n'
         f'{"Startpage:".ljust(11)}{cfg.ORANGE}{sp_UA}{cfg.NC}\n'
         f'{"Mojeek:".ljust(11)}{cfg.ORANGE}{moj_UA}{cfg.NC}\n'
-        f'{"MegaGer:".ljust(11)}{cfg.ORANGE}{mg_UA}{cfg.NC}\n'
     )
 
     file_header = (

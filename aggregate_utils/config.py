@@ -5,10 +5,10 @@ Configuration file used by aggregate_search.py
 #   item order should also match (b/c used reporting form for loop).
 # This is to report the proper/correct engine name.
 TAG_NAME = {
+    '(MG)': 'MetaGer',
     '(DDG)': 'DuckDuckGo',
     '(SP)': 'Startpage',
     '(Moj)': 'Mojeek',
-    '(MG)': 'MetaGer',
 }
 
 # Assign a random user agent function from get_user_agents() to each engine.
