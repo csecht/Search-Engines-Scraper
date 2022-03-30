@@ -93,7 +93,7 @@ def echt_agent() -> str:
 
     :return: csecht GitHub module and forked repository as user agent.
     """
-    return 'search_engines/0.3 Repo: https://github.com/csecht/Search-Engines-Scraper'
+    return 'search_engines/0.4 Repo: https://github.com/csecht/Search-Engines-Scraper'
 
 
 def tasos_agent() -> str:
