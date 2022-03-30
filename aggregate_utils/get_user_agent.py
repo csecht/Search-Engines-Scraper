@@ -89,7 +89,7 @@ def fake_agent() -> str:
 def echt_agent() -> str:
     """
     The forked Search-Engine-Scraper default user agent:
-    'search_engines/0.3 Repo: https://github.com/csecht/Search-Engines-Scraper'
+    'search_engines/0.4 Repo: https://github.com/csecht/Search-Engines-Scraper'
 
     :return: csecht GitHub module and forked repository as user agent.
     """

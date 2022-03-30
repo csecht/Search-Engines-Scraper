@@ -10,6 +10,7 @@ class Metager(SearchEngine):
     def __init__(self, user_agent, proxy=PROXY, timeout=TIMEOUT):
         super().__init__(proxy, timeout)
         self._base_url = 'https://metager.org'
+        # self._base_url = 'https://metager3.de/en'
         self.set_headers({'User-Agent': user_agent})
 
     @staticmethod
@@ -18,7 +19,7 @@ class Metager(SearchEngine):
         selectors = {
             'url': 'a.result-link',
             'title': 'h2.result-title a',
-            'text': 'div.result-description',
+            'text': 'div.result-description', # TODO: FIX no match
             'links': '#results div.result-header',
             'next': '#next-search-link a',
             }

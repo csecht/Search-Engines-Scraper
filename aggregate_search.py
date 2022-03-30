@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'aggregate_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.4.12'
+__version__ = '0.4.14'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -43,14 +43,14 @@ from datetime import datetime
 from os import system
 from pathlib import Path
 
-from aggregate_utils import config as cfg, files, get_user_agent, reporting, vcheck
-from aggregate_utils import aggr_engines, engine_names, tag_UAs
+from aggregate_utils import files, get_user_agent, reporting, vcheck, config as cfg
+from search_engines import engines as se
 
 FileIt = files.results2file
 ReportIt = reporting.report_results
 
-# Random user agent for each engine are assigned here;
-#  the assigned agent is also reported in main().
+# Random user agents for each engine are assigned here;
+#  assigned agents are also reported in main().
 ddg_UA = get_user_agent.rando_function(cfg.DDG_UAs)
 sp_UA = get_user_agent.rando_function(cfg.SP_UAs)
 moj_UA = get_user_agent.rando_function(cfg.MOJ_UAs)
@@ -66,59 +66,72 @@ def search_this(search_term: str) -> None:
     :param search_term: String with valid syntax on all or most engines.
     """
 
+    # Any duplicated url closest to the end of the combined_results list will
+    #   be retained in the unique_results list, so engine order here matters
+    #   for engine-specific reporting of unique results counts.
+    # Engine keys (tags) here should match those in config.py ENGINE_NAMES.
+    engine = {
+        '(DDG)': se.Duckduckgo(ddg_UA),
+        '(SP)': se.Startpage(sp_UA),
+        '(Moj)': se.Mojeek(moj_UA),
+        '(MG)': se.Metager(mg_UA),
+    }
+
     combined_results = []
-    for e_key, _e in aggr_engines.items():
+    for e_key, _e in engine.items():
         # Limit each engine to ~20 max results.
-        # DDG and MG return 20-60 results/page depending on UA.
+        # MG returns ~20-60 results/page depending on UA; DDG ~36.
         if e_key in '(DDG), (MG)':
-            results = _e(tag_UAs[e_key]).search(search_term, pages=1)
+            results = _e.search(search_term, pages=1)
             links = results.links()[0:20]
             titles = results.titles()[0:20]
+            detail = results.text()[0:20]
         else:
             # Mojeek and Startpage return 10 results/page.
-            results =  _e(tag_UAs[e_key]).search(search_term, pages=2)
+            results = _e.search(search_term, pages=2)
             links = results.links()
             titles = results.titles()
+            detail = results.text()
 
         # Prepend the engine tag to each result title.
         for i, _title in enumerate(titles):
             titles[i] = f'{e_key} {_title}'
 
-        # Pack the link and its title into a list of tupled results.
-        e_result = list(zip(links, titles))
+        # Pack the result into a list of tuples.
+        e_result = list(zip(links, titles, detail))
         combined_results.extend(e_result)
 
         e_count_msg = (f'Keeping the first {len(links)} results'
-                       f' from {engine_names[e_key]} {e_key}')
-
+                       f' from {cfg.ENGINE_NAMES[e_key]} {e_key}')
         ReportIt(search_term, e_count_msg)
 
     # Filter unique urls, saving the last redundant hit from combined_results,
     #   where last is determined by the dict(engine) items' order.
     # Note: in combined_results and unique_results, res[0] is the url,
-    #   res[1] is the title.
+    #   res[1] is the page title, res[2] is the detailed description.
     unique_results = tuple({res[0]: res for res in combined_results}.values())
 
     result_summary = (f'Kept {len(combined_results)} total results.\n\n'
                       f'There are {len(unique_results)} unique results.')
     ReportIt(search_term, result_summary)
 
-    # Report number of unique hits retained from each engine.
-    for tag in tag_UAs:
+    # Report number of unique results retained from each engine.
+    for tag, _ in cfg.ENGINE_NAMES.items():
         num_uniq = len([res for res in unique_results if f'{tag}' in res[1]])
         uniq_msg = f'{num_uniq} unique results retained from {tag}'
         ReportIt(search_term, uniq_msg)
 
     # Need a brief delay before Terminal scrolls to last line of results
-    #   so user can glimpse the last engine's unique count.
+    #   so user can glimpse the last engine's, and final, unique count.
     time.sleep(2)
 
-    # Finally, report formatted url and page title for each result.
+    # Finally, report url, page title, and detail from each tuple in results list.
     for res in unique_results:
-        (url, title) = res
+        (url, title, detail) = res
         url = f'\n{cfg.BLUE}{url}'
         title = f'\n{cfg.YELLOW}{title}{cfg.NC}'
-        ReportIt(search_term, url+title)
+        detail = f'\n{detail}'
+        ReportIt(search_term, url+title+detail)
 
     print(f'\nResults were written or appended to {FileIt(search_term, "")}')
     ending_msg = f'\n{"=" * 26} END of {len(unique_results)} results {"=" * 26}\n'
@@ -166,7 +179,6 @@ def parse_args(assist: str = None) -> None:
 
 def main() -> None:
     """
-    Startup housekeeping functions. Prompt for search term entry.
     Print parameters and header information to Terminal and file.
     Run the search if no arguments are given.
     """
@@ -192,8 +204,8 @@ def main() -> None:
     user_agents_used = (
         'User agents assigned for this search:\n'
         f'{"DuckDuckGo:".ljust(11)}{cfg.ORANGE}{ddg_UA}{cfg.NC}\n'
-        f'{"Mojeek:".ljust(11)}{cfg.ORANGE}{moj_UA}{cfg.NC}\n'
         f'{"Startpage:".ljust(11)}{cfg.ORANGE}{sp_UA}{cfg.NC}\n'
+        f'{"Mojeek:".ljust(11)}{cfg.ORANGE}{moj_UA}{cfg.NC}\n'
         f'{"MegaGer:".ljust(11)}{cfg.ORANGE}{mg_UA}{cfg.NC}\n'
     )
 

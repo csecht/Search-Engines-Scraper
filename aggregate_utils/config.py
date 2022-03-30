@@ -1,6 +1,15 @@
 """
 Configuration file used by aggregate_search.py
 """
+# Keys here need to match those of the dict(engine) in aggrigate_search.py;
+#   item order should also match (b/c used reporting form for loop).
+# This is to report the proper/correct engine name.
+ENGINE_NAMES = {
+    '(DDG)': 'DuckDuckGo',
+    '(SP)': 'Startpage',
+    '(Moj)': 'Mojeek',
+    '(MG)': 'MetaGer',
+}
 
 # Assign a random user agent function from get_user_agents() to each engine.
 # Any agent may be temporarily blocked when too frequent requests are made,
@@ -9,9 +18,9 @@ Configuration file used by aggregate_search.py
 # These tuples of dictionary keys are a mix of static and random user agent
 #   functions for random selection by get_user_agents.rando_function().
 DDG_UAs = ('bua', 'fua', 'tua', 'eua')
-SP_UAs = ('fua', 'wua')
-MOJ_UAs = ('bua', 'fua', 'eua', 'rua', 'rua')
 MG_UAs = ('bua', 'fua', 'pua', 'tua', 'eua', 'rua')
+MOJ_UAs = ('bua', 'fua', 'eua', 'rua', 'rua')
+SP_UAs = ('fua', 'wua')
 
 # Terminal output ANSI foreground colors.
 BLUE = '\x1b[1;38;5;33m'
