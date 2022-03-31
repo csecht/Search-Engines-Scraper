@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'aggregate_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.4.16'
+__version__ = '0.4.17'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -129,6 +129,9 @@ def search_this(search_term: str) -> None:
         (url, title, detail) = res
         url = f'\n{cfg.BLUE}{url}'
         title = f'\n{cfg.YELLOW}{title}{cfg.NC}'
+        # Use this MG condition until can find proper selector for 'text'
+        if '(MG)' in title:
+            detail = f'Hosted {detail}.'
         detail = f'\n{detail}'
         ReportIt(search_term, url+title+detail)
 

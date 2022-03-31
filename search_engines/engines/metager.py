@@ -19,11 +19,18 @@ class Metager(SearchEngine):
         selectors = {
             'url': 'a.result-link',
             'title': 'h2.result-title a',
-            'text': 'div.result-description', # TODO: FIX no match
+            # DO THIS: FIX no text match to <div class="result-description">
+            # 'text': '.result-description',
+            # This works, i.e. -> "by Bing", or the title:
+            'text': 'div.result-headline .result-hoster', #  or 'h2.result-title a',
             'links': '#results div.result-header',
             'next': '#next-search-link a',
             }
         return selectors[element]
+    # From SearchAggregator script, this works:
+    #   soup = BeautifulSoup(request.content, 'html.parser')
+    #   for i in soup.find_all('div', {'class': 'result-description'}):
+    #       details.append(i.text.strip())
 
     def redirect(self, query):
         """Redirects initial request to actual result page."""
