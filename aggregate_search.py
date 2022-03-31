@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'aggregate_search.py'
 __project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.4.15'
+__version__ = '0.4.16'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -40,10 +40,9 @@ import argparse
 import sys
 import time
 from datetime import datetime
-from os import system
 from pathlib import Path
 
-from aggregate_utils import files, get_user_agent, reporting, vcheck, config as cfg
+from aggregate_utils import files, get_user_agent, reporting, config as cfg
 from search_engines import engines as se
 
 FileIt = files.results2file
@@ -125,7 +124,7 @@ def search_this(search_term: str) -> None:
     #   so user can glimpse the last engine's, and final, unique count.
     time.sleep(2)
 
-    # Finally, report url, page title, and detail from each tuple in results list.
+    # Finally, report url, page title, and page detail from each result.
     for res in unique_results:
         (url, title, detail) = res
         url = f'\n{cfg.BLUE}{url}'
@@ -179,18 +178,11 @@ def parse_args(assist: str = None) -> None:
 
 def main() -> None:
     """
-    Run startup checks and housekeeping.
-    Print parameters and header information to Terminal and file.
+    Print user agents and header information to Terminal and file.
     Run searches if no arguments are given.
     """
-    # Quit if Python interpreter version is earlier than required.
-    vcheck.minversion('3.6')
 
     parse_args()
-
-    # Needed for Windows Command Prompt ANSI text formatting.
-    if sys.platform[:3] == 'win':
-        system("color")
 
     term = input("\nEnter search term: ").lstrip()
     print()
