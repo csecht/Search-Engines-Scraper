@@ -18,7 +18,7 @@ TAG_NAME = {
 # These tuples of dictionary keys are a mix of static and random user agent
 #   functions for random selection by get_user_agents.rando_function().
 DDG_UAs = ('bua', 'fua', 'tua', 'eua')
-MG_UAs = ('bua', 'fua', 'pua', 'tua', 'eua', 'rua')
+MG_UAs = ('bua', 'fua', 'pua', 'tua', 'eua', 'rua', 'rua')
 MOJ_UAs = ('bua', 'fua', 'eua', 'rua', 'rua')
 SP_UAs = ('fua', 'wua')
 
