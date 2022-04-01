@@ -19,11 +19,9 @@ class Metager(SearchEngine):
         selectors = {
             'url': 'a.result-link',
             'title': 'h2.result-title a',
-            # DO THIS: FIX no text match to <div class="result-description">
-            # 'text': '.result-description',
-            # This works, i.e. -> "by Bing", or the title:
-            'text': 'div.result-headline .result-hoster', #  or 'h2.result-title a',
-            'links': '#results div.result-header',
+            'text': 'div.result-description',
+            # 'text': 'a.result-hoster',  # i.e. => by Bing
+            'links': '#results div.result',
             'next': '#next-search-link a',
             }
         return selectors[element]
