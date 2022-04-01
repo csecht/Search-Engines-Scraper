@@ -20,7 +20,7 @@ class Startpage(SearchEngine):
             'url': 'a.w-gl__result-url', 
             'title': 'a.w-gl__result-title h3', 
             'text': 'p.w-gl__description', 
-            'links': 'section.w-gl div.w-gl__result', 
+            'parent': 'section.w-gl div.w-gl__result',
             'next': {'form': 'form.pagination__form', 'text': 'Next'},
             'search_form': 'form#search input[name]',
             'blocked_form': 'form#blocked_feedback_form'

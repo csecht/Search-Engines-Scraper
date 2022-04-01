@@ -21,7 +21,7 @@ class Metager(SearchEngine):
             'title': 'h2.result-title a',
             'text': 'div.result-description',
             # 'text': 'a.result-hoster',  # i.e. => by Bing
-            'links': '#results div.result',
+            'parent': '#results div.result',
             'next': '#next-search-link a',
             }
         return selectors[element]

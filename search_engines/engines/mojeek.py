@@ -16,7 +16,7 @@ class Mojeek(SearchEngine):
             'url': 'a.ob[href]',
             'title': 'a.ob[href]',
             'text': 'p.s',
-            'links': 'ul.results-standard > li',
+            'parent': 'ul.results-standard > li',
             'next': {'href': 'div.pagination li a[href]', 'text': 'Next'}
         }
         return selectors[element]

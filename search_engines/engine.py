@@ -88,7 +88,7 @@ class SearchEngine:
 
     def _filter_results(self, soup):
         """Processes and filters the search results."""
-        tags = soup.select(self._selectors('links'))
+        tags = soup.select(self._selectors('parent'))
         results = [self._item(link) for link in tags]
 
         if 'url' in self.se_filters:
