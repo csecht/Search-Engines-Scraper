@@ -49,4 +49,3 @@ class Metager(SearchEngine):
             url = self.redirect(next_page['href'])
 
         return {'url': url, 'data': None}
-
