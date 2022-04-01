@@ -25,16 +25,11 @@ class Metager(SearchEngine):
             'next': '#next-search-link a',
             }
         return selectors[element]
-    # From SearchAggregator script, this works:
-    #   soup = BeautifulSoup(request.content, 'html.parser')
-    #   for i in soup.find_all('div', {'class': 'result-description'}):
-    #       details.append(i.text.strip())
 
     def redirect(self, query):
         """Redirects initial request to actual result page."""
         response = self._get_page(query)
         src_page = BeautifulSoup(response.html, "html.parser")
-        # url = src_page.select_one('iframe').get('src')
         url = src_page.select_one('#mg-framed').get('src')
 
         return url
