@@ -5,7 +5,7 @@ from search_engines.config import PROXY, TIMEOUT
 
 
 class Metager(SearchEngine):
-    """Searches metager.org"""
+    """Searches metager3.de/en"""
 
     def __init__(self, user_agent, proxy=PROXY, timeout=TIMEOUT):
         super().__init__(proxy, timeout)
