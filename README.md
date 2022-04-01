@@ -20,14 +20,14 @@ _[BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)_
 Developed in Python 3.8-3.9
 
 ## Installation
-Download the .zip code archive, extract the .zip file, open Terminal/Command Prompt in the Search-Engines-Scraper-master folder, run the setup file:
+Download the .zip code archive, extract the .zip file, open Terminal/Command Prompt in the search-aggregator-main folder, run the setup file:
 
 `python3 setup.py install`
 
 Done!
 
 ## Usage  
-From within the Search-Engines-Scraper-master folder, execute `aggregate_search.py` from Terminal/Command Prompt:
+From within the search-aggregator-main folder, execute `aggregate_search.py` from Terminal/Command Prompt:
 - Linux/MacOS: `python3 aggregate_search.py` or `./aggregate_search.py`
 - Windows: `python3 aggregate_search.py` or `python aggregate_search.py` or `py aggregate_search.py`, depending on your system environment. 
 
