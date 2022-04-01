@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<style type='text/css'>
+    <!-
+        .tab{margin-left:40px;}
+    ->
+</style>
 <meta charset="utf-8"><!--markdown .md to HTML conversion courtesy of https://markdowntohtml.com/ -->
 <h1 id="search-engines-scraper-cse">Search Aggregator</h1>
 <p>Aggregates results from several search engines with an easily read text output. This is a fork of Search Engines Scraper by tasos_py. It is run from
@@ -29,40 +34,50 @@ From within the Search-Engines-Scraper-master folder, execute <code>aggregate_se
 <li>Windows: <code>python3 aggregate_search.py</code> or <code>python aggregate_search.py</code> or <code>py aggregate_search.py</code>, depending on your system environment.
 </ul>
 Example output:
-<pre><code>Enter search term: gov forest policies
+<pre><code>    Enter search term: gov forest policies
 
-User agents used <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span> search
-DuckDuckGo: search_engines<span class="hljs-regexp">/0.5 Repo: https:/</span>/github.com/tasos-py/Search-Engines-Scraper
-Mojeek: search_engines<span class="hljs-regexp">/0.5 Repo: https:/</span>/github.com/csecht/Search-Engines-Scraper
-Startpage: Firefox/<span class="hljs-number">89.0</span>
-MetaGer: b<span class="hljs-string">'Opera/9.60 (Windows NT 6.0; U; uk) Presto/2.1.1'</span>
+    User agents assigned for this search:
+    MegaGer:   Firefox/90.0
+    DuckDuckGo:Firefox/91.0
+    Startpage: Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/90.0
+    Mojeek:    b'Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/125.2 (KHTML, like Gecko) Safari/125.7'
 
-Searching Duckduckgo
-<span class="hljs-number">29</span> hits <span class="hljs-keyword">from</span> DuckDuckGo (DDG)
-Searching Mojeek
-<span class="hljs-number">20</span> hits <span class="hljs-keyword">from</span> Mojeek (M)
-Searching Startpage
-<span class="hljs-number">20</span> hits <span class="hljs-keyword">from</span> Startpage (SP)
-Searching MetaGer
-<span class="hljs-number">19</span> hits <span class="hljs-keyword">from</span> MetaGer (MG)
-Found <span class="hljs-number">88</span> hits.
+    Searching Metager
+    Keeping the first 20 results from MetaGer (MG)
+    Searching Duckduckgo
+    Keeping the first 20 results from DuckDuckGo (DDG)
+    Searching Startpage
+    Keeping the first 19 results from Startpage (SP)
+    Searching Mojeek
+    Keeping the first 20 results from Mojeek (Moj)
+    Kept 79 total results.
 
-There are <span class="hljs-number">84</span> unique hits.
-<span class="hljs-number">26</span> unique hits <span class="hljs-keyword">from</span> (DDG)
-<span class="hljs-number">19</span> unique hits <span class="hljs-keyword">from</span> (M)
-<span class="hljs-number">20</span> unique hits <span class="hljs-keyword">from</span> (SP)
-<span class="hljs-number">19</span> unique hits <span class="hljs-keyword">from</span> (MG)
+    There are 68 unique results.
+    12 unique results retained from (MG)
+    18 unique results retained from (DDG)
+    18 unique results retained from (SP)
+    20 unique results retained from (Moj)
 
-https:<span class="hljs-regexp">//www.fs.usda.gov/about-agency/regulations-policies
-(SP) Regulations &amp; Policies | US Forest Service
+    https://www.fs.usda.gov/about-agency/regulations-policies
+    (SP) Regulations & Policies | US Forest Service
+    Federal agencies operate under the U.S. Code and the Code of Federal Regulations. These laws help form our directives and policies on how we manage national ...
 
-https://</span>fire.ca.gov
-(MG) CAL FIRE - Home<span class="hljs-function"> -&gt;</span>hosted <span class="hljs-keyword">by</span> Scopia
+    https://www.fs.usda.gov/science-technology/forest-products-modernization/policy-updates
+    (MG) Policy Updates | US Forest Service - USDA
+    Timber sales production in the Chattahoochee National Forest, GA. (Forest Service photo by Cecilio Ricardo). The USDA Forest Service recently issued…
+
+    https://portal.ct.gov/DEEP/Forestry/Forest-Policy-and-Planning
+    (Moj) CT Forest Policy and Planning
+    Some of the features on CT.gov will not function properly with out javascript enabled. ... Get the latest updates on COVID-19 at ct.gov/coronavirus .
+
+    https://kingcounty.gov/services/environment/water-and-land/forestry/forest-policy.aspx
+    (DDG) Forest policy and planning - King County
+    The Forestry Program is guided by the King County Comprehensive Plan, which establishes policies on the management of rural land and the uses that are suitable to the rural area. The Comprehensive Plan directs that strategies be developed to maintain forest cover and support the practice of sustainable forestry.
 </code></pre><p>...and the remaining results. All results would be printed to Terminal and written to a file automatically titled: Results_gov+forest+policies.txt</p>
 <p>Arguments: --help, --about, or --use.  The command <code>aggregate_search.py --use</code> provides examples of search term syntax.</p>
 
 <h3 id="single-engine-search">Single engine search</h3>
-<p>The original command line client from Search-Engines_Scraper, <code>search_engines_cli.py</code> can be used for customized searches. For example,</p>
+<p>The original command line client from Search-Engines-Scraper, <code>search_engines_cli.py</code> can be used for customized searches. For example,</p>
 <pre><code>python3 search_engines_cli<span class="hljs-selector-class">.py</span> -<span class="hljs-selector-tag">q</span> forestry -<span class="hljs-selector-tag">p</span> <span class="hljs-number">4</span> -e mojeek
 </code></pre><p>will return four pages of url results for the query &#39;forestry&#39; from the Mojeek engine. To see additional search and output options, use the help command,</p>
 <pre><code>python3 search_engines_cli<span class="hljs-selector-class">.py</span> -h

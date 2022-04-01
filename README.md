@@ -78,7 +78,7 @@ The Forestry Program is guided by the King County Comprehensive Plan, which esta
 Arguments: --help, --about, or --use. The command `aggregate_search.py --use` provides examples of search term syntax.
 
 ### Single engine search
-The original command line client from Search-Engines_Scraper, `search_engines_cli.py` can be used for customized searches. For example, 
+The original command line client from Search-Engines-Scraper, `search_engines_cli.py` can be used for customized searches. For example, 
 ```
 python3 search_engines_cli.py -q forestry -p 4 -e mojeek
 ```
