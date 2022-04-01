@@ -33,49 +33,45 @@ From within the Search-Engines-Scraper-master folder, execute `aggregate_search.
 
 then enter your search term at the prompt. Example output:
 ```
-Enter search term: gov income tax
+Enter search term: gov forest policy
 
 User agents assigned for this search:
-MegaGer:   Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
-DuckDuckGo:Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
-Startpage: Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/91.0
-Mojeek:    Firefox/89.0
+MegaGer:   Firefox/90.0
+DuckDuckGo:Firefox/91.0
+Startpage: Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/90.0
+Mojeek:    b'Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/125.2 (KHTML, like Gecko) Safari/125.7'
 
 Searching Metager
 Keeping the first 20 results from MetaGer (MG)
 Searching Duckduckgo
 Keeping the first 20 results from DuckDuckGo (DDG)
 Searching Startpage
-Keeping the first 20 results from Startpage (SP)
+Keeping the first 19 results from Startpage (SP)
 Searching Mojeek
 Keeping the first 20 results from Mojeek (Moj)
-Kept 80 total results.
+Kept 79 total results.
 
-There are 54 unique results.
-6 unique results retained from (MG)
-10 unique results retained from (DDG)
+There are 68 unique results.
+12 unique results retained from (MG)
+18 unique results retained from (DDG)
 18 unique results retained from (SP)
 20 unique results retained from (Moj)
 
-https://www.incometax.gov.in/iec/foportal
-(SP) Income Tax Department: Home
-Please use e-mail ID “ITR.helpdesk@incometax.gov.in” for queries related to Income tax return (ITR 1 to ITR 7 for AY 21-22). Refer News & update for the ...
+https://www.fs.usda.gov/about-agency/regulations-policies
+(SP) Regulations & Policies | US Forest Service
+Federal agencies operate under the U.S. Code and the Code of Federal Regulations. These laws help form our directives and policies on how we manage national ...
 
-https://eportal.incometax.gov.in/iec/foservices/
-(MG) e-Filing Home Page, Income Tax Department, Government of India
+https://www.fs.usda.gov/science-technology/forest-products-modernization/policy-updates
+(MG) Policy Updates | US Forest Service - USDA
+Timber sales production in the Chattahoochee National Forest, GA. (Forest Service photo by Cecilio Ricardo). The USDA Forest Service recently issued…
 
+https://portal.ct.gov/DEEP/Forestry/Forest-Policy-and-Planning
+(Moj) CT Forest Policy and Planning
+Some of the features on CT.gov will not function properly with out javascript enabled. ... Get the latest updates on COVID-19 at ct.gov/coronavirus .
 
-https://www.usa.gov/taxes
-(SP) Taxes | USAGov
-Find answers to top questions about filing federal income tax, paying, getting refunds, and more.
-
-https://www.usa.gov/check-tax-status
-(DDG) Where&#x27;s My Refund? Check the Status of My Tax Return - USA.gov
-Check Your Federal Tax Refund Status. If you have filed your federal income taxes and expect to receive a refund, you can track its status. Have your Social Security number, filing status, and the exact whole dollar amount of your refund ready.
-
-http://www.taxes.ca.gov/Income_Tax/
-(Moj) Income Tax
-CA.gov ... City/County Business Tax (CCBT) Program - Identifies individuals and businesses with certain filing requirements.
+https://kingcounty.gov/services/environment/water-and-land/forestry/forest-policy.aspx
+(DDG) Forest policy and planning - King County
+The Forestry Program is guided by the King County Comprehensive Plan, which establishes policies on the management of rural land and the uses that are suitable to the rural area. The Comprehensive Plan directs that strategies be developed to maintain forest cover and support the practice of sustainable forestry.
 ```
 ...and all remaining results. All results are printed to Terminal and written to a file automatically titled: Results_gov+forest+policies.txt
 
@@ -91,4 +87,4 @@ will return four pages of url results for the query 'forestry' from the Mojeek e
 python3 search_engines_cli.py -h
 ```
 ## Known issues
-Page details are not being reported for MetaGer search results.
+Waiting for comments...
