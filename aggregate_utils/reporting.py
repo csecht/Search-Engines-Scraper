@@ -1,4 +1,11 @@
+#!/usr/bin/env python3
 import re
+
+"""
+Handle combined reporting for clean terminal/console printing and 
+writing results files.
+"""
+
 from aggregate_utils.files import results2file
 
 # Need to remove color escape codes for text in file.

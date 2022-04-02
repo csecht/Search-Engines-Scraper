@@ -31,7 +31,7 @@ __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'aggregate_search.py'
 __project_url__ = 'https://github.com/csecht/search-aggregator'
-__version__ = '0.4.19'
+__version__ = '0.4.20'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -66,8 +66,8 @@ def search_this(search_term: str) -> None:
     """
 
     # Any duplicated url closest to the end of the combined_results list will
-    #   be retained in the unique_results list, so engine order here matters
-    #   for engine-specific reporting of unique results counts.
+    #   be retained in the unique_results list, so dict(engines) order matters
+    #   for the final number of unique results from each engine.
     # Engine keys (tags) here should match those in config.py TAG_NAME.
     engines = {
         '(MG)': se.Metager(mg_UA),
@@ -75,16 +75,17 @@ def search_this(search_term: str) -> None:
         '(SP)': se.Startpage(sp_UA),
         '(Moj)': se.Mojeek(moj_UA),
     }
-
     combined_results = []
+
+    # From each engine, balance number of initial results so number of
+    #   unique results retained are approximately even.
     for tag, _e in engines.items():
-        # Limit each engine to ~20 max results.
-        # MG returns ~20-60 results/page depending on UA; DDG ~36.
+        # Depending on UA, DGG returns ~20-40 results/page, MG ~20-40.
         if tag in '(DDG), (MG)':
             results = _e.search(search_term, pages=1)
-            links = results.links()[0:20]
-            titles = results.titles()[0:20]
-            details = results.text()[0:20]
+            links = results.links()[0:30]
+            titles = results.titles()
+            details = results.text()
         else:
             # Mojeek and Startpage return 10 results/page.
             results = _e.search(search_term, pages=2)
@@ -96,9 +97,8 @@ def search_this(search_term: str) -> None:
         for i, _title in enumerate(titles):
             titles[i] = f'{tag} {_title}'
 
-        # Pack the result into a list of tuples.
-        e_result = list(zip(links, titles, details))
-        combined_results.extend(e_result)
+        # Pack each engine's result into a list of tuples.
+        combined_results.extend(list(zip(links, titles, details)))
 
         e_count_msg = (f'Keeping the first {len(links)} results'
                        f' from {cfg.TAG_NAME[tag]} {tag}')
@@ -125,12 +125,11 @@ def search_this(search_term: str) -> None:
     time.sleep(2)
 
     # Finally, report url, page title, and page detail from each result.
-    for res in unique_results:
-        (url, title, details) = res
-        url = f'\n{cfg.BLUE}{url}'
-        title = f'\n{cfg.YELLOW}{title}{cfg.NC}'
-        details = f'\n{details}'
-        ReportIt(search_term, url+title+details)
+    for (_u, _t, _d) in unique_results:
+        url = f'\n{cfg.BLUE}{_u}'
+        title = f'\n{cfg.YELLOW}{_t}{cfg.NC}'
+        detail = f'\n{_d}'
+        ReportIt(search_term, url+title+detail)
 
     print(f'\nResults were written or appended to {FileIt(search_term, "")}')
     ending_msg = f'\n{"=" * 26} END of {len(unique_results)} results {"=" * 26}\n'
