@@ -1,7 +1,7 @@
 import sys
+from os import system
 
 from aggregate_utils import vcheck
-from os import system
 
 about = {
     'author': 'Craig Echt',
