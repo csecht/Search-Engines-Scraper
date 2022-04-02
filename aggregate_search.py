@@ -30,8 +30,8 @@ __author__ = 'Craig Echt'
 __copyright__ = 'Copyright (C) 2022 C.S. Echt'
 __license__ = 'GNU General Public License'
 __program_name__ = 'aggregate_search.py'
-__project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__version__ = '0.4.18'
+__project_url__ = 'https://github.com/csecht/search-aggregator'
+__version__ = '0.4.19'
 __credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
 __dev_environment__ = 'Python 3.8'
 __status__ = 'Development Status :: 1 - Alpha'
@@ -146,7 +146,7 @@ def parse_args(assist: str = None) -> None:
                         action='store_true',
                         default=False)
     parser.add_argument('--use',
-                        help='Program execution and search term examples.',
+                        help='Search term syntax and examples.',
                         action='store_true',
                         default=False)
 
@@ -214,7 +214,5 @@ if __name__ == "__main__":
     try:
         main()
     except (EOFError, KeyboardInterrupt):
-        # Note: Ctrl-c may not work with PyCharm Terminal interpreter when
-        #   waiting for Terminal input; Ctrl-d does work.
         print(' *** Keyboard interrupt: User has quit the program ***\n')
         sys.exit()
