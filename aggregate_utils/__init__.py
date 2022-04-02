@@ -9,7 +9,7 @@ about = {
     'license': 'GNU General Public License',
     'program_name': 'aggregate_search.py',
     'project_url': 'https://github.com/csecht/search-aggregator',
-    'version': '0.4.22',
+    'version': '0.4.23',
     'credits': 'Tasos M Adamopoulos (tasos-py) and Mario Vilas',
     'dev_environment': 'Python 3.8',
     'status': 'Development Status :: 1 - Alpha',
