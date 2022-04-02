@@ -3,6 +3,17 @@ import sys
 from aggregate_utils import vcheck
 from os import system
 
+about = {
+    'author': 'Craig Echt',
+    'copyright': 'Copyright (C) 2022 C.S. Echt',
+    'license': 'GNU General Public License',
+    'program_name': 'aggregate_search.py',
+    'project_url': 'https://github.com/csecht/search-aggregator',
+    'version': '0.4.22',
+    'credits': 'Tasos M Adamopoulos (tasos-py) and Mario Vilas',
+    'dev_environment': 'Python 3.8',
+    'status': 'Development Status :: 1 - Alpha',
+}
 
 # Quit if Python interpreter version is earlier than required.
 vcheck.minversion('3.6')

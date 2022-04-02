@@ -26,15 +26,6 @@ unintended search filtering, and automatically store results to file.
 
 See LICENCE file for additional licenses of repository components.
 """
-__author__ = 'Craig Echt'
-__copyright__ = 'Copyright (C) 2022 C.S. Echt'
-__license__ = 'GNU General Public License'
-__program_name__ = 'aggregate_search.py'
-__project_url__ = 'https://github.com/csecht/search-aggregator'
-__version__ = '0.4.20'
-__credits__ = 'Tasos M Adamopoulos (tasos-py) and Mario Vilas'
-__dev_environment__ = 'Python 3.8'
-__status__ = 'Development Status :: 1 - Alpha'
 
 import argparse
 import sys
@@ -42,27 +33,44 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-from aggregate_utils import files, get_user_agent, reporting, config as cfg
+from aggregate_utils import about, files, get_user_agent, reporting, config as cfg
 from search_engines import engines as se
 
 FileIt = files.results2file
 ReportIt = reporting.report_results
 
-# Random user agents for each engine are assigned here;
-#  assigned agents are also reported in main().
+# Random user agents for each engine are assigned here.
 ddg_UA = get_user_agent.rando_function(cfg.DDG_UAs)
 sp_UA = get_user_agent.rando_function(cfg.SP_UAs)
 moj_UA = get_user_agent.rando_function(cfg.MOJ_UAs)
 mg_UA = get_user_agent.rando_function(cfg.MG_UAs)
 
 
+def report_agents(term: str) -> None:
+    """
+    Print to Terminal and result file user agents assigned to each
+    engine.
+
+    :param term: The input search term; used for file naming.
+    """
+    user_agents_used = (
+        'User agents assigned for this search:\n'
+        f'{"MegaGer:".ljust(11)}{cfg.ORANGE}{mg_UA}{cfg.NC}\n'
+        f'{"DuckDuckGo:".ljust(11)}{cfg.ORANGE}{ddg_UA}{cfg.NC}\n'
+        f'{"Startpage:".ljust(11)}{cfg.ORANGE}{sp_UA}{cfg.NC}\n'
+        f'{"Mojeek:".ljust(11)}{cfg.ORANGE}{moj_UA}{cfg.NC}\n'
+    )
+
+    ReportIt(term, user_agents_used)
+
+
 def search_this(search_term: str) -> None:
     """
     Run the input search term through engines specified in dict(engine).
     Report to Terminal and to file non-redundant results of urls and
-    page titles.
+    page titles and page text details.
 
-    :param search_term: String with valid syntax on all or most engines.
+    :param search_term: String with valid syntax for all or most engines.
     """
 
     # Any duplicated url closest to the end of the combined_results list will
@@ -152,15 +160,15 @@ def parse_args(assist: str = None) -> None:
     args = parser.parse_args()
     if args.about:
         print(__doc__)
-        print(f'{"Author:".ljust(13)}', __author__)
-        print(f'{"License:".ljust(13)}', __license__)
-        print(f'{"Copyright:".ljust(13)}', __copyright__)
-        print(f'{"Program:".ljust(13)}', __program_name__)
-        print(f'{"url:".ljust(13)}', __project_url__)
-        print(f'{"Version:".ljust(13)}', __version__)
-        print(f'{"Credits:".ljust(13)}', __credits__)
-        print(f'{"Dev Env:".ljust(13)}', __dev_environment__)
-        print(f'{"Status:".ljust(13)}', __status__)
+        print(f'{"Author:".ljust(10)}', about['author'])
+        print(f'{"License:".ljust(10)}', about['license'])
+        print(f'{"Copyright:".ljust(10)}', about['copyright'])
+        print(f'{"Program:".ljust(10)}', about['program_name'])
+        print(f'{"url:".ljust(10)}', about['project_url'])
+        print(f'{"Version:".ljust(10)}', about['version'])
+        print(f'{"Credits:".ljust(10)}', about['credits'])
+        print(f'{"Dev Env:".ljust(10)}', about['dev_environment'])
+        print(f'{"Status:".ljust(10)}', about['status'])
         print()
         sys.exit(0)
 
@@ -193,18 +201,11 @@ def main() -> None:
     # Remove spaces in term for better file naming; '+' doesn't affect search.
     term = term.replace(' ', '+')
 
-    user_agents_used = (
-        'User agents assigned for this search:\n'
-        f'{"MegaGer:".ljust(11)}{cfg.ORANGE}{mg_UA}{cfg.NC}\n'
-        f'{"DuckDuckGo:".ljust(11)}{cfg.ORANGE}{ddg_UA}{cfg.NC}\n'
-        f'{"Startpage:".ljust(11)}{cfg.ORANGE}{sp_UA}{cfg.NC}\n'
-        f'{"Mojeek:".ljust(11)}{cfg.ORANGE}{moj_UA}{cfg.NC}\n'
-    )
-
     file_header = (
         f'SEARCH TERM: {term}    TIME: {datetime.now().strftime("%x %X")}')
     FileIt(term, f'{file_header}\n\n')
-    ReportIt(term, user_agents_used)
+
+    report_agents(term)
 
     search_this(term)
 
