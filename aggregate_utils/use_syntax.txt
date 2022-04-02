@@ -1,5 +1,5 @@
 Specifiers like site:edu, 'dogs AND cats', or 'dogs -cats' may not work as expected, specifically with Startpage.
-Example search terms:
+Example search terms => effect or result:
     paint => Results prefer 'paint', but also finds 'Paints', 'painter', 'painting', etc.
     "jump the shark" => Double quote a word or phrase for exact matches.
     jump AND shark => Finds any combination of 'jump(s)' with 'shark(s)'.
