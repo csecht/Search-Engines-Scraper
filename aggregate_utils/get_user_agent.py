@@ -88,12 +88,13 @@ def fake_agent() -> str:
 
 def echt_agent() -> str:
     """
-    The forked Search-Engine-Scraper default user agent:
-    'search_engines/0.4 Repo: https://github.com/csecht/Search-Engines-Scraper'
+    This repository's default user agent:
+    'aggregate_search/0.4 Repo: https://github.com/csecht/search-aggregator'
+    Keep version up-to-date.
 
-    :return: csecht GitHub module and forked repository as user agent.
+    :return: The search-aggregator user agent.
     """
-    return 'search_engines/0.4 Repo: https://github.com/csecht/Search-Engines-Scraper'
+    return 'aggregate_search/0.4 Repo: https://github.com/csecht/search-aggregator'
 
 
 def tasos_agent() -> str:
