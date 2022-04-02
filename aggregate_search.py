@@ -88,12 +88,12 @@ def search_this(search_term: str) -> None:
     # From each engine, balance number of initial results so number of
     #   unique results retained are approximately even.
     for tag, _e in engines.items():
-        # Depending on UA, DGG returns ~20-40 results/page, MG ~20-40.
+        # Depending on UA, DGG returns ~20-60 results/page, MG ~20-40.
         if tag in '(DDG), (MG)':
             results = _e.search(search_term, pages=1)
             links = results.links()[0:30]
-            titles = results.titles()
-            details = results.text()
+            titles = results.titles()[0:30]
+            details = results.text()[0:30]
         else:
             # Mojeek and Startpage return 10 results/page.
             results = _e.search(search_term, pages=2)
@@ -153,7 +153,7 @@ def parse_args(assist: str = None) -> None:
                         action='store_true',
                         default=False)
     parser.add_argument('--use',
-                        help='Search term syntax and examples.',
+                        help='Usage, search term syntax examples.',
                         action='store_true',
                         default=False)
 
@@ -175,16 +175,18 @@ def parse_args(assist: str = None) -> None:
     if args.use or str(assist) in '-help, --help':
         print(f'USAGE: Run {__file__} without arguments,'
               ' then enter your search term at the prompt.\n')
+        _use = Path('aggregate_utils/use_syntax.txt').resolve()
         try:
-            syntax = Path('aggregate_utils', 'use_syntax.txt').read_text(encoding='utf-8')
+            syntax = Path(_use).read_text(encoding='utf-8')
             print(syntax)
         except FileNotFoundError:
-            print('Sorry, but the use_syntax.txt file is not in the aggregate_utils folder.')
+            print(f'Sorry, but could not find file: {_use}')
         sys.exit(0)
 
 
 def main() -> None:
     """
+    Obtain input search term.
     Print user agents and header information to Terminal and file.
     Run searches if no arguments are given.
     """
