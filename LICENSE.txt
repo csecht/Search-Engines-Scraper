@@ -57,7 +57,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ########################################################################
 
-aggregate_search.py and aggregate_search_utils modules:
+aggregate_search.py and aggregate_utils modules:
 
 Copyright (c) 2022 Craig S Echt, under
 

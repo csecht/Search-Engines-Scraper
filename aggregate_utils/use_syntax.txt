@@ -1,11 +1,19 @@
 Specifiers like site:edu, 'dogs AND cats', or 'dogs -cats' may not work as expected, specifically with Startpage.
-Example search terms => effect or result:
+Example search term => effect or result:
     paint => Results prefer 'paint', but also finds 'Paints', 'painter', 'painting', etc.
+
     "jump the shark" => Double quote a word or phrase for exact matches.
+
     jump AND shark => Finds any combination of 'jump(s)' with 'shark(s)'.
+
     classes edu => Preference for 'classes' at .edu sites.
+
     site:gov subsidy => Searches only .gov domains. For Startpage try 'gov subsidy'.
+
     dogs cats => Preference for 'dogs' with 'cats', but also only 'dogs', 'cats', 'dog', etc.
-    *ology => Wildcard character * will prefer 'ology'; does not find 'biology', 'ecology', etc.
+
     Rock * roll -and => Finds 'Rock -N- Roll', 'rock & roll', etc. (excludes 'and')
+
+    *ology => Wildcard character * will prefer 'ology'; does not find 'biology', 'ecology', etc.
+
 Results are printed to the Terminal and written to the ResultsFiles folder.
