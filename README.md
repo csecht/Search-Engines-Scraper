@@ -36,25 +36,25 @@ then enter your search term at the prompt. Example output:
 Enter search term: gov forest policy
 
 User agents assigned for this search:
-MegaGer:   Firefox/90.0
-DuckDuckGo:Firefox/91.0
-Startpage: Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/90.0
-Mojeek:    b'Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/125.2 (KHTML, like Gecko) Safari/125.7'
+MegaGer:   Firefox/74.0
+DuckDuckGo:aggregate_search/0.4 Repo: https://github.com/csecht/search-aggregator
+Startpage: Firefox/82.0
+Mojeek:    b'Opera/8.10 (Windows NT 5.1; U; en)'
 
-Searching Metager
-Keeping the first 20 results from MetaGer (MG)
+Searching Metager                   
+Keeping the first 30 results from MetaGer (MG)
 Searching Duckduckgo
 Keeping the first 20 results from DuckDuckGo (DDG)
 Searching Startpage
-Keeping the first 19 results from Startpage (SP)
+Keeping the first 20 results from Startpage (SP)
 Searching Mojeek
 Keeping the first 20 results from Mojeek (Moj)
-Kept 79 total results.
+Kept 90 total results.
 
-There are 68 unique results.
-12 unique results retained from (MG)
-18 unique results retained from (DDG)
-18 unique results retained from (SP)
+There are 74 unique results.
+24 unique results retained from (MG)
+14 unique results retained from (DDG)
+16 unique results retained from (SP)
 20 unique results retained from (Moj)
 
 https://www.fs.usda.gov/about-agency/regulations-policies
