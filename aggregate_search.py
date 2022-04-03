@@ -118,7 +118,7 @@ def search_this(search_term: str) -> None:
     ReportIt(search_term, result_summary)
 
     # Report number of unique results retained from each engine.
-    for tag in cfg.ENGINE_NAME.keys():
+    for tag in cfg.ENGINE_NAME:
         num_uniq = sum(tag in r[1] for r in unique_results)
         uniq_msg = f'{num_uniq} unique results retained from {tag}'
         ReportIt(search_term, uniq_msg)
