@@ -72,10 +72,10 @@ def search_this(search_term: str) -> None:
     #   for the final number of unique results from each engine.
     # Engine keys (tags) here should match those in config.py TAG_NAME.
     engines = {
-        '(MG)': se.Metager(agent["mg_UA"]),
-        '(DDG)': se.Duckduckgo(agent["ddg_UA"]),
-        '(SP)': se.Startpage(agent["sp_UA"]),
-        '(Moj)': se.Mojeek(agent["moj_UA"]),
+        '(MG)': se.Metager(agent['mg_UA']),
+        '(DDG)': se.Duckduckgo(agent['ddg_UA']),
+        '(SP)': se.Startpage(agent['sp_UA']),
+        '(Moj)': se.Mojeek(agent['moj_UA']),
     }
     combined_results = []
 
@@ -118,7 +118,7 @@ def search_this(search_term: str) -> None:
 
     # Report number of unique results retained from each engine.
     for tag, _ in cfg.TAG_NAME.items():
-        num_uniq = len([res for res in unique_results if f'{tag}' in res[1]])
+        num_uniq = sum(tag in res[1] for res in unique_results)
         uniq_msg = f'{num_uniq} unique results retained from {tag}'
         ReportIt(search_term, uniq_msg)
 
