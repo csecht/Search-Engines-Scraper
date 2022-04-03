@@ -3,32 +3,8 @@
 Simple check of current Python version.
 Functions:
 minversion() - Exit program if not minimum required version.
-maxversion() - Warn if newer than tested versions.
-
-    Copyright (C) 2020  C. Echt
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program. If not, see https://www.gnu.org/licenses/.
+maxversion() - Warn if current is newer than tested versions.
 """
-__author__ = 'cecht'
-__copyright__ = 'Copyright (C) 2022 C. Echt'
-__license__ = 'GNU General Public License'
-__module_name__ = 'vcheck.py'
-__module_ver__ = '0.1.2'
-__dev_environment__ = "Python 3.8 - 3.9"
-__project_url__ = 'https://github.com/csecht/Search-Engines-Scraper'
-__maintainer__ = 'cecht'
-__status__ = 'Development Status :: 4 - Beta'
 
 import sys
 
