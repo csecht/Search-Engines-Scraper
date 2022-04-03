@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
+"""
+Combined result reporting for clean terminal/console printing and
+writing to file.
+"""
 import re
 
-"""
-Handle combined reporting for clean terminal/console printing and 
-writing results files.
-"""
-
-from aggregate_utils.files import results2file
+from . import files
 
 # Need to remove color escape codes for text in file.
 ansi_esc = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
@@ -22,4 +21,4 @@ def report_results(searchterm: str, message: str) -> None:
 
     print(message)
     message_cleaned = ansi_esc.sub('', message)
-    results2file(searchterm, f'{message_cleaned}\n')
+    files.results2file(searchterm, f'{message_cleaned}\n')
