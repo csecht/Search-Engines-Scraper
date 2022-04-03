@@ -8,7 +8,7 @@ from . import get_user_agent, vcheck, config as cfg
 
 __author__ = 'Craig S. Echt'
 __copyright__ = 'Copyright (C) 2022 C.S. Echt'
-__version__ = '0.4.25'
+__version__ = '0.5.0'
 
 about = {
     'author': __author__,
@@ -19,7 +19,7 @@ about = {
     'version': __version__,
     'credits': 'Tasos M Adamopoulos (tasos-py) and Mario Vilas',
     'dev_environment': 'Python 3.8',
-    'status': 'Development Status :: 1 - Alpha',
+    'status': 'Development Status :: 2 - Beta',
 }
 
 # Random user agents for each engine are assigned here.
