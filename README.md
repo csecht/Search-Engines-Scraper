@@ -82,7 +82,7 @@ The original command line client from Search-Engines-Scraper, `search_engines_cl
 ```
 python3 search_engines_cli.py -q forestry -p 4 -e mojeek
 ```
-will return four pages of url results for the query 'forestry' from the Mojeek engine. To see additional search and output options, use the help command,
+will return four pages of url results for the query 'forestry' from the Mojeek engine. If no -e engine is specified, defaults to DuckDuckGo. To see additional search and output options, use the help command,
 ```
 python3 search_engines_cli.py -h
 ```
