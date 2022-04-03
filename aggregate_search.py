@@ -28,10 +28,10 @@ See LICENCE file for additional licenses of repository components.
 """
 
 import argparse
-import sys
 import time
 from datetime import datetime
 from pathlib import Path
+from sys import exit as sys_exit
 
 from aggregate_utils import about, agent, files, reporting, config as cfg
 from search_engines import engines as se
@@ -70,7 +70,7 @@ def search_this(search_term: str) -> None:
     # Any duplicated url closest to the end of the combined_results list will
     #   be retained in the unique_results list, so dict(engines) order matters
     #   for the final number of unique results from each engine.
-    # Engine keys (tags) here should match those in config.py TAG_NAME.
+    # Engine keys (tags) here should match those in config.py ENGINE_NAME.
     engines = {
         '(MG)': se.Metager(agent['mg_UA']),
         '(DDG)': se.Duckduckgo(agent['ddg_UA']),
@@ -81,16 +81,16 @@ def search_this(search_term: str) -> None:
 
     # From each engine, balance number of initial results so number of
     #   unique results retained are approximately even.
-    for tag, _e in engines.items():
+    for tag, engine in engines.items():
         # Depending on UA, DGG returns ~20-60 results/page, MG ~20-40.
         if tag in '(DDG), (MG)':
-            results = _e.search(search_term, pages=1)
+            results = engine.search(search_term, pages=1)
             links = results.links()[0:30]
             titles = results.titles()[0:30]
             details = results.text()[0:30]
         else:
             # Mojeek and Startpage return 10 results/page.
-            results = _e.search(search_term, pages=2)
+            results = engine.search(search_term, pages=2)
             links = results.links()
             titles = results.titles()
             details = results.text()
@@ -103,7 +103,7 @@ def search_this(search_term: str) -> None:
         combined_results.extend(list(zip(links, titles, details)))
 
         e_count_msg = (f'Keeping the first {len(links)} results'
-                       f' from {cfg.TAG_NAME[tag]} {tag}')
+                       f' from {cfg.ENGINE_NAME[tag]} {tag}')
         ReportIt(search_term, e_count_msg)
 
     # Filter unique urls, saving the last redundant hit from combined_results,
@@ -117,8 +117,8 @@ def search_this(search_term: str) -> None:
     ReportIt(search_term, result_summary)
 
     # Report number of unique results retained from each engine.
-    for tag, _ in cfg.TAG_NAME.items():
-        num_uniq = sum(tag in res[1] for res in unique_results)
+    for tag in cfg.ENGINE_NAME.keys():
+        num_uniq = sum(tag in r[1] for r in unique_results)
         uniq_msg = f'{num_uniq} unique results retained from {tag}'
         ReportIt(search_term, uniq_msg)
 
@@ -164,7 +164,7 @@ def parse_args(assist: str = None) -> None:
         print(f'{"Dev Env:".ljust(10)}', about['dev_environment'])
         print(f'{"Status:".ljust(10)}', about['status'])
         print()
-        sys.exit(0)
+        sys_exit(0)
 
     if args.use or str(assist) in '-help, --help':
         print(f'USAGE: Run {__file__} without arguments,'
@@ -175,7 +175,7 @@ def parse_args(assist: str = None) -> None:
             print(syntax)
         except FileNotFoundError:
             print(f'Sorry, but could not find file: {_use}')
-        sys.exit(0)
+        sys_exit(0)
 
 
 def main() -> None:
@@ -211,4 +211,4 @@ if __name__ == "__main__":
         main()
     except (EOFError, KeyboardInterrupt):
         print(' *** Keyboard interrupt: User has quit the program ***\n')
-        sys.exit()
+        sys_exit()
