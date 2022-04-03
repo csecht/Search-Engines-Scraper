@@ -33,17 +33,11 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-from aggregate_utils import about, files, get_user_agent, reporting, config as cfg
+from aggregate_utils import about, agent, files, reporting, config as cfg
 from search_engines import engines as se
 
 FileIt = files.results2file
 ReportIt = reporting.report_results
-
-# Random user agents for each engine are assigned here.
-ddg_UA = get_user_agent.rando_function(cfg.DDG_UAs)
-sp_UA = get_user_agent.rando_function(cfg.SP_UAs)
-moj_UA = get_user_agent.rando_function(cfg.MOJ_UAs)
-mg_UA = get_user_agent.rando_function(cfg.MG_UAs)
 
 
 def report_agents(term: str) -> None:
@@ -55,10 +49,10 @@ def report_agents(term: str) -> None:
     """
     user_agents_used = (
         'User agents assigned for this search:\n'
-        f'{"MegaGer:".ljust(11)}{cfg.ORANGE}{mg_UA}{cfg.NC}\n'
-        f'{"DuckDuckGo:".ljust(11)}{cfg.ORANGE}{ddg_UA}{cfg.NC}\n'
-        f'{"Startpage:".ljust(11)}{cfg.ORANGE}{sp_UA}{cfg.NC}\n'
-        f'{"Mojeek:".ljust(11)}{cfg.ORANGE}{moj_UA}{cfg.NC}\n'
+        f'{"MegaGer:".ljust(12)}{cfg.ORANGE}{agent["mg_UA"]}{cfg.NC}\n'
+        f'{"DuckDuckGo:".ljust(12)}{cfg.ORANGE}{agent["ddg_UA"]}{cfg.NC}\n'
+        f'{"Startpage:".ljust(12)}{cfg.ORANGE}{agent["sp_UA"]}{cfg.NC}\n'
+        f'{"Mojeek:".ljust(12)}{cfg.ORANGE}{agent["moj_UA"]}{cfg.NC}\n'
     )
 
     ReportIt(term, user_agents_used)
@@ -78,10 +72,10 @@ def search_this(search_term: str) -> None:
     #   for the final number of unique results from each engine.
     # Engine keys (tags) here should match those in config.py TAG_NAME.
     engines = {
-        '(MG)': se.Metager(mg_UA),
-        '(DDG)': se.Duckduckgo(ddg_UA),
-        '(SP)': se.Startpage(sp_UA),
-        '(Moj)': se.Mojeek(moj_UA),
+        '(MG)': se.Metager(agent["mg_UA"]),
+        '(DDG)': se.Duckduckgo(agent["ddg_UA"]),
+        '(SP)': se.Startpage(agent["sp_UA"]),
+        '(Moj)': se.Mojeek(agent["moj_UA"]),
     }
     combined_results = []
 
