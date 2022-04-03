@@ -104,7 +104,7 @@ def search_this(search_term: str) -> None:
         combined_results.extend(list(zip(links, titles, details)))
 
         e_count_msg = (f'Keeping the first {len(links)} results'
-                       f' from {cfg.ENGINE_NAME[tag]} {tag}')
+                       f' from {cfg.ENGINE_NAME[tag]}')
         ReportIt(search_term, e_count_msg)
 
     # Filter unique urls, saving the last redundant hit from combined_results,
@@ -118,9 +118,9 @@ def search_this(search_term: str) -> None:
     ReportIt(search_term, result_summary)
 
     # Report number of unique results retained from each engine.
-    for tag in cfg.ENGINE_NAME:
+    for tag, engine in cfg.ENGINE_NAME.items():
         num_uniq = sum(tag in r[1] for r in unique_results)
-        uniq_msg = f'{num_uniq} unique results retained from {tag}'
+        uniq_msg = f'{num_uniq} unique results retained from {engine} {tag}'
         ReportIt(search_term, uniq_msg)
 
     # Need a brief delay before Terminal scrolls to last line of results
