@@ -15,6 +15,7 @@ class HttpClient:
         self.session.proxies = self._set_proxy(proxy)
         self.session.headers['User-Agent'] = USER_AGENT
         self.session.headers['Accept-Language'] = 'en-GB,en;q=0.5'
+        self.session.headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
 
         self.timeout = timeout
         self.response = namedtuple('response', ['http', 'html'])
