@@ -50,8 +50,8 @@ def report_agents(term: str) -> None:
     """
     user_agents_used = (
         'User agents assigned for this search:\n'
-        f'{"MegaGer:".ljust(12)}{cfg.ORANGE}{agent["mg_UA"]}{cfg.NC}\n'
         f'{"DuckDuckGo:".ljust(12)}{cfg.ORANGE}{agent["ddg_UA"]}{cfg.NC}\n'
+        f'{"MegaGer:".ljust(12)}{cfg.ORANGE}{agent["mg_UA"]}{cfg.NC}\n'
         f'{"Startpage:".ljust(12)}{cfg.ORANGE}{agent["sp_UA"]}{cfg.NC}\n'
         f'{"Mojeek:".ljust(12)}{cfg.ORANGE}{agent["moj_UA"]}{cfg.NC}\n'
     )
@@ -73,15 +73,15 @@ def search_this(search_term: str) -> None:
     #   for the final number of unique results from each engine.
     # Engine keys (tags) here should match those in config.py ENGINE_NAME.
     engines = {
-        '(MG)': se.Metager(agent['mg_UA']),
         '(DDG)': se.Duckduckgo(agent['ddg_UA']),
+        '(MG)': se.Metager(agent['mg_UA']),
         '(SP)': se.Startpage(agent['sp_UA']),
         '(Moj)': se.Mojeek(agent['moj_UA']),
     }
     combined_results = []
 
-    # From each engine, balance number of initial results so number of
-    #   unique results retained are approximately even.
+    # From each engine, balance the number of initial results so numbers
+    #   of unique results retained are more even among engines.
     for tag, engine in engines.items():
         # Depending on UA, DGG returns ~20-60 results/page, MG ~20-40.
         if tag in '(DDG), (MG)':
@@ -108,7 +108,7 @@ def search_this(search_term: str) -> None:
         ReportIt(search_term, e_count_msg)
 
     # Filter unique urls, saving the last redundant hit from combined_results,
-    #   where last is determined by the dict(engine) items' order.
+    #   where last is determined by the order of items in {engines}.
     # Note: in combined_results and unique_results, res[0] is the url,
     #   res[1] is the page title, res[2] is the detailed description.
     unique_results = tuple({res[0]: res for res in combined_results}.values())
@@ -119,7 +119,7 @@ def search_this(search_term: str) -> None:
 
     # Report number of unique results retained from each engine.
     for tag, engine in cfg.ENGINE_NAME.items():
-        num_uniq = sum(tag in r[1] for r in unique_results)
+        num_uniq = sum(tag in res[1] for res in unique_results)
         uniq_msg = f'{num_uniq} unique results retained from {engine} {tag}'
         ReportIt(search_term, uniq_msg)
 
