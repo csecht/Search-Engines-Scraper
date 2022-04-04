@@ -4,10 +4,6 @@ import json
 import re
 from collections import namedtuple
 
-try:
-    from shutil import get_terminal_size
-except ImportError:
-    from .libs.get_terminal_size import get_terminal_size
 
 from .utils import decode_bytes #, encode_str
 from .libs import windows_cmd_encoding
@@ -97,8 +93,7 @@ def write_file(data, path, encoding='utf-8'):
 
 def console(msg, end='\n', level=None):
     """Prints data on the console."""
-    console_len = get_terminal_size().columns
-    clear_line = f'\r{" " * (console_len - 1)}\r'
+    clear_line = '\r\x1b[2K\r'
     msg = clear_line + (level or '') + msg
     print(msg, end=end)
 
