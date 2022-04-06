@@ -17,7 +17,8 @@ from pathlib import Path
 from random import choice
 
 # Modified from get_random_user_agent() in googlesearch module of google package.
-#   Can get system's UA from http://my-user-agent.com/
+#   Can get current system's (browser's) UA from http://my-user-agent.com/
+#   or from https://httpbin.org/headers
 DEFAULT_AGENT = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)'
 
 # Load the list of user agents to use for random_agent().
@@ -143,7 +144,7 @@ def rando_function(agents: tuple) -> str:
     """
     select = choice(agents)
 
-    agent = {
+    r_agents = {
         'bua': bot_agent(),
         'eua': echt_agent(),
         'fua': firefox_agent(),
@@ -153,4 +154,4 @@ def rando_function(agents: tuple) -> str:
         'wua': winfire_agent(),
     }
 
-    return agent[select]
+    return r_agents[select]

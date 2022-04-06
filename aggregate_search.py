@@ -34,7 +34,7 @@ from datetime import datetime
 from pathlib import Path
 from sys import exit as sys_exit
 
-from aggregate_utils import about, agent, files, reporting, config as cfg
+from aggregate_utils import about, agents, files, reporting, config as cfg
 from search_engines import engines as se
 
 FileIt = files.results2file
@@ -50,10 +50,10 @@ def report_agents(term: str) -> None:
     """
     user_agents_used = (
         'User agents assigned for this search:\n'
-        f'{"DuckDuckGo:".ljust(12)}{cfg.ORANGE}{agent["ddg_UA"]}{cfg.NC}\n'
-        f'{"MegaGer:".ljust(12)}{cfg.ORANGE}{agent["mg_UA"]}{cfg.NC}\n'
-        f'{"Startpage:".ljust(12)}{cfg.ORANGE}{agent["sp_UA"]}{cfg.NC}\n'
-        f'{"Mojeek:".ljust(12)}{cfg.ORANGE}{agent["moj_UA"]}{cfg.NC}\n'
+        f'{"DuckDuckGo:".ljust(12)}{cfg.ORANGE}{agents["ddg_UA"]}{cfg.NC}\n'
+        f'{"MegaGer:".ljust(12)}{cfg.ORANGE}{agents["mg_UA"]}{cfg.NC}\n'
+        f'{"Startpage:".ljust(12)}{cfg.ORANGE}{agents["sp_UA"]}{cfg.NC}\n'
+        f'{"Mojeek:".ljust(12)}{cfg.ORANGE}{agents["moj_UA"]}{cfg.NC}\n'
     )
 
     ReportIt(term, user_agents_used)
@@ -73,10 +73,10 @@ def search_this(search_term: str) -> None:
     #   for the final number of unique results from each engine.
     # Engine keys (tags) here should match those in config.py ENGINE_NAME.
     engines = {
-        '(DDG)': se.Duckduckgo(agent['ddg_UA']),
-        '(MG)': se.Metager(agent['mg_UA']),
-        '(SP)': se.Startpage(agent['sp_UA']),
-        '(Moj)': se.Mojeek(agent['moj_UA']),
+        '(DDG)': se.Duckduckgo(agents['ddg_UA']),
+        '(MG)': se.Metager(agents['mg_UA']),
+        '(SP)': se.Startpage(agents['sp_UA']),
+        '(Moj)': se.Mojeek(agents['moj_UA']),
     }
     combined_results = []
 

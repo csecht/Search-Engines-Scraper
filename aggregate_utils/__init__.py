@@ -8,7 +8,7 @@ from . import get_user_agent, vcheck, config as cfg
 
 __author__ = 'Craig S. Echt'
 __copyright__ = 'Copyright (C) 2022 C.S. Echt'
-__version__ = '0.5.2'
+__version__ = '0.5.3'
 
 about = {
     'author': __author__,
@@ -23,7 +23,7 @@ about = {
 }
 
 # Random user agents for each engine are assigned here.
-agent = {
+agents = {
     'ddg_UA':  get_user_agent.rando_function(cfg.DDG_UAs),
     'sp_UA': get_user_agent.rando_function(cfg.SP_UAs),
     'moj_UA': get_user_agent.rando_function(cfg.MOJ_UAs),
