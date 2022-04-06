@@ -162,7 +162,6 @@ def parse_args(assist: str = None) -> None:
         print(f'{"Program:".ljust(10)}', about['program_name'])
         print(f'{"url:".ljust(10)}', about['project_url'])
         print(f'{"Version:".ljust(10)}', about['version'])
-        print(f'{"Credits:".ljust(10)}', about['credits'])
         print(f'{"Dev Env:".ljust(10)}', about['dev_environment'])
         print(f'{"Status:".ljust(10)}', about['status'])
         print()

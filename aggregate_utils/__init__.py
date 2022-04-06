@@ -7,8 +7,10 @@ import os
 from . import get_user_agent, vcheck, config as cfg
 
 __author__ = 'Craig S. Echt'
-__copyright__ = 'Copyright (C) 2022 C.S. Echt'
-__version__ = '0.5.3'
+__copyright__ = ('Copyright (c) 2022 C.S. Echt,\n'
+                 'Copyright (c) 2018 Tasos M Adamopoulos,\n'
+                 'Copyright (c) 2009-2020, Mario Vilas')
+__version__ = '0.5.4'
 
 about = {
     'author': __author__,
@@ -17,7 +19,6 @@ about = {
     'program_name': 'aggregate_search.py',
     'project_url': 'https://github.com/csecht/search-aggregator',
     'version': __version__,
-    'credits': 'Tasos M Adamopoulos (tasos-py) and Mario Vilas',
     'dev_environment': 'Python 3.8',
     'status': 'Development Status :: 2 - Beta',
 }
