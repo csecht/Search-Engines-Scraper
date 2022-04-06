@@ -18,9 +18,9 @@ ENGINE_NAME = {
 # Bot agents, 'bua', are generally banned by SP; tua may be blocked by Moj.
 # These tuples of dictionary keys are a mix of static and random user agent
 #   functions for random selection by get_user_agents.rando_function().
-DDG_UAs = ('bua', 'fua', 'tua', 'eua')
-MG_UAs = ('bua', 'fua', 'pua', 'tua', 'eua', 'rua', 'rua')
-MOJ_UAs = ('bua', 'fua', 'eua', 'rua', 'rua')
+DDG_UAs = ('bua', 'fua', 'gua')
+MG_UAs = ('bua', 'fua', 'pua', 'gua', 'rua', 'rua')
+MOJ_UAs = ('bua', 'fua', 'gua', 'rua', 'rua')
 SP_UAs = ('fua', 'wua')
 
 # Terminal output ANSI foreground colors.

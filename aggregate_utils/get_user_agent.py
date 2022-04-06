@@ -87,26 +87,19 @@ def fake_agent() -> str:
     return 'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/84.0'
 
 
-def echt_agent() -> str:
+def github_agent() -> str:
     """
-    This repository's default user agent:
-    'aggregate_search/0.4 Repo: https://github.com/csecht/search-aggregator'
-    Keep version up-to-date.
+    A GitHub repository's custom user agent.
+    Keep versions up-to-date.
 
-    :return: The search-aggregator user agent.
+    :return: The Search-Engines-Scraper or search-aggregator Repo.
     """
-    return 'aggregate_search/0.4 Repo: https://github.com/csecht/search-aggregator'
+    github_repo = (
+        'aggregate_search/0.4 Repo: https://github.com/csecht/search-aggregator',
+        'search_engines/0.5 Repo: https://github.com/tasos-py/Search-Engines-Scraper'
+    )
 
-
-def tasos_agent() -> str:
-    """
-    The original Search-Engine-Scraper default user agent:
-    'search_engines/0.5 Repo: https://github.com/tasos-py/Search-Engines-Scraper'
-    Works with all engines except Google, which works with firefox_agent().
-
-    :return: Original GitHub module and repository link as user agent.
-    """
-    return 'search_engines/0.5 Repo: https://github.com/tasos-py/Search-Engines-Scraper'
+    return choice(github_repo)
 
 
 def python_agent() -> str:
@@ -139,18 +132,17 @@ def rando_function(agents: tuple) -> str:
 
     :param agents: Tuple of handles for agent functions known to work
     for an engine. 'bua': bot_agent(),  'fua': firefox_agent(),
-    'pua': python_agent(), 'eua': echt_agent(), 'tua': tasos_agent(),
-    'rua': random_agent(), 'wua': winfire_agent()
+    'pua': python_agent(), 'gua': github_agent(), 'rua': random_agent(),
+    'wua': winfire_agent()
     """
     select = choice(agents)
 
     r_agents = {
         'bua': bot_agent(),
-        'eua': echt_agent(),
+        'gua': github_agent(),
         'fua': firefox_agent(),
         'pua': python_agent(),
         'rua': random_agent(),
-        'tua': tasos_agent(),
         'wua': winfire_agent(),
     }
 
