@@ -8,7 +8,7 @@ from . import get_user_agent, vcheck, config as cfg
 
 __author__ = 'Craig S. Echt'
 __copyright__ = 'Copyright (C) 2022 C.S. Echt'
-__version__ = '0.5.1'
+__version__ = '0.5.2'
 
 about = {
     'author': __author__,
