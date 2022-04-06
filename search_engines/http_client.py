@@ -8,17 +8,16 @@ import requests
 from search_engines import utils as utl
 from search_engines.config import TIMEOUT, PROXY, USER_AGENT
 
-# Generate X-Amzn-Trace-Id for header.
-# https://docs.aws.amazon.com/xray/latest/devguide/xray-api-sendingdata.html#xray-api-traceids
-#    TRACE_ID =  f"1-{HEX}-{binascii.hexlify(os.urandom(12)).decode('utf-8')}"
-HEX_TIME = hex(int(time()))[2:]
-TRACE_ID =  f"1-{HEX_TIME}-{hexlify(token_bytes(12)).decode('utf-8')}"
-
 
 class HttpClient:
     """Performs HTTP requests. A `requests` wrapper, essentially."""
     def __init__(self, timeout=TIMEOUT, proxy=PROXY):
         self.session = requests.sessions.Session()
+
+        # Generate X-Amzn-Trace-Id for header. Code derived from:
+        # https://docs.aws.amazon.com/xray/latest/devguide/xray-api-sendingdata.html#xray-api-traceids
+        hex_time = hex(int(time()))[2:]
+        trace_id = f"1-{hex_time}-{hexlify(token_bytes(12)).decode('utf-8')}"
 
         self.session.proxies = self._set_proxy(proxy)
         self.session.headers['User-Agent'] = USER_AGENT
@@ -31,7 +30,7 @@ class HttpClient:
         self.session.headers['Sec-Fetch-User'] = "?1"
         self.session.headers['Sec-Gpc'] = "1"
         self.session.headers['Upgrade-Insecure-Requests'] = "1"
-        self.session.headers['X-Amzn-Trace-Id'] = TRACE_ID
+        self.session.headers['X-Amzn-Trace-Id'] = trace_id
 
         self.timeout = timeout
         self.response = namedtuple('response', ['http', 'html'])
