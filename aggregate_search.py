@@ -4,13 +4,13 @@ aggregate_search.py is a command-line web search aggregator written in
 Python3. It is derived from the Search-Engines-Scraper repository at
 https://github.com/tasos-py/Search-Engines-Scraper.
 
-Non-redundant aggregated results from privacy-oriented search engines
-are returned as URLs and their page titles to the Terminal and to
-an auto-named text file. User agents for requests are randomized and
-tailored for each engine.
+Non-redundant aggregated results from privacy-focused search engines
+are returned as URLs, page titles, and page descriptions printed to the
+Terminal and to an auto-named text file.
 
-The intent is to provide easy comparisons among search engines, avoid
-unintended search filtering, and automatically store results to file.
+The intent is to provide broad searches and easy comparisons among
+search engines, while minimizing or avoiding search silos. User agents
+for HTTP requests are randomized for each engine within optimized sets.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
