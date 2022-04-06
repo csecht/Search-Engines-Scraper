@@ -75,6 +75,9 @@ The Forestry Program is guided by the King County Comprehensive Plan, which esta
 ```
 ...and all remaining results. All results are printed to Terminal and written to a file automatically titled: Results_gov+forest+policies.txt
 
+Example of color-enhanced Terminal output:
+![color_output](images/scrnshot_output.png)
+
 Arguments: --help, --about, or --use. The command `aggregate_search.py --use` provides examples of search term syntax.
 
 ### Single engine search
