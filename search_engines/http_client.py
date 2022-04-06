@@ -9,14 +9,19 @@ from search_engines.config import TIMEOUT, PROXY, USER_AGENT
 class HttpClient:
     """Performs HTTP requests. A `requests` wrapper, essentially."""
     def __init__(self, timeout=TIMEOUT, proxy=PROXY):
-        # self.session = requests.session() # Deprecated
         self.session = requests.sessions.Session()
 
         self.session.proxies = self._set_proxy(proxy)
         self.session.headers['User-Agent'] = USER_AGENT
         self.session.headers['Accept-Language'] = 'en-GB,en;q=0.5'
         self.session.headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-
+        self.session.headers['Accept-Encoding'] = "gzip, deflate"
+        self.session.headers['Sec-Fetch-Dest'] = "document"
+        self.session.headers['Sec-Fetch-Mode'] = "navigate"
+        self.session.headers['Sec-Fetch-Site'] = "none"
+        self.session.headers['Sec-Fetch-User'] = "?1"
+        self.session.headers['Sec-Gpc'] = "1"
+        self.session.headers['Upgrade-Insecure-Requests'] = "1"
         self.timeout = timeout
         self.response = namedtuple('response', ['http', 'html'])
 
