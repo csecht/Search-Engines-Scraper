@@ -16,19 +16,22 @@ import gzip
 from pathlib import Path
 from random import choice
 
+from . import about
+
 # Modified from get_random_user_agent() in googlesearch module of google package.
 #   Can get current system's (browser's) UA from http://my-user-agent.com/
 #   or from https://httpbin.org/headers
 DEFAULT_AGENT = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)'
+AGENT_ARCHIVE: str = 'user_agents.txt.gz'
 
-# Load the list of user agents to use for random_agent().
+# Load the list of gzipped user agents to use in random_agent().
 try:
-    user_agents_file = Path(Path(__file__).parent, 'user_agents.txt.gz')
-    with gzip.open(user_agents_file, 'rb') as fp:
+    rua_file = Path(Path(__file__).parent, f'{AGENT_ARCHIVE}')
+    with gzip.open(rua_file, 'rb') as fp:
         user_agents_list = [_.strip() for _ in fp.readlines()]
 except FileNotFoundError:
-    print('Could not open user_agents file; using default agent...\n'
-          'Try downloading user_agents.txt.gz from https://github.com/csecht/Search-Engines-Scraper')
+    print('Could not open the random user agent file; using default agent...\n'
+          f'Try downloading {AGENT_ARCHIVE} from {about["project_url"]}')
     user_agents_list = [DEFAULT_AGENT]
 
 
