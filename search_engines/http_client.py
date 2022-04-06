@@ -1,9 +1,18 @@
+from binascii import hexlify
 from collections import namedtuple
+from secrets import token_bytes
+from time import time
 
 import requests
 
 from search_engines import utils as utl
 from search_engines.config import TIMEOUT, PROXY, USER_AGENT
+
+# Generate X-Amzn-Trace-Id for header.
+# https://docs.aws.amazon.com/xray/latest/devguide/xray-api-sendingdata.html#xray-api-traceids
+#    TRACE_ID =  f"1-{HEX}-{binascii.hexlify(os.urandom(12)).decode('utf-8')}"
+HEX_TIME = hex(int(time()))[2:]
+TRACE_ID =  f"1-{HEX_TIME}-{hexlify(token_bytes(12)).decode('utf-8')}"
 
 
 class HttpClient:
@@ -22,6 +31,8 @@ class HttpClient:
         self.session.headers['Sec-Fetch-User'] = "?1"
         self.session.headers['Sec-Gpc'] = "1"
         self.session.headers['Upgrade-Insecure-Requests'] = "1"
+        self.session.headers['X-Amzn-Trace-Id'] = TRACE_ID
+
         self.timeout = timeout
         self.response = namedtuple('response', ['http', 'html'])
 
