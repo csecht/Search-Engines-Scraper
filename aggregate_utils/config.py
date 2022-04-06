@@ -2,12 +2,12 @@
 """
 Configuration file for aggregate_search.py
 """
-# Keys here need to match those of the dict(engine) in aggrigate_search.py;
+# Keys here need to match those of the dict(engines) in aggregate_search.py;
 #   item order should also match (b/c used reporting form for loop).
 # This is to report the proper/correct engine name.
 ENGINE_NAME = {
-    '(MG)': 'MetaGer',
     '(DDG)': 'DuckDuckGo',
+    '(MG)': 'MetaGer',
     '(SP)': 'Startpage',
     '(Moj)': 'Mojeek',
 }

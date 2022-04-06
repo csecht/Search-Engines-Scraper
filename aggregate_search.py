@@ -68,10 +68,11 @@ def search_this(search_term: str) -> None:
     :param search_term: String with valid syntax for all or most engines.
     """
 
-    # Any duplicated url closest to the end of the combined_results list will
-    #   be retained in the unique_results list, so dict(engines) order matters
-    #   for the final number of unique results from each engine.
-    # Engine keys (tags) here should match those in config.py ENGINE_NAME.
+    # Any duplicated url closest to the end of the combined_results list
+    #   will be retained in the unique_results list, so engines item
+    #   order matters for the number of unique results from each engine.
+    # Engine keys (tags) and item order here should match those in
+    #   config.py ENGINE_NAME for consistent reporting format.
     engines = {
         '(DDG)': se.Duckduckgo(agents['ddg_UA']),
         '(MG)': se.Metager(agents['mg_UA']),
