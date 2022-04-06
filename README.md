@@ -1,5 +1,5 @@
 # Search Aggregator
-Aggregates results from several search engines with an easily read text output. This is a fork of Search Engines Scraper by tasos_py. It is run from the `aggregate_search.py` Python script.
+Aggregates results from several search engines with output to Terminal and text file. This is a fork of Search Engines Scraper by tasos_py, but is run from the `aggregate_search.py` Python script.
 ## Supported search engines  
 
 - _[Duckduckgo](https://duckduckgo.com)_
@@ -9,8 +9,8 @@ Aggregates results from several search engines with an easily read text output. 
 
 ## Features
  - Uses search engines that are focused on user privacy.
- - Creates output text file of non-redundant results (URL, page title).
- - Uses random user agent when possible.
+ - Non-redundant results (URL, page title, page detail) are printed to the Terminal/console with easy-to-read colors and to an automatically named text file.
+ - A random user agent is assigned from an appropriate set of options for each engine.
 
 ## Requirements
 _Python 3_ with

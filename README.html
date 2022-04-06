@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8"><!--markdown .md to HTML conversion courtesy of https://markdowntohtml.com/ -->
 <h1 id="search-engines-scraper-cse">Search Aggregator</h1>
-<p>Aggregates results from several search engines with an easily read text output. This is a fork of Search Engines Scraper by tasos_py. It is run from
-the <code>aggregate_search.py</code> Python script.</p>
+<p>Aggregates results from several search engines with output to Terminal and text file. This is a fork of Search Engines Scraper by tasos_py, but is run from the <code>aggregate_search.py</code> Python script.</p>
 <h2 id="supported-search-engines">Supported search engines</h2>
 <ul><li><em><a href="https://duckduckgo.com">Duckduckgo</a></em>
 <li><em><a href="https://www.startpage.com">Startpage</a></em>
@@ -11,8 +10,8 @@ the <code>aggregate_search.py</code> Python script.</p>
 <h2 id="features">Features</h2>
 <ul>
 <li>Uses search engines that are focused on user privacy.</li>
-<li>Creates output text file of non-redundant results (URL, page title).</li>
-<li>Uses random user agent when possible.</li>
+<li>Non-redundant results (URL, page title, page detail) are printed to the Terminal/console with easy-to-read colors and to an automatically named text file.</li>
+<li>A random user agent is assigned from an appropriate set of options for each engine.</li>
 </ul>
 <h2 id="requirements">Requirements</h2>
 <p><em>Python 3</em> with
