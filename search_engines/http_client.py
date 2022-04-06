@@ -17,7 +17,7 @@ class HttpClient:
         # Generate X-Amzn-Trace-Id for header. Code derived from:
         # https://docs.aws.amazon.com/xray/latest/devguide/xray-api-sendingdata.html#xray-api-traceids
         hex_time = hex(int(time()))[2:]
-        trace_id = f"1-{hex_time}-{hexlify(token_bytes(12)).decode('utf-8')}"
+        trace_id = f"Root=1-{hex_time}-{hexlify(token_bytes(12)).decode('utf-8')}"
 
         self.session.proxies = self._set_proxy(proxy)
         self.session.headers['User-Agent'] = USER_AGENT
