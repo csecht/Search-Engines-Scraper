@@ -139,8 +139,8 @@ def parse_args(assist: str = None) -> int:
                         action='store_true',
                         default=False)
     parser.add_argument('--x',
-                        help='Result multiplication factor; N = 1 thru 5'
-                             ' (default: %(default)d).',
+                        help='Result multiplication factor, N:'
+                             ' %(choices)s (default: %(default)d).',
                         default=1,
                         choices=range(1, 6, 1),
                         type=int,
