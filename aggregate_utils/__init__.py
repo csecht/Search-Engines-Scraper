@@ -10,14 +10,14 @@ __author__ = 'Craig S. Echt'
 __copyright__ = ('Copyright (c) 2022 C.S. Echt,\n'
                  'Copyright (c) 2018 Tasos M Adamopoulos,\n'
                  'Copyright (c) 2009-2020, Mario Vilas')
-__version__ = '0.5.4'
+__version__ = '0.5.5'
 
 about = {
     'author': __author__,
     'copyright': __copyright__,
     'license': 'GNU General Public License',
     'program_name': 'aggregate_search.py',
-    'project_url': 'https://github.com/csecht/search-aggregator',
+    'project_url': f'{cfg.PROJECT}',
     'version': __version__,
     'dev_environment': 'Python 3.8',
     'status': 'Development Status :: 2 - Beta',

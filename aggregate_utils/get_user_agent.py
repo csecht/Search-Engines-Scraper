@@ -5,10 +5,9 @@ Agent functions:
 bot_agent: assigns one of three search engine bot agents.
 firefox_ver(): assigns a random Firefox browser version.
 fake_agent(): static, FAKE_USER_AGENT from config, works with Startpage.
-echt_agent(): static, this distribution's url agent.
+github_agent(): assigns one of original GitHub repo or this fork.
 python_agent(): static, default used by the requests module.
 random_agent(): a random full system-type agent from list of 4400+.
-tasos_agent(): static, default original Search-Engines-Scraper url agent.
 winfire_agent(): original FAKE_USER_AGENT for Startpage, but with random
     assignment of Firefox version.
 """
@@ -16,7 +15,7 @@ import gzip
 from pathlib import Path
 from random import choice
 
-from . import about
+from . import config as cfg
 
 # Modified from get_random_user_agent() in googlesearch module of google package.
 #   Can get current system's (browser's) UA from http://my-user-agent.com/
@@ -31,7 +30,7 @@ try:
         user_agents_list = [_.strip() for _ in fp.readlines()]
 except FileNotFoundError:
     print('Could not open the random user agent file; using default agent...\n'
-          f'Try downloading {AGENT_ARCHIVE} from {about["project_url"]}')
+          f'Try downloading {AGENT_ARCHIVE} from {cfg.PROJECT}')
     user_agents_list = [DEFAULT_AGENT]
 
 

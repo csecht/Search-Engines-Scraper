@@ -2,6 +2,9 @@
 """
 Configuration file for aggregate_search.py
 """
+
+PROJECT = 'https://github.com/csecht/search-aggregator'
+
 # Keys here need to match those of the dict(engines) in aggregate_search.py;
 #   item order should also match (b/c used reporting form for loop).
 # This is to report the proper/correct engine name.
