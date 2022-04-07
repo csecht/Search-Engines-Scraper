@@ -41,24 +41,6 @@ FileIt = files.results2file
 ReportIt = reporting.report_results
 
 
-def report_agents(term: str) -> None:
-    """
-    Print to Terminal and result file user agents assigned to each
-    engine.
-
-    :param term: The input search term; used for file naming.
-    """
-    user_agents_used = (
-        'User agents assigned for this search:\n'
-        f'{"DuckDuckGo:".ljust(12)}{cfg.ORANGE}{agents["ddg_UA"]}{cfg.NC}\n'
-        f'{"MegaGer:".ljust(12)}{cfg.ORANGE}{agents["mg_UA"]}{cfg.NC}\n'
-        f'{"Startpage:".ljust(12)}{cfg.ORANGE}{agents["sp_UA"]}{cfg.NC}\n'
-        f'{"Mojeek:".ljust(12)}{cfg.ORANGE}{agents["moj_UA"]}{cfg.NC}\n'
-    )
-
-    ReportIt(term, user_agents_used)
-
-
 def search_this(search_term: str) -> None:
     """
     Run the input search term through engines specified in dict(engine).
@@ -71,13 +53,13 @@ def search_this(search_term: str) -> None:
     # Any duplicated url closest to the end of the combined_results list
     #   will be retained in the unique_results list, so engines item
     #   order matters for the number of unique results from each engine.
-    # Engine keys (tags) and item order here should match those in
-    #   config.py ENGINE_NAME for consistent reporting format.
+    # For sensible reporting, item order should match among
+    #   dict(agents), config.ENGINE_NAMES, and dict(engines)
     engines = {
-        '(DDG)': se.Duckduckgo(agents['ddg_UA']),
-        '(MG)': se.Metager(agents['mg_UA']),
-        '(SP)': se.Startpage(agents['sp_UA']),
-        '(Moj)': se.Mojeek(agents['moj_UA']),
+        '(DDG)': se.Duckduckgo(agents['(DDG)']),
+        '(MG)': se.Metager(agents['(MG)']),
+        '(SP)': se.Startpage(agents['(SP)']),
+        '(Moj)': se.Mojeek(agents['(Moj)']),
     }
     combined_results = []
 
@@ -105,7 +87,7 @@ def search_this(search_term: str) -> None:
         combined_results.extend(list(zip(links, titles, details)))
 
         e_count_msg = (f'Keeping the first {len(links)} results'
-                       f' from {cfg.ENGINE_NAME[tag]}')
+                       f' from {cfg.ENGINE_NAMES[tag]}')
         ReportIt(search_term, e_count_msg)
 
     # Filter unique urls, saving the last redundant hit from combined_results,
@@ -119,7 +101,7 @@ def search_this(search_term: str) -> None:
     ReportIt(search_term, result_summary)
 
     # Report number of unique results retained from each engine.
-    for tag, engine in cfg.ENGINE_NAME.items():
+    for tag, engine in cfg.ENGINE_NAMES.items():
         num_uniq = sum(tag in res[1] for res in unique_results)
         uniq_msg = f'{num_uniq} unique results retained from {engine} {tag}'
         ReportIt(search_term, uniq_msg)
@@ -202,7 +184,7 @@ def main() -> None:
         f'SEARCH TERM: {term}    TIME: {datetime.now().strftime("%x %X")}')
     FileIt(term, f'{file_header}\n\n')
 
-    report_agents(term)
+    reporting.report_agents(term)
 
     search_this(term)
 
