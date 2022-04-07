@@ -126,10 +126,12 @@ def search_this(search_term: str, page_factor: int) -> None:
 def parse_args(assist: str = None) -> int:
     """Allow handling of common command line arguments.
 
-    :param assist: Used if search input string is -h or --help.
-    :return: Page request multiplier passed to search_this().
+    :param assist: Used if input search string is -h or --help.
+    :return: Optional page request multiplier passed to search_this().
     """
     parser = argparse.ArgumentParser()
+    args = parser.parse_args()
+
     parser.add_argument('--about',
                         help='Provides description, version, GNU license.',
                         action='store_true',
@@ -147,7 +149,6 @@ def parse_args(assist: str = None) -> int:
                         metavar="N"
                         )
 
-    args = parser.parse_args()
     if args.about:
         print(__doc__)
         print(f'{"Author:".ljust(10)}', about.data('author'))
@@ -161,7 +162,7 @@ def parse_args(assist: str = None) -> int:
         print()
         sys_exit(0)
 
-    if args.use or str(assist) in '-help, --help':
+    elif args.use or str(assist) in '-help, --help':
         print(f'USAGE: Run {__file__} without arguments,'
               ' then enter your search term at the prompt.\n')
         _use = Path('aggregate_utils/use_syntax.txt').resolve()
@@ -172,9 +173,8 @@ def parse_args(assist: str = None) -> int:
             print(f'Sorry, but could not find file: {_use}')
         sys_exit(0)
 
-    if args.x:
-        # The multiplier for number of page results requested.
-        return args.x
+    # The multiplier for number of results returned.
+    return args.x
 
 
 def main() -> None:
