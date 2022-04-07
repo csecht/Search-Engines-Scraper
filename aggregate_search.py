@@ -124,7 +124,7 @@ def search_this(search_term: str, page_factor: int) -> None:
 
 
 def parse_args(assist: str = None) -> int:
-    """Allow handling of common command line arguments.
+    """Allow handling of command line arguments.
 
     :param assist: Used if input search string is -h or --help.
     :return: Optional page request multiplier passed to search_this().
@@ -144,7 +144,7 @@ def parse_args(assist: str = None) -> int:
                         help='Result multiplication factor, N:'
                              ' %(choices)s (default: %(default)d).',
                         default=1,
-                        choices=range(1, 6, 1),
+                        choices=range(1, 6),
                         type=int,
                         metavar="N"
                         )
