@@ -7,21 +7,11 @@ import os
 from . import get_user_agent, vcheck, config as cfg
 
 __author__ = 'Craig S. Echt'
-__copyright__ = ('Copyright (c) 2022 C.S. Echt,\n'
-                 'Copyright (c) 2018 Tasos M Adamopoulos,\n'
+__copyright__ = ('Copyright (c) 2022 C.S. Echt, '
+                 'Copyright (c) 2018 Tasos M Adamopoulos, '
                  'Copyright (c) 2009-2020, Mario Vilas')
 __version__ = '0.5.6'
 
-about = {
-    'author': __author__,
-    'copyright': __copyright__,
-    'license': 'GNU General Public License',
-    'program_name': 'aggregate_search.py',
-    'project_url': f'{cfg.PROJECT}',
-    'version': __version__,
-    'dev_environment': 'Python 3.8',
-    'status': 'Development Status :: 2 - Beta',
-}
 
 # Random user agents for each engine are assigned here.
 # For sensible reporting, item order should match among
