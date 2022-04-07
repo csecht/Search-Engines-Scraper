@@ -68,8 +68,12 @@ Example output:
     (DDG) Forest policy and planning - King County
     The Forestry Program is guided by the King County Comprehensive Plan, which establishes policies on the management of rural land and the uses that are suitable to the rural area. The Comprehensive Plan directs that strategies be developed to maintain forest cover and support the practice of sustainable forestry.
 </code></pre><p>...and the remaining results. All results would be printed to Terminal and written to a file automatically titled: Results_gov+forest+policies.txt</p>
-<p>Arguments: --help, --about, or --use.  The command <code>aggregate_search.py --use</code> provides examples of search term syntax.</p>
-
+<p>Example of color-enhanced Terminal output:
+<img src="images/scrnshot_output.png" alt="color_output"></p>
+<p>ARGUMENTS: --help, --about, --use, or --x.</p>
+<ul><li>The command <code>aggregate_search.py --use</code> provides examples of search term syntax, then exits.</li>
+<li>The command <code>aggregate_search.py --x 2</code> doubles the number of results returned; <code>--x 3</code> triples results, etc., up to <code>--x 5</code>. Without an --x argument, ~60 -- 80 total unique results are returned.</li>
+</ul>
 <h3 id="single-engine-search">Single engine search</h3>
 <p>The original command line client from Search-Engines-Scraper, <code>search_engines_cli.py</code> can be used for customized searches. For example,</p>
 <pre><code>python3 search_engines_cli<span class="hljs-selector-class">.py</span> -<span class="hljs-selector-tag">q</span> forestry -<span class="hljs-selector-tag">p</span> <span class="hljs-number">4</span> -e mojeek

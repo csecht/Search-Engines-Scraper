@@ -78,7 +78,11 @@ The Forestry Program is guided by the King County Comprehensive Plan, which esta
 Example of color-enhanced Terminal output:
 ![color_output](images/scrnshot_output.png)
 
-Arguments: --help, --about, or --use. The command `aggregate_search.py --use` provides examples of search term syntax.
+ARGUMENTS: --help, --about, --use, or --x. 
+
+The command `aggregate_search.py --use` provides examples of search term syntax, then exits.
+
+The command `aggregate_search.py --x 2` doubles the number of results returned; `--x 3` triples results, etc., up to `--x 5`. Without an --x argument, ~60 -- 80 total unique results are returned. 
 
 ### Single engine search
 The original command line client from Search-Engines-Scraper, `search_engines_cli.py` can be used for customized searches. For example, 
