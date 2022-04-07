@@ -41,13 +41,14 @@ FileIt = files.results2file
 ReportIt = reporting.report_results
 
 
-def search_this(search_term: str) -> None:
+def search_this(search_term: str, page_factor: int) -> None:
     """
     Run the input search term through engines specified in dict(engine).
     Report to Terminal and to file non-redundant results of urls and
     page titles and page text details.
 
     :param search_term: String with valid syntax for all or most engines.
+    :param page_factor: Multiplication factor to increase search results.
     """
 
     # Any duplicated url closest to the end of the combined_results list
@@ -68,13 +69,13 @@ def search_this(search_term: str) -> None:
     for tag, engine in engines.items():
         # Depending on UA, DGG returns ~20-60 results/page, MG ~20-40.
         if tag in '(DDG), (MG)':
-            results = engine.search(search_term, pages=1)
-            links = results.links()[0:30]
-            titles = results.titles()[0:30]
-            details = results.text()[0:30]
+            results = engine.search(search_term, pages=(1 * page_factor))
+            links = results.links()[0:(30 * page_factor)]
+            titles = results.titles()
+            details = results.text()
         else:
             # Mojeek and Startpage return 10 results/page.
-            results = engine.search(search_term, pages=2)
+            results = engine.search(search_term, pages=(2 * page_factor))
             links = results.links()
             titles = results.titles()
             details = results.text()
@@ -122,8 +123,11 @@ def search_this(search_term: str) -> None:
     ReportIt(search_term, ending_msg)
 
 
-def parse_args(assist: str = None) -> None:
+def parse_args(assist: str = None) -> int:
     """Allow handling of common command line arguments.
+
+    :param assist: Used if search input string is -h or --help.
+    :return: Page request multiplier passed to search_this().
     """
     parser = argparse.ArgumentParser()
     parser.add_argument('--about',
@@ -134,6 +138,14 @@ def parse_args(assist: str = None) -> None:
                         help='Usage, search term syntax examples.',
                         action='store_true',
                         default=False)
+    parser.add_argument('--x',
+                        help='Result multiplication factor; N = 1 thru 5'
+                             ' (default: %(default)d).',
+                        default=1,
+                        choices=range(1, 6, 1),
+                        type=int,
+                        metavar="N"
+                        )
 
     args = parser.parse_args()
     if args.about:
@@ -160,6 +172,10 @@ def parse_args(assist: str = None) -> None:
             print(f'Sorry, but could not find file: {_use}')
         sys_exit(0)
 
+    if args.x:
+        # The multiplier for number of page results requested.
+        return args.x
+
 
 def main() -> None:
     """
@@ -168,7 +184,7 @@ def main() -> None:
     Run searches if no arguments are given.
     """
 
-    parse_args()
+    page_factor = parse_args()
 
     term = input("\nEnter search term: ").lstrip()
     print()
@@ -186,7 +202,7 @@ def main() -> None:
 
     reporting.report_agents(term)
 
-    search_this(term)
+    search_this(term, page_factor)
 
 
 if __name__ == "__main__":
