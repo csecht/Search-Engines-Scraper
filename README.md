@@ -78,7 +78,7 @@ The Forestry Program is guided by the King County Comprehensive Plan, which esta
 Example of color-enhanced Terminal output:
 ![color_output](images/scrnshot_output.png)
 
-ARGUMENTS: --help, --about, --use, or --x. 
+ARGUMENTS: --help, --info, --use, or --x. 
 
 The command `aggregate_search.py --use` provides examples of search term syntax, then exits.
 
