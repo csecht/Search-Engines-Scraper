@@ -1,4 +1,3 @@
-Specifiers like site:edu, 'dogs AND cats', or 'dogs -cats' may not work as expected, specifically with Startpage.
 Example search term => effect or result:
     paint => Results prefer 'paint', but also finds 'Paints', 'painter', 'painting', etc.
 
@@ -16,4 +15,6 @@ Example search term => effect or result:
 
     *ology => Wildcard character * will prefer 'ology'; does not find 'biology', 'ecology', etc.
 
-Results are printed to the Terminal and written to the ResultsFiles folder.
+Specifiers, e.g., site:org, dogs AND cats, or dogs -cats, may not work as expected for all engines.
+
+Results are printed to the Terminal/console and written to the ResultsFiles folder.
