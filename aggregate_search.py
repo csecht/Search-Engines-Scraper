@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-aggregate_search.py is a command-line web search aggregator written in
-Python3. It is derived from the Search-Engines-Scraper repository at
+aggregate_search.py is a command-line search engine aggregator written
+in Python3. It is derived from the Search-Engines-Scraper repository at
 https://github.com/tasos-py/Search-Engines-Scraper.
 
-Non-redundant aggregated results from privacy-focused search engines
-are returned as URLs, page titles, and page descriptions printed to the
-Terminal and to an auto-named text file.
+Non-redundant aggregated results from four privacy-focused search
+engines. Results are returned as URLs, page titles, and page descriptions
+printed to the Terminal/console and to an auto-named text file.
 
 The intent is to provide broad searches and easy comparisons among
 search engines, while minimizing or avoiding search silos. User agents
@@ -130,13 +130,12 @@ def parse_args(assist: str = None) -> int:
     :return: Optional page request multiplier passed to search_this().
     """
     parser = argparse.ArgumentParser()
-    args = parser.parse_args()
 
-    parser.add_argument('--about',
+    parser.add_argument('--info', '-i',
                         help='Provides description, version, GNU license.',
                         action='store_true',
                         default=False)
-    parser.add_argument('--use',
+    parser.add_argument('--use', '-u',
                         help='Usage, search term syntax examples.',
                         action='store_true',
                         default=False)
@@ -149,16 +148,17 @@ def parse_args(assist: str = None) -> int:
                         metavar="N"
                         )
 
-    if args.about:
+    args = parser.parse_args()
+    if args.info:
         print(__doc__)
-        print(f'{"Author:".ljust(10)}', about.data('author'))
-        print(f'{"License:".ljust(10)}', about.data('license'))
-        print(f'{"Copyright:".ljust(10)}', about.data('copyright'))
-        print(f'{"Program:".ljust(10)}', about.data('program_name'))
-        print(f'{"URL:".ljust(10)}', about.data('project_url'))
-        print(f'{"Version:".ljust(10)}', about.data('version'))
-        print(f'{"Dev Env:".ljust(10)}', about.data('dev_environment'))
-        print(f'{"Status:".ljust(10)}', about.data('status'))
+        print(f'{"Author:".ljust(10)}', about.data['author'])
+        print(f'{"License:".ljust(10)}', about.data['license'])
+        print(f'{"Copyright:".ljust(10)}', about.data['copyright'])
+        print(f'{"Program:".ljust(10)}', about.data['program_name'])
+        print(f'{"URL:".ljust(10)}', about.data['project_url'])
+        print(f'{"Version:".ljust(10)}', about.data['version'])
+        print(f'{"Dev Env:".ljust(10)}', about.data['dev_environment'])
+        print(f'{"Status:".ljust(10)}', about.data['status'])
         print()
         sys_exit(0)
 
