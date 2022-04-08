@@ -40,14 +40,14 @@ FileIt = files.results2file
 ReportIt = reporting.report_results
 
 
-def search_this(search_term: str, page_factor: int) -> None:
+def search_this(search_term: str, page_x: int) -> None:
     """
     Run the input search term through engines specified in dict(engine).
     Report to Terminal and to file non-redundant results of urls and
     page titles and page text details.
 
     :param search_term: String with valid syntax for all or most engines.
-    :param page_factor: Multiplication factor to increase search results.
+    :param page_x: Multiplication factor to increase search results.
     """
 
     # Any duplicated url closest to the end of the combined_results list
@@ -68,13 +68,13 @@ def search_this(search_term: str, page_factor: int) -> None:
     for tag, engine in engines.items():
         # Depending on UA, DGG returns ~20-60 results/page, MG ~20-40.
         if tag in '(DDG), (MG)':
-            results = engine.search(search_term, pages=(1 * page_factor))
-            links = results.links()[0:(30 * page_factor)]
+            results = engine.search(search_term, pages=(1 * page_x))
+            links = results.links()[0:(30 * page_x)]
             titles = results.titles()
             details = results.text()
         else:
             # Mojeek and Startpage return 10 results/page.
-            results = engine.search(search_term, pages=(2 * page_factor))
+            results = engine.search(search_term, pages=(2 * page_x))
             links = results.links()
             titles = results.titles()
             details = results.text()
@@ -148,6 +148,7 @@ def parse_args(assist: str = None) -> int:
                         )
 
     args = parser.parse_args()
+    # --info and --use will print, then exit.
     if args.info:
         about.info(__doc__)
 
@@ -165,7 +166,7 @@ def main() -> None:
     Run searches if no arguments are given.
     """
 
-    page_factor = parse_args()
+    result_multiplier = parse_args()
 
     term = input("\nEnter search term: ").lstrip()
     print()
@@ -183,7 +184,7 @@ def main() -> None:
 
     reporting.report_agents(term)
 
-    search_this(term, page_factor)
+    search_this(term, result_multiplier)
 
 
 if __name__ == "__main__":
