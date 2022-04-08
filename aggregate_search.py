@@ -122,7 +122,7 @@ def search_this(search_term: str, page_x: int) -> None:
     ReportIt(search_term, ending_msg)
 
 
-def parse_args(assist: str = None) -> int:
+def manage_args(assist: str = None) -> int:
     """Allow handling of command line arguments.
 
     :param assist: Used if input search string is -h or --help.
@@ -166,7 +166,7 @@ def main() -> None:
     Run searches if no arguments are given.
     """
 
-    result_multiplier = parse_args()
+    result_multiplier = manage_args()
 
     # Remove trailing spaces, replace internal spaces in term for better
     #    file naming; '+' doesn't affect search.
@@ -175,7 +175,7 @@ def main() -> None:
 
     # In the unlikely event user seeks assistance at input prompt...
     if term in '-help, --help, -h':
-        parse_args(term)
+        manage_args(term)
 
     file_header = (
         f'SEARCH TERM: {term}    TIME: {datetime.now().strftime("%x %X")}')
