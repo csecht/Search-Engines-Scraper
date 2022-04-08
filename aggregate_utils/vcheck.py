@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Simple check of current Python version.
 Functions:
@@ -40,24 +39,3 @@ def maxversion(req_version: str) -> None:
               f' Python versions newer than {req_version}.\n'
               'Current Python version:'
               f' {sys.version_info.major}.{sys.version_info.minor}\n')
-
-
-def about() -> None:
-    """
-    Print basic information about this module.
-    """
-    print(__doc__)
-    print(f'{"Author:".ljust(11)}', __author__)
-    print(f'{"Copyright:".ljust(11)}', __copyright__)
-    print(f'{"License:".ljust(11)}', __license__)
-    print(f'{"Module:".ljust(11)}', __module_name__)
-    print(f'{"Module ver.:".ljust(11)}', __module_ver__)
-    print(f'{"Dev Env:".ljust(11)}', __dev_environment__)
-    print(f'{"URL:".ljust(11)}', __project_url__)
-    print(f'{"Maintainer:".ljust(11)}',  __maintainer__)
-    print(f'{"Status:".ljust(11)}', __status__)
-    sys.exit(0)
-
-
-if __name__ == '__main__':
-    about()

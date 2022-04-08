@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Configuration file for aggregate_search.py
 """
