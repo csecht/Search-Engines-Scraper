@@ -31,7 +31,6 @@ See LICENCE file for additional licenses of repository components.
 import argparse
 import time
 from datetime import datetime
-from pathlib import Path
 from sys import exit as sys_exit
 
 from aggregate_utils import about, agents, files, reporting, config as cfg
@@ -150,28 +149,10 @@ def parse_args(assist: str = None) -> int:
 
     args = parser.parse_args()
     if args.info:
-        print(__doc__)
-        print(f'{"Author:".ljust(10)}', about.data['author'])
-        print(f'{"License:".ljust(10)}', about.data['license'])
-        print(f'{"Copyright:".ljust(10)}', about.data['copyright'])
-        print(f'{"Program:".ljust(10)}', about.data['program_name'])
-        print(f'{"URL:".ljust(10)}', about.data['project_url'])
-        print(f'{"Version:".ljust(10)}', about.data['version'])
-        print(f'{"Dev Env:".ljust(10)}', about.data['dev_environment'])
-        print(f'{"Status:".ljust(10)}', about.data['status'])
-        print()
-        sys_exit(0)
+        about.info(__doc__)
 
     elif args.use or str(assist) in '-help, --help':
-        print(f'USAGE: Run {__file__} without arguments,'
-              ' then enter your search term at the prompt.\n')
-        _use = Path('aggregate_utils/use_syntax.txt').resolve()
-        try:
-            syntax = Path(_use).read_text(encoding='utf-8')
-            print(syntax)
-        except FileNotFoundError:
-            print(f'Sorry, but could not find file: {_use}')
-        sys_exit(0)
+        about.usage()
 
     # The multiplier for number of results returned.
     return args.x
