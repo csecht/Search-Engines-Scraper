@@ -1,3 +1,5 @@
-requests[socks]
-bs4
+requests~=2.27.1
+bs4~=0.0.1
 soupsieve
+setuptools~=57.0.0
+beautifulsoup4~=4.10.0
