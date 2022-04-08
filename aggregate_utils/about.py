@@ -41,7 +41,8 @@ def usage():
     """
     Print short usage explanation, then print text from use_syntax file.
     """
-    print(f'{cfg.ORANGE}USAGE: Run {__main__.__file__} without arguments or with the [--x] option,\n'
+    print(f'{cfg.ORANGE}USAGE: Run {Path(__main__.__file__).name}'
+          ' without options or with the [--x <integer>] option,\n'
           f'       then enter your search term at the prompt.{cfg.NC}\n')
     _use = Path('aggregate_utils/use_syntax.txt').resolve()
     try:

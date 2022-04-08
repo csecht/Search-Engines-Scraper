@@ -126,7 +126,7 @@ def parse_args(assist: str = None) -> int:
     """Allow handling of command line arguments.
 
     :param assist: Used if input search string is -h or --help.
-    :return: Optional page request multiplier passed to search_this().
+    :return: Page request multiplier parameter for search_this().
     """
     parser = argparse.ArgumentParser()
 
@@ -142,7 +142,7 @@ def parse_args(assist: str = None) -> int:
                         help='Result multiplication factor, N:'
                              ' %(choices)s (default: %(default)d).',
                         default=1,
-                        choices=range(1, 6),
+                        choices=range(2, 6),
                         type=int,
                         metavar="N"
                         )
@@ -168,15 +168,14 @@ def main() -> None:
 
     result_multiplier = parse_args()
 
-    term = input("\nEnter search term: ").lstrip()
+    # Remove trailing spaces, replace internal spaces in term for better
+    #    file naming; '+' doesn't affect search.
+    term = input("\nEnter search term: ").lstrip().replace(' ', '+')
     print()
 
     # In the unlikely event user seeks assistance at input prompt...
     if term in '-help, --help, -h':
         parse_args(term)
-
-    # Remove spaces in term for better file naming; '+' doesn't affect search.
-    term = term.replace(' ', '+')
 
     file_header = (
         f'SEARCH TERM: {term}    TIME: {datetime.now().strftime("%x %X")}')
