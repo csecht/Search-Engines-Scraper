@@ -18,8 +18,8 @@ ENGINE_NAMES = {
 #   so try to maximize the choice of most likely to be accepted agents.
 # Bot agents, 'bua', are generally banned by SP & Moj; 'gua' sometimes by Moj.
 # These tuples of dictionary keys are a mix of static and random user agent
-#   functions for random selection by get_user_agents.rando_function().
-DDG_UAs = ('bua', 'fua', 'gua', 'rua')
+#   functions randomly selected by the get_user_agents.rando_function().
+DDG_UAs = ('bua', 'fua', 'wua', 'gua', 'rua', 'rua')
 MG_UAs = ('bua', 'fua', 'pua', 'gua', 'rua', 'rua')
 MOJ_UAs = ('fua', 'wua', 'gua', 'rua')
 SP_UAs = ('fua', 'wua')
