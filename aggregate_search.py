@@ -63,17 +63,19 @@ def search_this(search_term: str, page_x: int) -> None:
     }
     combined_results = []
 
-    # From each engine, balance the number of initial results so numbers
-    #   of unique results retained are more even among engines.
+    # For each engine, balance the number of initial results so that
+    #   there are more equal numbers of unique results among engines.
+    #   Keep in mind that fewer unique results are retained for engines
+    #   earlier in the engines.items loop.
+    # Depending on UA, DGG returns ~20-60 results/page, MG ~20-40;
+    #   Mojeek and Startpage return 10 results/page.
     for tag, engine in engines.items():
-        # Depending on UA, DGG returns ~20-60 results/page, MG ~20-40.
         if tag in '(DDG), (MG)':
             results = engine.search(search_term, pages=(1 * page_x))
             links = results.links()[0:(30 * page_x)]
             titles = results.titles()
             details = results.text()
         else:
-            # Mojeek and Startpage return 10 results/page.
             results = engine.search(search_term, pages=(2 * page_x))
             links = results.links()
             titles = results.titles()
@@ -107,7 +109,7 @@ def search_this(search_term: str, page_x: int) -> None:
         ReportIt(search_term, uniq_msg)
 
     # Need a brief delay before Terminal scrolls to last line of results
-    #   so user can glimpse the last engine's, and final, unique count.
+    #   so user can glimpse the final engine's unique count.
     time.sleep(2)
 
     # Finally, report url, page title, and page detail from each result.
