@@ -26,7 +26,7 @@ AGENT_ARCHIVE: str = 'user_agents.txt.gz'
 # Load the list of gzipped user agents to use in random_agent().
 try:
     rua_file = Path(Path(__file__).parent, f'{AGENT_ARCHIVE}')
-    with gzip.open(rua_file, 'rb') as fp:
+    with gzip.open(rua_file, 'rt') as fp:
         user_agents_list = [_.strip() for _ in fp.readlines()]
 except FileNotFoundError:
     print('Could not open the random user agent file; using default agent...\n'
