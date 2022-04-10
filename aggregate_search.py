@@ -73,13 +73,12 @@ def search_this(search_term: str, page_x: int) -> None:
         if tag in '(DDG), (MG)':
             results = engine.search(search_term, pages=(1 * page_x))
             links = results.links()[0:(30 * page_x)]
-            titles = results.titles()
-            details = results.text()
         else:
             results = engine.search(search_term, pages=(2 * page_x))
             links = results.links()
-            titles = results.titles()
-            details = results.text()
+
+        titles = results.titles()
+        details = results.text()
 
         # Prepend the engine tag to each result title.
         for i, _title in enumerate(titles):
@@ -163,9 +162,10 @@ def manage_args(assist: str = None) -> int:
 
 def main() -> None:
     """
+    Check for arguments; print and exit for informational args.
     Obtain input search term.
     Print user agents and header information to Terminal and file.
-    Run searches if no arguments are given.
+    Run searches.
     """
 
     result_multiplier = manage_args()
