@@ -16,7 +16,8 @@ ENGINE_NAMES = {
 # Assign a random user agent function from get_user_agents() to each engine.
 # Any agent may be temporarily blocked when too frequent requests are made,
 #   so try to maximize the choice of most likely to be accepted agents.
-# Bot agents, 'bua', are generally banned by SP & Moj; 'gua' sometimes by Moj.
+# Bot agents, 'bua', are generally banned by SP & Moj;
+#   'gua' sometimes by Moj; 'rua' often by SP.
 # These tuples of dictionary keys are a mix of static and random user agent
 #   functions randomly selected by the get_user_agents.rando_function().
 DDG_UAs = ('bua', 'fua', 'wua', 'gua')
