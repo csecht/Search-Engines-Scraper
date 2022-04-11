@@ -179,7 +179,7 @@ class SearchEngine:
                     break
                 if page < pages:
                     sleep(random_uniform(*self._delay))
-            except KeyboardInterrupt:
+            except (KeyboardInterrupt, TypeError):
                 break
         out.console('', end='')
         return self.results
