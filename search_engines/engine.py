@@ -179,7 +179,11 @@ class SearchEngine:
                     break
                 if page < pages:
                     sleep(random_uniform(*self._delay))
-            except (KeyboardInterrupt, TypeError):
+            except KeyboardInterrupt:
+                print('User interrupted search from keyboard.')
+                break
+            except TypeError:
+                print('Internal error (engine.py)')
                 break
         out.console('', end='')
         return self.results
