@@ -23,31 +23,6 @@ from . import config as cfg
 DEFAULT_AGENT = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)'
 AGENT_ARCHIVE: str = 'user_agents.txt.gz'
 
-# Load the list of gzipped user agents to use in random_agent().
-try:
-    rua_file = Path(Path(__file__).parent, f'{AGENT_ARCHIVE}')
-    with gzip.open(rua_file, 'rt') as fp:
-        user_agents_list = [_.strip() for _ in fp.readlines()]
-except FileNotFoundError:
-    print('Could not open the random user agent file; using default agent...\n'
-          f'Try downloading {AGENT_ARCHIVE} from {cfg.PROJECT}')
-    user_agents_list = [DEFAULT_AGENT]
-
-
-def random_agent() -> bytes:
-    """
-    Get a random user agent byte string from file of over 4400 obtained
-    from the googlesearch module of google package by Mario Vilas. See:
-    https://python-googlesearch.readthedocs.io/en/latest/
-
-    :return: Random full user agent string.
-    """
-    # Note that all the browser versions in user_agents.txt are old,
-    # so list probably needs an update to work more consistently.
-    return choice(user_agents_list)
-
-# ^^^^^^^^^^^^^^ Modified from from googlesearch module of google package.
-
 
 def bot_agent() -> str:
     """
@@ -74,6 +49,7 @@ def firefox_agent() -> str:
         '87.0', '88.0', '89.0', '90.0', '91.0', '92.0', '93.0', '94.0', '95.0',
         '96.0', '97.0'
     )
+
     return f'Firefox/{choice(firefox_vers)}'
 
 
@@ -85,6 +61,7 @@ def fake_agent() -> str:
 
     :return: static user agent string.
     """
+
     # NOTE that the Firefox ver can be any from firefox_agent()
     return 'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 Firefox/84.0'
 
@@ -111,24 +88,49 @@ def python_agent() -> str:
 
     :return: Default Python requests package header user agent.
     """
+
     # Obtained from : >>>requests.utils.default_headers()
     return 'python-requests/2.27.1'
 
 
+def random_agent() -> bytes:
+    """
+    Get a random user agent byte string from file of over 4400 obtained
+    from the googlesearch module of google package by Mario Vilas. See:
+    https://python-googlesearch.readthedocs.io/en/latest/
+
+    :return: Random full user agent string.
+    """
+    # Load the list of ~4400 user agents to select from.
+    try:
+        rua_file = Path(Path(__file__).parent, f'{AGENT_ARCHIVE}')
+        with gzip.open(rua_file, 'rt') as fp:
+            user_agents_list = [_.strip() for _ in fp.readlines()]
+    except FileNotFoundError:
+        print('Could not open the random user agent file; using default agent...\n'
+              f'Try downloading {AGENT_ARCHIVE} from {cfg.PROJECT}')
+        user_agents_list = [DEFAULT_AGENT]
+    # Note that all the browser versions in user_agents.txt are old,
+    # so list probably needs an update to work more consistently.
+    return choice(user_agents_list)
+
+
 def winfire_agent() -> str:
     """
-    Derivative of fake_agent(), using randome Firefox versions.
-    Use with Startpage. Not tested on other engines, but should work.
+    Derivative of fake_agent(), appending random Firefox versions from
+    firefox_agent().
 
-    :return: A user agent that works with Startpage.
+    :return: A user agent that works with most engines most times.
     """
+
     return f'Mozilla/5.0 (Windows NT 6.1; rv:84.0) Gecko/20100101 {firefox_agent()}'
 
 
 def rando_function(agents: tuple) -> str:
     """
-    From available user agent functions, pick one at random from the
-    selection of functions provided by *agents*.
+    Run one at user agent function at random from the group of functions
+    provided by *agents*. Each search engine will have a certain group
+    of UA functions that work consistently for it.
     Example USAGE:
     engine_agent = get_user_agent.rando_function(('fua', 'pua', 'rua'))
 
