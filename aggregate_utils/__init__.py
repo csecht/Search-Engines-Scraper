@@ -10,7 +10,7 @@ __author__ = 'Craig S. Echt'
 __copyright__ = ('Copyright (c) 2022 C.S. Echt, '
                  'Copyright (c) 2018 Tasos M Adamopoulos, '
                  'Copyright (c) 2009-2020, Mario Vilas')
-__version__ = '0.5.11'
+__version__ = '0.5.12'
 
 
 # Random user agents for each engine are assigned here.

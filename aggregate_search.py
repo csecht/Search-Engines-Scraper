@@ -40,14 +40,14 @@ FileIt = files.results2file
 ReportIt = reporting.report_results
 
 
-def search_this(search_term: str, page_x: int) -> None:
+def search_this(search_term: str, multiplier: int) -> None:
     """
     Run the input search term through engines specified in dict(engine).
     Report to Terminal and to file non-redundant results of urls and
     page titles and page text details.
 
     :param search_term: String with valid syntax for all or most engines.
-    :param page_x: Multiplication factor to increase search results.
+    :param multiplier: Multiplication factor to increase search results.
     """
 
     # Any duplicated url closest to the end of the combined_results list
@@ -71,10 +71,10 @@ def search_this(search_term: str, page_x: int) -> None:
     #   Mojeek and Startpage return 10 results/page.
     for tag, engine in engines.items():
         if tag in '(DDG), (MG)':
-            results = engine.search(search_term, pages=(1 * page_x))
-            links = results.links()[0:(30 * page_x)]
+            results = engine.search(search_term, pages=(1 * multiplier))
+            links = results.links()[0:(30 * multiplier)]
         else:
-            results = engine.search(search_term, pages=(2 * page_x))
+            results = engine.search(search_term, pages=(2 * multiplier))
             links = results.links()
 
         titles = results.titles()
@@ -87,7 +87,7 @@ def search_this(search_term: str, page_x: int) -> None:
         # Pack each engine's result into a list of tuples.
         combined_results.extend(list(zip(links, titles, details)))
 
-        e_count_msg = (f'Keeping the first {len(links)} results'
+        e_count_msg = (f'Kept the first {len(links)} results'
                        f' from {cfg.ENGINE_NAMES[tag]}')
         ReportIt(search_term, e_count_msg)
 
@@ -97,8 +97,8 @@ def search_this(search_term: str, page_x: int) -> None:
     #   res[1] is the page title, res[2] is the detailed description.
     unique_results = tuple({res[0]: res for res in combined_results}.values())
 
-    result_summary = (f'Kept {len(combined_results)} total results.\n\n'
-                      f'There are {len(unique_results)} unique results.')
+    result_summary = (f'{len(combined_results)} total results.\n\n'
+                      f'{len(unique_results)} unique results.')
     ReportIt(search_term, result_summary)
 
     # Report number of unique results retained from each engine.
@@ -184,6 +184,7 @@ def main() -> None:
     FileIt(term, f'{file_header}\n\n')
 
     reporting.report_agents(term)
+    ReportIt(term, f'Search results multiplier: {result_multiplier}X')
 
     search_this(term, result_multiplier)
 
