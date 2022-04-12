@@ -97,14 +97,14 @@ def search_this(search_term: str, multiplier: int) -> None:
     #   res[1] is the page title, res[2] is the detailed description.
     unique_results = tuple({res[0]: res for res in combined_results}.values())
 
-    result_summary = (f'{len(combined_results)} total results.\n\n'
-                      f'{len(unique_results)} unique results.')
+    result_summary = (f'{len(combined_results)} total results\n\n'
+                      f'{len(unique_results)} unique results retained:')
     ReportIt(search_term, result_summary)
 
     # Report number of unique results retained from each engine.
     for tag, engine in cfg.ENGINE_NAMES.items():
         num_uniq = sum(tag in res[1] for res in unique_results)
-        uniq_msg = f'{num_uniq} unique results retained from {engine} {tag}'
+        uniq_msg = f'{num_uniq} from {engine} {tag}'
         ReportIt(search_term, uniq_msg)
 
     # Need a brief delay before Terminal scrolls to last line of results
