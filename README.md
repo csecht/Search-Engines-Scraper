@@ -95,4 +95,5 @@ will return four pages of url results for the query 'forestry' from the Mojeek e
 python3 search_engines_cli.py -h
 ```
 ## Known issues
-Waiting for comments...
+As of July 2022, MetaGer searches return no results because scrapper queries
+now require a CAPTCHA response, which aggregate_search.py does not provide.

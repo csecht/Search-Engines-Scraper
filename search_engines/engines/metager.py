@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 from search_engines.engine import SearchEngine
 from search_engines.config import PROXY, TIMEOUT
 
+# TODO: Loading the redirect() url now requires a CAPTCHA response,
+#  via https://metager.org/verify/... , as of July 2022.  Solution: unknown.
+
 
 class Metager(SearchEngine):
     """Searches metager3.de/en"""

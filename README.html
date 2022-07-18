@@ -81,3 +81,6 @@ Example output:
 </code></pre><p>will return four pages of url results for the query &#39;forestry&#39; from the Mojeek engine. To see additional search and output options, use the help command,</p>
 <pre><code>python3 search_engines_cli<span class="hljs-selector-class">.py</span> -h
 </code></pre>
+<h3 id="issues">Known issues</h3>
+<p>As of July 2022, MetaGer searches return no results because scrapper queries
+now require a CAPTCHA response, which aggregate_search.py does not provide.</p>
