@@ -7,6 +7,6 @@ from .metager import Metager
 search_engines_dict = { 
     'duckduckgo': Duckduckgo,
     'startpage': Startpage,
-    'metager': Metager,
+    # 'metager': Metager,
     'mojeek': Mojeek,
 }

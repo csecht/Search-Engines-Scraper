@@ -57,7 +57,7 @@ def search_this(search_term: str, multiplier: int) -> None:
     #   dict(agents), config.ENGINE_NAMES, and dict(engines)
     engines = {
         '(DDG)': se.Duckduckgo(agents['(DDG)']),
-        '(MG)': se.Metager(agents['(MG)']),
+        # '(MG)': se.Metager(agents['(MG)']),
         '(SP)': se.Startpage(agents['(SP)']),
         '(Moj)': se.Mojeek(agents['(Moj)']),
     }
@@ -70,7 +70,8 @@ def search_this(search_term: str, multiplier: int) -> None:
     # Depending on UA, DGG returns ~20-60 results/page, MG ~20-40;
     #   Mojeek and Startpage return 10 results/page.
     for tag, engine in engines.items():
-        if tag in '(DDG), (MG)':
+        # if tag in '(DDG), (MG)':
+        if tag == 'DDG':
             results = engine.search(search_term, pages=(1 * multiplier))
             links = results.links()[0:(30 * multiplier)]
         else:

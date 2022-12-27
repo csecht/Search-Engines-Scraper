@@ -5,7 +5,6 @@ Aggregates results from several search engines with output to Terminal and text 
 - _[Duckduckgo](https://duckduckgo.com)_
 - _[Startpage](https://www.startpage.com)_
 - _[Mojeek](https://www.mojeek.com)_
-- _[MetaGer](https://metager.org)_
 
 ## Features
  - Uses search engines that are focused on user privacy.
@@ -36,7 +35,6 @@ then enter your search term at the prompt. Example output:
 Enter search term: gov forest policy
 
 User agents assigned for this search:
-MegaGer:   Firefox/74.0
 DuckDuckGo:aggregate_search/0.4 Repo: https://github.com/csecht/search-aggregator
 Startpage: Firefox/82.0
 Mojeek:    Opera/8.10 (Windows NT 5.1; U; en)
@@ -44,27 +42,20 @@ Mojeek:    Opera/8.10 (Windows NT 5.1; U; en)
 Search results multiplier: 1X
 Searching Duckduckgo
 Kept the first 28 results from DuckDuckGo
-Searching Metager
-Kept the first 21 results from MetaGer
 Searching Startpage
 Kept the first 20 results from Startpage
 Searching Mojeek
 Kept the first 20 results from Mojeek
-89 total results
+68 total results
 
-71 unique results retained:
+54 unique results retained:
 14 from DuckDuckGo (DDG)
-17 from MetaGer (MG)
 20 from Startpage (SP)
 20 from Mojeek (Moj)
 
 https://www.fs.usda.gov/about-agency/regulations-policies
 (SP) Regulations & Policies | US Forest Service
 Federal agencies operate under the U.S. Code and the Code of Federal Regulations. These laws help form our directives and policies on how we manage national ...
-
-https://www.fs.usda.gov/science-technology/forest-products-modernization/policy-updates
-(MG) Policy Updates | US Forest Service - USDA
-Timber sales production in the Chattahoochee National Forest, GA. (Forest Service photo by Cecilio Ricardo). The USDA Forest Service recently issued…
 
 https://portal.ct.gov/DEEP/Forestry/Forest-Policy-and-Planning
 (Moj) CT Forest Policy and Planning

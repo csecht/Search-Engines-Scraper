@@ -8,7 +8,7 @@ PROJECT = 'https://github.com/csecht/search-aggregator'
 #   dict(agents), config.ENGINE_NAMES, and dict(engines)
 ENGINE_NAMES = {
     '(DDG)': 'DuckDuckGo',
-    '(MG)': 'MetaGer',
+    # '(MG)': 'MetaGer',
     '(SP)': 'Startpage',
     '(Moj)': 'Mojeek',
 }
@@ -21,7 +21,7 @@ ENGINE_NAMES = {
 # These tuples of dictionary keys are a mix of static and random user agent
 #   functions randomly selected by the get_user_agents.rando_function().
 DDG_UAs = ('bua', 'fua', 'wua', 'gua')
-MG_UAs = ('bua', 'fua', 'wua', 'pua', 'gua', 'rua', 'rua')
+# MG_UAs = ('bua', 'fua', 'wua', 'pua', 'gua', 'rua', 'rua')
 MOJ_UAs = ('fua', 'wua', 'rua', 'rua')
 SP_UAs = ('fua', 'wua')
 

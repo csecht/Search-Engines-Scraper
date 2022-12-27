@@ -10,7 +10,7 @@ __author__ = 'Craig S. Echt'
 __copyright__ = ('Copyright (c) 2022 C.S. Echt, '
                  'Copyright (c) 2018 Tasos M Adamopoulos, '
                  'Copyright (c) 2009-2020, Mario Vilas')
-__version__ = '0.5.12'
+__version__ = '0.5.13'
 
 
 # Random user agents for each engine are assigned here.
@@ -18,7 +18,7 @@ __version__ = '0.5.12'
 #   dict(agents), config.ENGINE_NAMES, and dict(engines)
 agents = {
     '(DDG)':  get_user_agent.rando_function(cfg.DDG_UAs),
-    '(MG)': get_user_agent.rando_function(cfg.MG_UAs),
+    # '(MG)': get_user_agent.rando_function(cfg.MG_UAs),
     '(SP)': get_user_agent.rando_function(cfg.SP_UAs),
     '(Moj)': get_user_agent.rando_function(cfg.MOJ_UAs),
 }
